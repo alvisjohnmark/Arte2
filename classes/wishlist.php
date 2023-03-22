@@ -1,0 +1,54 @@
+<?php
+class Wishlist extends DB
+{
+    private $customerID;
+    private $itemID;
+    public function __construct($customerID, $itemID)
+    {
+        $this->customerID = $customerID;
+        $this->itemID = $itemID;
+    }
+
+    public function setToWishlist()
+    {
+        try {
+            $stmt = $this->connect()->prepare("INSERT INTO `wishlist`(`customerID`, `itemID`) VALUES (?,?)");
+            $stmt->bindParam(1, $this->customerID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->itemID, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                return "Success";
+            }
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+
+    }
+
+    public function deleteFromWishlist()
+    {
+        try {
+            $stmt = $this->connect()->prepare("DELETE FROM `wishlist` WHERE itemID = ? AND customerID = ?");
+            $stmt->bindParam(1, $this->itemID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->customerID, PDO::PARAM_INT);
+            $stmt->execute();
+            return "Success";
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
+
+    public function getWishlist()
+    {
+        try {
+            $stmt = $this->connect()->prepare("SELECT item.itemID, item.name, item.stock, item.price, item.category, item.kind, item.img FROM (item
+            INNER JOIN wishlist on wishlist.itemID = item.itemID
+            ) WHERE wishlist.customerID = ?"); //use join
+            $stmt->bindParam(1, $this->customerID, PDO::PARAM_INT);
+            $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
+}
+?>
