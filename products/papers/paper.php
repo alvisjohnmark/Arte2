@@ -134,11 +134,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
 
+
         $(document).ready(function () {
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
             let value = params.itemID; // "some_value"
+            renderItem(value)
+            wishlist(value)
+        });
+
+
+        //RENDER PRODUCT AND ADD TO CART
+        function renderItem(value) {
+
             $.ajax({
                 method: "GET",
                 url: `../../server/item/get.php?itemID=${value}`,
@@ -184,7 +193,7 @@
                     </div>
                   </div>
                   <button id="cart" class="add-to-cart">Add to cart</button>
-
+    
                 </div>
               </div>
             </div>`
@@ -198,10 +207,9 @@
                     if (cur == item["stock"] || cur === item["stock"]) {
                         return
                     }
-
                     $("#qnty").val(cur + 1)
-
                 });
+
                 $(document).on('click', "#dec", function () {
                     let cur = $("#qnty").val()
                     if (cur == 0 || cur === 0) {
@@ -212,7 +220,7 @@
                 });
             }
 
-            //ADD TO CART 
+            //add to cart 
             $(document).on('click', "#cart", function (i) {
                 let qnty = $("#qnty").val()
                 //itemID is very importanting
@@ -232,33 +240,75 @@
                     }
                 })
             });
+        }
+
+
+        //WISHLIST
+        function wishlist(value) {
+            let hasBeat = true;
+            $.ajax({
+                method: "POST",
+                url: '../../server/wishlist/exist.php',
+                data: { itemID: value },
+                success: async function (response) {
+                    let result = await JSON.parse(response)
+                    if (result.data) {
+                        $(".fa-heart").addClass("beat");
+                        hasBeat = true;
+                    } else {
+                        "No Item";
+                        hasBeat = false;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
 
             $(document).on('click', ".fa-heart", function () {
                 if ($(this).hasClass("beat")) {
+                    hasBeat = false;
                     $(this).removeClass("beat");
                 } else {
+                    hasBeat = true;
                     $(this).addClass("beat");
                 }
             });
 
             $(window).on('beforeunload', function () {
-                let data = { itemID: 0 }
-                console.log("asd");
-                $.ajax({
-                    method: "POST",
-                    url: "../server/wishlist/add.php",
-                    data: data,
-                    success: function (response) {
-                        let result = JSON.parse(response)
-                        console.log(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr, status, error);
-                    }
-                })
-            });
-        });
+                let data = { itemID: value }
+                if (hasBeat) {
+                    $.ajax({
+                        method: "POST",
+                        url: "../../server/wishlist/add.php",
+                        data: data,
+                        success: function (response) {
+                            let result = JSON.parse(response)
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr, status, error);
+                        }
+                    })
+                    console.log("ADD");
+                } else {
+                    $.ajax({
+                        method: "POST",
+                        url: "../../server/wishlist/delete.php",
+                        data: data,
+                        success: function (response) {
+                            let result = JSON.parse(response)
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr, status, error);
+                        }
+                    })
+                    console.log("DELETE");
 
+                }
+            });
+        }
     </script>
 </body>
 

@@ -11,6 +11,9 @@ class Wishlist extends DB
 
     public function setToWishlist()
     {
+
+        if ($this->itemExist())
+            return;
         try {
             $stmt = $this->connect()->prepare("INSERT INTO `wishlist`(`customerID`, `itemID`) VALUES (?,?)");
             $stmt->bindParam(1, $this->customerID, PDO::PARAM_INT);
@@ -32,6 +35,20 @@ class Wishlist extends DB
             $stmt->bindParam(2, $this->customerID, PDO::PARAM_INT);
             $stmt->execute();
             return "Success";
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
+
+    public function itemExist()
+    {
+        try {
+            $stmt = $this->connect()->prepare("SELECT count(*) FROM `wishlist` WHERE customerID = ? AND itemID = ?"); //use join
+            $stmt->bindParam(1, $this->customerID, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->itemID, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetchColumn();
+            return $result > 0 ? $result : false;
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }

@@ -72,6 +72,7 @@
                 url: "../server/wishlist/get.php?customerID=null",
                 success: async function (response) {
                     let result = await JSON.parse(response)
+                    console.log(result.data);
                     result.data ? setElements(result) : console.log("No customer");
                 },
                 error: function (xhr, status, error) {
