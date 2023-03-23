@@ -47,15 +47,15 @@
         <div class="outer-paper-products">
           <ul>
             <a href="../index.php#products">
-
               <li>Products</li>
             </a>
             <span>❯</span>
             <li><b>Paper</b></li>
           </ul>
           <div class="inner-outer-products">
-            <div class="paper-products">
-            </div>
+
+            <div class="card-container"></div>
+
           </div>
         </div>
       </div>
@@ -88,28 +88,20 @@
         let image = item["img"];
         let itemID = item["itemID"];
         let src = `../assets/images/${image}`
-        $("section .inner-outer-products .paper-products").append(
-          $(`<div class="product">
-          <div class="image-holder">
-          <a href="./papers/paper.php?itemID=${itemID}">
-                    <img src=${src} alt=""></a>
+        $("section .inner-outer-products .card-container").append(
+          $(`<a href="./papers/paper.php?itemID=${itemID}"><div class="card">
+                <div class="image-holder">
+                    <img src=${src} loading="lazy">
                 </div>
-                <p id="PRP">${name}</p>
-                <p>Php ${price}</p>
-                <span class="favorite">
-                <a><i class="fa fa-heart" aria-hidden="true"></i></a>
-                </span>
-                </div>`));
+                <div class="detail">
+                    <p>${name}</p>
+                    <p></p>
+                    <p>₱${price}.00</p>
+                </div>
+            </div></a>`));
       })
 
-      $(document).on('click', ".favorite", function (i) {
-        let node = $(this);
-        if (node.hasClass("beat")) {
-          node.removeClass("beat");
-        } else {
-          node.addClass("beat")
-        }
-      });
+
     }
   </script>
 

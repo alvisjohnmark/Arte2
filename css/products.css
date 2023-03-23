@@ -9,7 +9,96 @@
   --font-style-four: "Cormorant", serif;
 }
 
-.paper-products {
+.outer-paper-products {
+  margin: 150px 0;
+}
+
+.outer-paper-products ul {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.outer-paper-products li {
+  position: relative;
+  font-size: 33px;
+  list-style: none;
+  cursor: pointer;
+}
+
+.outer-paper-products ul > span {
+  margin: 0 15px;
+  font-size: 22px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  z-index: 0;
+  width: fit-content;
+  height: 100%;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  background-color: #dfccc5;
+  cursor: pointer;
+}
+
+.card .image-holder {
+  position: relative;
+  padding: 10px;
+  height: 300px;
+  width: 300px;
+}
+.card p {
+  font-family: "Playfair Display", serif;
+  text-align: center;
+  /* font-family: "Source Serif Pro", serif; */
+}
+
+.card .detail p:nth-child(1) {
+  margin-top: 10px;
+  font-size: 20px;
+}
+.card .detail p:nth-child(2) {
+  font-size: 13px;
+  color: #b38168;
+  font-family: "Josefin Sans", sans-serif;
+  margin: 3px;
+}
+.card .detail p:nth-child(3) {
+  font-size: 18px;
+  padding-bottom: 20px;
+}
+
+.card .fa {
+  font-size: 32px;
+  color: #896f61;
+}
+
+.card .fa-heart:hover {
+  /* opacity: 0;
+    display: none; */
+  /* transition: all 0.3s ease-in;
+  transform: scale(1.2); */
+  color: #9980765c;
+}
+
+.card span {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+/* .card span:hover {
+  display: none;
+} */
+
+/* .paper-products {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
   grid-gap: 16px;
@@ -68,4 +157,4 @@ img {
 }
 .product p {
   margin: 15px 0;
-}
+} */

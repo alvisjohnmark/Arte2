@@ -48,6 +48,7 @@
         <!--Do a while loop-->
         <section>
             <div class="inner-outer-products">
+                <div class="card-container"></div>
             </div>
         </section>
         <?php
@@ -81,45 +82,45 @@
             })
         });
 
-        //do sql on refresh/close on the page
 
-        // $(window).on('beforeunload', function () {
-        //     let data = { itemID: 0 }
-        //     console.log("asd");
-        //     $.ajax({
-        //         method: "POST",
-        //         url: "../server/wishlist/add.php",
-        //         data: data,
-        //         success: function (response) {
-        //             let result = JSON.parse(response)
-        //             console.log(response);
-        //         },
-        //         error: function (xhr, status, error) {
-        //             console.error(xhr, status, error);
-        //         }
-        //     })
-        // });
+        $(document).on('click', "#card", function (e) {
+            console.log(e.target);
+            if ($(e.target).is("#heart")) {
+                console.log($(this));
+                $($(this)).css("display", "none")
+            } else {
+                let ID = $(this).attr("data-item-id")
+                window.location.href = `http://localhost/ARTE/products/papers/paper.php?itemID=${ID}`
+
+            }
+        });
 
 
         function setElements(params) {
             params.data.forEach(item => {
                 let image = item["img"];
+                let name = item["name"];
+                let price = item["price"];
+                let itemID = item["itemID"]
                 let src = `../assets/images/${image}`
-                $("section .inner-outer-products").append(
-                    $(`<div class="product">
-                        <div class="image-holder">
-                            <a href="./paper/plain-recycled-paper.php">
-                                <img src=${src}
-                                    alt="Pic"></a>
-                        </div>
-                        <p id="PRP">Plain Recycled Paper</p>
-                        <p>Php 50-70</p>
-                        <span class="favorite">
-                            <a><i class="fa fa-heart" aria-hidden="true"></i></a>
-                        </span>
-                    </div>`));
+                $("section .inner-outer-products .card-container").append(
+                    $(`<div id="card" class="card" data-item-id="${itemID}">
+                <div class="image-holder">
+                    <img src=${src} loading="lazy">
+                    <span><i id="heart" class="fa fa-heart" aria-hidden="true"></i></span>
+                </div>
+                <div class="detail">
+                    <p>${name}</p>
+                    <p>Paper</p>
+                    <p>₱${price}.00</p>
+                </div>
+            </div>`));
             })
         }
+
+        // $(document).on("click",, function () {
+
+        // })
 
     </script>
 </body>

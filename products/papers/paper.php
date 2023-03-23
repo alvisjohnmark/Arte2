@@ -31,7 +31,7 @@
                     <a href="../../pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                 </li>
                 <li>
-                    <a href="../forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    <a href="../../pages/wishlist.php"><i class=" fa fa-user-circle-o" aria-hidden="true"></i></a>
                 </li>
                 <li>
                     <div class="tooltip">
@@ -49,7 +49,7 @@
             <div class="container">
                 <div class="outer-paper-products">
                     <ul>
-                        <a href="../../index.php#products">
+                        <a href="../../index.php">
                             <li>Products</li>
                         </a>
                         <span>❯</span>
@@ -59,7 +59,7 @@
                         <span>❯</span>
                         <li id="name"></li>
                     </ul>
-                    <div class="item">
+                    <div class="item" data-beat="true">
                         <?php
 
                         try {
@@ -94,7 +94,7 @@
                                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
                                         incididunt ut labore
                                         et dolore magna aliqua.</p>
-                                    <div class="wishlist"><i class="fa fa-heart" aria-hidden="true"></i>
+                                    <div class="wishlist-add"><i class="fa fa-heart" aria-hidden="true"></i>
                                     </div>
                                     <div class="lower">
                                         <div class="quantity-wrapper">
@@ -170,21 +170,21 @@
 
                     $(`<div class="item-wrapper">
               <div class="item-image">
-                <img src=${src}>
+                <img src=${src} loading="lazy">
               </div>
               <div class="item-detail">
                 <p>${name}</p>
                 <p>₱${price}.00</p>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                   et dolore magna aliqua.</p>
-                <div class="wishlist"><i class="fa fa-heart" aria-hidden="true"></i>
+                <div class="wishlist" data-beat=${true}><i class="fa fa-heart wishlist-add" aria-hidden="true"></i>
                 </div>
                 <div class="lower">
                   <div class="quantity-wrapper">
                     <p>Stocks remaining: <b>${stock}</b>.</p>
                     <p>Each pack contains <b>6</b> pieces.</p>
                     <div class="quantity">
-                      <label for="qnty">Quantity</label>
+                      <label for="qnty"><p>Quantity</p></label>
                       <input type="number" id="qnty" name="qnty" value="0" min="1" max="1000">
                       <div class="inc-dec">
                         <button id="inc"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
@@ -242,7 +242,6 @@
             });
         }
 
-
         //WISHLIST
         function wishlist(value) {
             let hasBeat = true;
@@ -253,9 +252,11 @@
                 success: async function (response) {
                     let result = await JSON.parse(response)
                     if (result.data) {
-                        $(".fa-heart").addClass("beat");
+                        $(".wishlist-add").addClass("beat");
                         hasBeat = true;
+                        console.log("Triggered add");
                     } else {
+                        console.log("Triggered del");
                         "No Item";
                         hasBeat = false;
                     }
@@ -265,18 +266,23 @@
                 }
             })
 
-            $(document).on('click', ".fa-heart", function () {
+            $(document).on('click', ".wishlist-add", function () {
                 if ($(this).hasClass("beat")) {
                     hasBeat = false;
+                    console.log(hasBeat);
                     $(this).removeClass("beat");
                 } else {
                     hasBeat = true;
+                    console.log(hasBeat);
                     $(this).addClass("beat");
                 }
             });
 
+
+
             $(window).on('beforeunload', function () {
                 let data = { itemID: value }
+                console.log(hasBeat);
                 if (hasBeat) {
                     $.ajax({
                         method: "POST",
@@ -305,7 +311,6 @@
                         }
                     })
                     console.log("DELETE");
-
                 }
             });
         }

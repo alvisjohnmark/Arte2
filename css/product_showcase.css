@@ -65,17 +65,19 @@ input[type="number"] {
   padding: 20px;
 }
 
+p {
+  font-family: "Playfair Display", serif;
+}
 .item-detail p:nth-child(1) {
-  /* max-width: 290px; */
   font-size: 30px;
 }
 .item-detail p:nth-child(2) {
-  font-size: 25px;
-  margin: 10px 0;
+  font-size: 24px;
+  margin: 5px 0;
 }
 .item-detail p:nth-child(3) {
-  font-size: 14px;
-  margin: 10px 0;
+  font-size: 13px;
+  margin: 5px 0;
   /* width: 200px; */
 }
 
@@ -87,10 +89,10 @@ input[type="number"] {
 
 .quantity-wrapper p:nth-child(1) {
   margin-bottom: 5px;
-  font-size: 18px;
+  font-size: 16px;
 }
 .quantity-wrapper p:nth-child(2) {
-  /* margin-bottom: 5px; */
+  font-family: "Josefin Sans", sans-serif;
   font-size: 13px;
   color: rgb(105, 4, 4);
 }
@@ -156,10 +158,16 @@ input[type="number"] {
   background-color: white;
 }
 
+.add-to-cart {
+  font-family: "Josefin Sans", sans-serif;
+}
 .add-to-cart:hover {
   cursor: pointer;
   background-color: var(--secondary-color);
 }
+
+/* .add-to-cart p {
+} */
 
 .image-holder {
   width: 300px;
