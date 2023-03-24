@@ -135,18 +135,29 @@
     <script>
 
 
-        $(document).ready(function () {
+        $(document).ready(async function () {
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
             let value = params.itemID; // "some_value"
-            renderItem(value)
-            wishlist(value)
+
+            $.ajax({
+                method: "GET",
+                url: "../../server/customer.php",
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    renderItem(value, result.data)
+                    wishlist(value, result.data)
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
         });
 
 
         //RENDER PRODUCT AND ADD TO CART
-        function renderItem(value) {
+        function renderItem(value, userLoggedIn) {
 
             $.ajax({
                 method: "GET",
@@ -160,7 +171,7 @@
                 }
             })
 
-            function setElements(item) {
+            function setElements(item, userLoggedIn) {
                 let name = item["name"];
                 let price = item["price"];
                 let image = item["img"];
@@ -220,8 +231,15 @@
                 });
             }
 
+
+
+
             //add to cart 
             $(document).on('click', "#cart", function (i) {
+                if (!userLoggedIn) {
+                    window.location.href = "http://localhost/ARTE/forms/login.php";
+                    return
+                }
                 let qnty = $("#qnty").val()
                 //itemID is very importanting
                 console.log(qnty);
@@ -243,7 +261,8 @@
         }
 
         //WISHLIST
-        function wishlist(value) {
+        function wishlist(value, userLoggedIn) {
+
             let hasBeat = true;
             $.ajax({
                 method: "POST",
@@ -267,6 +286,9 @@
             })
 
             $(document).on('click', ".wishlist-add", function () {
+                if (!userLoggedIn) {
+                    window.location.href = "http://localhost/ARTE/forms/login.php";
+                }
                 if ($(this).hasClass("beat")) {
                     hasBeat = false;
                     console.log(hasBeat);

@@ -16,8 +16,6 @@ if (isset($_POST["itemID"])) {
             // http_response_code(400);
         }
     } else {
-        print_r($_SESSION);
-        echo $_SESSION["customerID"];
         echo json_encode(["msg" => "No customer", "data" => null]);
 
     }

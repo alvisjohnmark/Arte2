@@ -13,9 +13,8 @@
         // http_response_code(400);
     }
 } else {
-    echo json_encode(["msg" => "Error"]);
-    // http_response_code(400);
-    exit();
+    return json_encode(["msg" => "itemID missing"]);
+
 
 }
 ?>
