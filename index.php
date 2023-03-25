@@ -31,12 +31,12 @@
           <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
         </li>
         <li>
-          <div class="tooltip">
-            <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-              <span>0</span>
-            </a>
-            <span class="tooltiptext">No items in the cart</span>
-          </div>
+          <!-- <div class="tooltip"> -->
+          <a href="./pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+            <span>0</span>
+          </a>
+          <!-- <span class="tooltiptext">No items in the cart</span>
+          </div> -->
         </li>
       </ul>
     </navbar>

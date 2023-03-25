@@ -60,69 +60,6 @@
                         <li id="name"></li>
                     </ul>
                     <div class="item" data-beat="true">
-                        <?php
-
-                        try {
-                            // $DB = new DB();
-                            // $conn = $DB->connect();
-                            // $stmt = $conn->query("SELECT * FROM `item` WHERE itemID = 1");
-                            // $stmt->bindParam(1, 1, PDO::PARAM_INT);
-                        
-                            // while (($row = $stmt->fetch(PDO::FETCH_ASSOC)) !== false) {
-                            //     echo $row['name'] . '<br>';
-                            // }
-                            // $data = $stmt->fetch(PDO::FETCH_ASSOC);
-                            // $ID = $_GET["itemID"];
-                            // $item = new Item($ID);
-                            // $msg = $item->getItem();
-                            // $data = json_encode($msg);
-                            // $name = $msg["name"];
-                            // $price = $msg["price"];
-                            // $img = $msg["img"];
-                            // ?>
-                            <!-- <div class="item-wrapper">
-                                <div class="item-image">
-                                    <img src="<?php echo '../../assets/images/' . $img ?>">
-                                </div>
-                                <div class="item-detail">
-                                    <p>
-                                        <?php echo $name ?>
-                                    </p>
-                                    <p>₱
-                                        <?php echo $price ?>.00
-                                    </p>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                                        incididunt ut labore
-                                        et dolore magna aliqua.</p>
-                                    <div class="wishlist-add"><i class="fa fa-heart" aria-hidden="true"></i>
-                                    </div>
-                                    <div class="lower">
-                                        <div class="quantity-wrapper">
-                                            <p>Each pack contains <b>6</b> pieces.</p>
-                                            <form action="">
-                                                <div class="quantity">
-                                                    <label for="qnty">Quantity</label>
-                                                    <input type="number" id="qnty" name="qnty" value="0" min="1" max="1000">
-                                                    <div class="inc-dec">
-                                                        <button id="inc"><i class="fa fa-caret-up"
-                                                                aria-hidden="true"></i></button>
-                                                        <button id="dec"><i class="fa fa-caret-down"
-                                                                aria-hidden="true"></i></button>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                        <input type="submit" value="submit">
-                                        <button class="add-to-cart">Add to cart</button>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div> -->
-                            <!-- <?php
-                        } catch (\Throwable $th) {
-                            echo json_encode(["msg" => "Errory"]);
-
-                        } ?> -->
                     </div>
                 </div>
             </div>
@@ -192,11 +129,11 @@
                 </div>
                 <div class="lower">
                   <div class="quantity-wrapper">
-                    <p>Stocks remaining: <b>${stock}</b>.</p>
+                    <p>Stocks remaining: <b id=stock>${stock}</b>.</p>
                     <p>Each pack contains <b>6</b> pieces.</p>
                     <div class="quantity">
                       <label for="qnty"><p>Quantity</p></label>
-                      <input type="number" id="qnty" name="qnty" value="0" min="1" max="1000">
+                      <input type="number" id="qnty" name="qnty" value="0" min="0" max="${stock}">
                       <div class="inc-dec">
                         <button id="inc"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
                         <button id="dec"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
@@ -213,21 +150,42 @@
                     $(`<b>${name}</b>`)
                 )
 
+                //this handles the quantity function and assures that quantity is not
+                //over than the number of stocks nor less than
+
+                let s = Number($('#stock').text())
+
+                $(document).on('input', "#qnty", function (e) {
+                    let cur = Number($("#qnty").val())
+
+                    if (cur > s) { //change the number here
+                        let lastDigi = Math.floor(cur / 10);
+                        $("#qnty").val(lastDigi)
+                        return
+                    }
+                    ($("#qnty").val(cur))
+                    $('#stock').text(s - cur)
+                })
+
                 $(document).on('click', "#inc", function () {
                     let cur = Number($("#qnty").val())
                     if (cur == item["stock"] || cur === item["stock"]) {
                         return
                     }
-                    $("#qnty").val(cur + 1)
+
+                    cur += 1
+                    $("#qnty").val(cur)
+                    $('#stock').text(s - cur)
                 });
 
                 $(document).on('click', "#dec", function () {
                     let cur = $("#qnty").val()
                     if (cur == 0 || cur === 0) {
                         return
-                    } else {
-                        $("#qnty").val(cur - 1)
                     }
+                    cur -= 1
+                    $("#qnty").val(cur)
+                    $('#stock').text(s - cur)
                 });
             }
 
@@ -249,9 +207,9 @@
                     url: "../../server/order/add.php",
                     data: data,
                     success: function (response) {
-                        let result = JSON.parse(response)
+                        let result = response
                         console.log(result);
-                        window.location.reload();
+                        // window.location.reload();
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr, status, error);
@@ -299,8 +257,6 @@
                     $(this).addClass("beat");
                 }
             });
-
-
 
             $(window).on('beforeunload', function () {
                 let data = { itemID: value }

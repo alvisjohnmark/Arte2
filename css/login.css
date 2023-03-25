@@ -5,7 +5,7 @@
 }
 
 /* Define the needed styles */
-:root {
+/* :root {
   --primary-color: #dfccc5;
   --secondary-color: #f4eee1;
   --icon-color: #998076;
@@ -24,63 +24,63 @@
 
 body{
   background-color: var(--secondary-color);
-}
-.welcome{
-    font-family: var(--font-style-four);
-    font-size: 2em;
-}
-
-.container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 4rem;
+} */
+.welcome {
+  font-family: var(--font-style-four);
+  font-size: 2em;
 }
 
-.form-container{
-    width: 26.25rem;
-    height: 30.25rem;
-    background-color: var(--primary-color);
-    position: relative;
-    box-sizing: border-box;
-    border: none;
-    border-radius: 2.5rem;
-    padding: 1rem;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
 }
 
-form{   
-    padding: 1rem 1rem 0 1rem;
+.form-container {
+  width: 26.25rem;
+  height: 30.25rem;
+  background-color: var(--primary-color);
+  position: relative;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 2.5rem;
+  padding: 1rem;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-form input{
-    width: 100%;
-    height: 1rem;
-    margin-top: 10px;
-    font-family: var(--font-style-three);
-    background: transparent;
-    border: none ;
+form {
+  padding: 1rem 1rem 0 1rem;
 }
-  input[type=email] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 2px solid rgb(0, 0, 0);
-  }
-  input[type=password] {
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: none;
-    border-bottom: 2px solid rgb(0, 0, 0);
-  }
-label{
-    font-size: 1.5em;
+
+form input {
+  width: 100%;
+  height: 1rem;
+  margin-top: 10px;
+  font-family: var(--font-style-three);
+  background: transparent;
+  border: none;
 }
-.sign-up{
+input[type="email"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+input[type="password"] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid rgb(0, 0, 0);
+}
+label {
+  font-size: 1.5em;
+}
+.sign-up {
   position: absolute;
   left: 2rem;
   top: 14rem;
@@ -102,7 +102,7 @@ label{
   align-items: center;
 }
 
-.form-container ul li a{
+.form-container ul li a {
   border: none;
   border-radius: 1.5rem;
   width: 3rem;
@@ -110,45 +110,47 @@ label{
   background-color: var(--secondary-color);
   text-decoration: none;
   color: var(--icon-color);
-  padding: .5rem;
+  padding: 0.5rem;
 }
-i{
+i {
   border-radius: 1rem;
   padding: 0.25rem;
 }
-.signs-1{
+.signs-1 {
   display: flex;
   justify-content: flex-end;
   margin-top: 3rem;
   font-size: 1.5em;
 }
-.signs-1 a{
+.signs-1 a {
   text-decoration: none;
-  color: black; font-family: var(--font-style-four);
+  color: black;
+  font-family: var(--font-style-four);
   font-weight: bold;
 }
-.signs-1 .fa{
+.signs-1 .fa {
   font-size: 1em;
 }
 
-.signs-2{
+.signs-2 {
   display: flex;
   justify-content: space-around;
   margin-top: 1rem;
   font-size: 1.5em;
 }
 
-.signs-2 .fa{
+.signs-2 .fa {
   font-size: 1em;
 }
 
-.signs-2 a{
+.signs-2 a {
   text-decoration: none;
   color: black;
   font-family: var(--font-style-four);
   font-weight: bold;
 }
 
-.signs-1, .signs-2:hover{
+.signs-1,
+.signs-2:hover {
   opacity: 1em;
 }

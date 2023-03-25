@@ -47,8 +47,10 @@
     if (isset($_SESSION["customerID"])) { ?>
         <!--Do a while loop-->
         <section>
-            <div class="inner-outer-products">
-                <div class="card-container"></div>
+            <div class="container">
+                <div class="inner-outer-products">
+                    <div class="card-container"></div>
+                </div>
             </div>
         </section>
         <?php
