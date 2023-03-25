@@ -199,12 +199,14 @@
                     return
                 }
                 let qnty = $("#qnty").val()
+
+                if (qnty === 0 || qnty === '0') return;
                 //itemID is very importanting
                 console.log(qnty);
                 let data = { quantity: qnty, itemID: value }
                 $.ajax({
                     method: "POST",
-                    url: "../../server/order/add.php",
+                    url: "../../server/cart/add.php",
                     data: data,
                     success: function (response) {
                         let result = response

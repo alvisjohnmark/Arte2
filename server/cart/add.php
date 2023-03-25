@@ -1,12 +1,12 @@
 <?php if (isset($_POST['itemID'])) {
     session_start();
     include "../../classes/DB.php";
-    include "../../classes/order.php";
+    include "../../classes/cart.php";
     try {
         $quantity = $_POST["quantity"];
         $ID = $_POST["itemID"];
-        $order = new Order(isset($_SESSION["customerID"]) ? $_SESSION["customerID"] : null, $ID, $quantity);
-        $msg = $order->setItemToOrder();
+        $cart = new Cart(isset($_SESSION["customerID"]) ? $_SESSION["customerID"] : null, $ID, $quantity);
+        $msg = $cart->setItemToCart();
         echo json_encode(["data" => $msg]);
         http_response_code(200);
     } catch (\Throwable $e) {

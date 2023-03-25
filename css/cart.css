@@ -30,6 +30,7 @@ p {
 }
 
 .product-wrapper {
+  position: relative;
   padding: 20px;
   /* border-bottom: 1px solid rgb(143, 143, 143); */
   margin: 0 50px;
@@ -37,6 +38,23 @@ p {
 
 input[type="checkbox"] {
   display: none;
+}
+
+.check:checked + label svg g path {
+  stroke-dashoffset: 0;
+}
+
+svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.path1 {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: 0.5s all;
 }
 
 .product {
@@ -148,5 +166,11 @@ input[type="checkbox"] {
   }
   .totals .totals-item .totals-value {
     width: 40%;
+  }
+
+  svg {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }

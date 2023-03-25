@@ -69,12 +69,12 @@
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
-        $(document).ready(async function () {
+        $(document).ready(function () {
             $.ajax({
                 method: "GET",
                 url: "../server/wishlist/get.php?customerID=null",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
+                success: function (response) {
+                    let result = JSON.parse(response)
                     console.log(result.data);
                     result.data ? setElements(result) : console.log("No customer");
                 },
