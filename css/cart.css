@@ -126,7 +126,20 @@ svg {
   cursor: pointer;
 }
 
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 @media screen and (max-width: 990px) {
+}
+
+@media screen and (max-width: 630px) {
   .product {
     grid-template-columns: 150px minmax(75px, 100px) minmax(75px, 100px);
     grid-template-rows: 75px 75px;
@@ -144,9 +157,6 @@ svg {
   .totals .totals-item {
     width: 60%;
   }
-}
-
-@media screen and (max-width: 550px) {
   .product-wrapper {
     margin: 0;
     padding: 10px;
@@ -166,6 +176,11 @@ svg {
   }
   .totals .totals-item .totals-value {
     width: 40%;
+  }
+
+  .product .product-total p {
+    visibility: hidden;
+    display: none;
   }
 
   svg {

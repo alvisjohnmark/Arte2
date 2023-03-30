@@ -108,7 +108,7 @@
                 }
             })
 
-            function setElements(item, userLoggedIn) {
+            function setElements(item) {
                 let name = item["name"];
                 let price = item["price"];
                 let image = item["img"];
@@ -133,7 +133,7 @@
                     <p>Each pack contains <b>6</b> pieces.</p>
                     <div class="quantity">
                       <label for="qnty"><p>Quantity</p></label>
-                      <input type="number" id="qnty" name="qnty" value="0" min="0" max="${stock}">
+                      <input type="number" id="qnty" name="qnty" value="1" min="1" max="${stock}">
                       <div class="inc-dec">
                         <button id="inc"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
                         <button id="dec"><i class="fa fa-caret-down" aria-hidden="true"></i></button>

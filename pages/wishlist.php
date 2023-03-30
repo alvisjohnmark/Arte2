@@ -67,7 +67,9 @@
         echo $_SESSION["customerID"] ?>
         asd
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function () {
             $.ajax({
@@ -86,14 +88,12 @@
 
 
         $(document).on('click', "#card", function (e) {
-            console.log(e.target);
+            // console.log(e.currentTarget);
             if ($(e.target).is("#heart")) {
-                console.log($(this));
-                $($(this)).css("display", "none")
+                $(e.currentTarget).fadeOut(300)
             } else {
                 let ID = $(this).attr("data-item-id")
                 window.location.href = `http://localhost/ARTE/products/papers/paper.php?itemID=${ID}`
-
             }
         });
 

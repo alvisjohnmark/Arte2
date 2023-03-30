@@ -24,14 +24,9 @@ class Cart extends DB
         try {
             if ($prevQnty) {
                 $sum = $prevQnty + $this->quantity;
-                $stmt = $this->connect()->prepare("UPDATE `cart_items` SET `quantity`=? WHERE cartID = ? AND itemID = ?");
-                $stmt->bindParam(1, $sum, PDO::PARAM_INT);
-                $stmt->bindParam(2, $this->cartID, PDO::PARAM_INT);
-                $stmt->bindParam(3, $this->itemID, PDO::PARAM_INT);
-                $stmt->execute();
+                $this->updateCartItems($sum);
             } else {
                 if ($insertCart) {
-
                     $stmt = $this->connect()->prepare("INSERT INTO `cart`(`customerID`) VALUES (?)");
                     $stmt->bindParam(1, $this->customerId, PDO::PARAM_INT);
                     $stmt->execute();
@@ -64,6 +59,23 @@ class Cart extends DB
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }
+    }
+
+    //use to update the quantity of items in the cart
+    public function updateCartItems($sum = null)
+    {
+        if ($this->userHasCart()) {
+            $toSet = $sum ? $sum : $this->quantity;
+            $stmt = $this->connect()->prepare("UPDATE `cart_items` SET `quantity`=? WHERE cartID = ? AND itemID = ?");
+            $stmt->bindParam(1, $toSet, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->cartID, PDO::PARAM_INT);
+            $stmt->bindParam(3, $this->itemID, PDO::PARAM_INT);
+            $stmt->execute();
+        } else {
+            return "Not added";
+        }
+
+        return $this->cartID;
     }
 
     /**
@@ -100,7 +112,6 @@ class Cart extends DB
             return "Error" . $e . ".";
         }
     }
-
 
     private function userAddedSameItem()
     {

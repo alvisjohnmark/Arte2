@@ -16,7 +16,7 @@
 <body>
     <header id="header">
         <div class="brand-name">
-            <a href="../index.₱">
+            <a href="../index.php">
                 <span>Arte</span>
                 <span>crafts</span>
             </a>
@@ -27,13 +27,13 @@
                 <li><a href="./products/paper.html">About</a></li>
                 <li><a href="#">Contact</a></li>
                 <li>
-                    <a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         <span>0</span>
                     </a>
                 </li>
@@ -45,7 +45,7 @@
         <div class="container">
 
             <h1>Shopping Cart</h1>
-            <button id="deleteBtn">delete</button>
+            <button id="deleteBtn" disabled><i class="fa fa-trash" aria-hidden="true"></i></button>
 
             <div class="products">
             </div>
@@ -124,11 +124,10 @@
                 let quantity = item["quantity"];
                 let src = `../assets/images/${image}`
                 initialTotal += (price * quantity)
-                console.log(name);
                 $("section .products").append(
                     $(`<div class="line"></div>
                 <div class="product-wrapper">
-                    <input type="checkbox" class="check" id=check${itemID} name=${itemID}>
+                    <input type="checkbox" class="check" name=${itemID}>
                     <label for=${itemID} class="label">
                         <svg viewBox="0 0 100 100" height="50" width="50">
                             <rect x="30" y="20" width="50" height="50" stroke="black" fill="none" />
@@ -200,10 +199,12 @@
 
 
             $(window).on("beforeunload", function () {
-                let selected = $('.check:checked').each(function () {
-                    return ($(this).attr('name'));
-                });
+                $.each($(".product-wrapper"), function (index, el) {
+                    updateItems(el);
+                })
             })
+
+
 
             function removeItemFromDB(el) {
                 let itemID = $(el).parent().find("input").attr("name");
@@ -229,6 +230,26 @@
                 let newPrice = subTotal - pTotal;
                 $("#cart-subtotal span").text(newPrice)
                 $("#cart-total span").text(newPrice + 80)
+            }
+
+            function updateItems(el) {
+                let quantity = $(el).find(".product-quantity").find("#qnty").val()
+                let itemID = $(el).find("input").attr("name")
+                const data = { quantity: quantity, itemID: itemID }
+                console.log(itemID);
+                console.log(quantity);
+                $.ajax({
+                    method: "POST",
+                    url: "../server/cart/update.php",
+                    data: data,
+                    success: function (response) {
+                        let result = response
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr, status, error);
+                    }
+                })
             }
 
             $("#deleteBtn").click(function () {
