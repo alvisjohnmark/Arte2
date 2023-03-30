@@ -67,14 +67,16 @@
         echo $_SESSION["customerID"] ?>
         asd
     </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $(document).ready(async function () {
+        $(document).ready(function () {
             $.ajax({
                 method: "GET",
                 url: "../server/wishlist/get.php?customerID=null",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
+                success: function (response) {
+                    let result = JSON.parse(response)
                     console.log(result.data);
                     result.data ? setElements(result) : console.log("No customer");
                 },
@@ -86,14 +88,12 @@
 
 
         $(document).on('click', "#card", function (e) {
-            console.log(e.target);
+            // console.log(e.currentTarget);
             if ($(e.target).is("#heart")) {
-                console.log($(this));
-                $($(this)).css("display", "none")
+                $(e.currentTarget).fadeOut(300)
             } else {
                 let ID = $(this).attr("data-item-id")
                 window.location.href = `http://localhost/ARTE/products/papers/paper.php?itemID=${ID}`
-
             }
         });
 

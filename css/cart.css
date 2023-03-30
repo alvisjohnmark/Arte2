@@ -30,6 +30,7 @@ p {
 }
 
 .product-wrapper {
+  position: relative;
   padding: 20px;
   /* border-bottom: 1px solid rgb(143, 143, 143); */
   margin: 0 50px;
@@ -37,6 +38,23 @@ p {
 
 input[type="checkbox"] {
   display: none;
+}
+
+.check:checked + label svg g path {
+  stroke-dashoffset: 0;
+}
+
+svg {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.path1 {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: 0.5s all;
 }
 
 .product {
@@ -108,7 +126,20 @@ input[type="checkbox"] {
   cursor: pointer;
 }
 
+button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 @media screen and (max-width: 990px) {
+}
+
+@media screen and (max-width: 630px) {
   .product {
     grid-template-columns: 150px minmax(75px, 100px) minmax(75px, 100px);
     grid-template-rows: 75px 75px;
@@ -126,9 +157,6 @@ input[type="checkbox"] {
   .totals .totals-item {
     width: 60%;
   }
-}
-
-@media screen and (max-width: 550px) {
   .product-wrapper {
     margin: 0;
     padding: 10px;
@@ -148,5 +176,16 @@ input[type="checkbox"] {
   }
   .totals .totals-item .totals-value {
     width: 40%;
+  }
+
+  .product .product-total p {
+    visibility: hidden;
+    display: none;
+  }
+
+  svg {
+    position: absolute;
+    top: 10px;
+    right: 10px;
   }
 }

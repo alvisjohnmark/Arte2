@@ -1,3 +1,4 @@
+<?php echo ""; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +16,7 @@
 <body>
     <header id="header">
         <div class="brand-name">
-            <a href="../index.₱">
+            <a href="../index.php">
                 <span>Arte</span>
                 <span>crafts</span>
             </a>
@@ -26,13 +27,13 @@
                 <li><a href="./products/paper.html">About</a></li>
                 <li><a href="#">Contact</a></li>
                 <li>
-                    <a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                    <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                         <span>0</span>
                     </a>
                 </li>
@@ -44,73 +45,26 @@
         <div class="container">
 
             <h1>Shopping Cart</h1>
+            <button id="deleteBtn" disabled><i class="fa fa-trash" aria-hidden="true"></i></button>
 
             <div class="products">
-                <div class="line"></div>
-                <div class="product-wrapper">
-                    <input type="checkbox" id="check">
-                    <label for="check">
-                        <div class="product">
-                            <div class="product-image">
-                                <img src="../assets/images/Dark Academia Stationary Kit Letter Writing Dark Academia - Etsy - Copy.png"
-                                    alt="">
-                            </div>
-                            <div class="product-title">
-                                <p>Plain Recycled Paper</p>
-                            </div>
-                            <div class="product-price">
-                                <p>₱50.00</p>
-                            </div>
-                            <div class="product-quantity">
-                                <input id="qnty" type="number" min="1" value="1">
-                            </div>
-                            <div class="product-total">
-                                <p>₱<span>100</span>.00</p>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-                <div class="line"></div>
-                <div class="product-wrapper">
-                    <input type="checkbox" id="check1">
-                    <label for="check1">
-                        <div class="product">
-                            <div class="product-image">
-                                <img src="../assets/images/Dark Academia Stationary Kit Letter Writing Dark Academia - Etsy - Copy.png"
-                                    alt="">
-                            </div>
-                            <div class="product-title">
-                                <p>Plain Recycled Paper</p>
-                            </div>
-                            <div class="product-price">
-                                <p>₱50.00</p>
-                            </div>
-                            <div class="product-quantity">
-                                <input id="qnty" type="number" min="1" value="1">
-                            </div>
-                            <div class="product-total">
-                                <p>₱<span>100</span>.00</p>
-                            </div>
-                        </div>
-                    </label>
-                </div>
-                <div class="line"></div>
-                <div class="totals">
-                    <div class="totals-item">
-                        <label>Subtotal</label>
-                        <div class="totals-value" id="cart-subtotal">₱<span>100</span></div>
-                    </div>
-                    <div class="totals-item">
-                        <label>Shipping</label>
-                        <div class="totals-value" id="cart-shipping">₱15.00</div>
-                    </div>
-                    <div class="totals-item totals-item-total">
-                        <label>Grand Total</label>
-                        <div class="totals-value" id="cart-total">₱<span>100</span></div>
-                    </div>
-                </div>
-                <button class="checkout">Checkout</button>
             </div>
+            <div class="totals">
+                <div class="totals-item">
+                    <label>Subtotal</label>
+                    <div class="totals-value" id="cart-subtotal">₱<span>100</span></div>
+                </div>
+                <div class="totals-item">
+                    <label>Shipping</label>
+                    <div class="totals-value" id="cart-shipping">₱80.00</div>
+                </div>
+                <div class="totals-item totals-item-total">
+                    <label>Grand Total</label>
+                    <div class="totals-value" id="cart-total">₱<span>100</span></div>
+                </div>
+            </div>
+            <button class="checkout">Checkout</button>
+        </div>
     </section>
 
     <footer>
@@ -121,19 +75,38 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
     <script>
+
+
         $(document).on("click", ".fa-shopping-cart", function () {
             console.log("Hey");
         })
 
+        function calculateTotal(total = null) {
+            console.log("dsdsd");
+            if (!total) {
+                let subTotal = 0;
+                ($(".product-total p span").each(function (index) {
+                    subTotal += parseFloat($(this).text());
+                }));
+                $("#cart-subtotal span").text(subTotal)
+                $("#cart-total span").text(subTotal + 80)
+            } else {
+                $("#cart-subtotal span").text(total)
+                $("#cart-total span").text(total + 80)
+            }
+        }
+
         function getItems() {
             $.ajax({
                 method: "GET",
-                url: "../server/order/getAll.php",
+                url: "../server/cart/getAll.php",
                 success: async function (response) {
                     let result = await JSON.parse(response)
                     console.log(result.data);
-                    result.data ? console.log(result.data) : console.log("No customer");
+                    result.data ? setElements(result) : console.log("No customer");
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr, status, error);
@@ -141,37 +114,153 @@
             })
         }
 
+        function setElements(params) {
+            let initialTotal = 0;
+            params.data.forEach(item => {
+                let name = item["name"];
+                let price = item["price"];
+                let image = item["img"];
+                let itemID = item["itemID"];
+                let quantity = item["quantity"];
+                let src = `../assets/images/${image}`
+                initialTotal += (price * quantity)
+                $("section .products").append(
+                    $(`<div class="line"></div>
+                <div class="product-wrapper">
+                    <input type="checkbox" class="check" name=${itemID}>
+                    <label for=${itemID} class="label">
+                        <svg viewBox="0 0 100 100" height="50" width="50">
+                            <rect x="30" y="20" width="50" height="50" stroke="black" fill="none" />
+                            <g transform="translate(0,-952.36216)" id="layer1">
+                                <path id="path4146"
+                                    d="m 55,978 c -73,19 46,71 15,2 C 60,959 13,966 30,1007 c 12,30 61,13 46,-23"
+                                    fill="none" stroke="black" stroke-width="3" class="path1" />
+                            </g>
+                        </svg> </span>
+
+                        <div class="product">
+                            <div class="product-image">
+                                <img src=${src}
+                                    alt="">
+                            </div>
+                            <div class="product-title">
+                                <p>${name}</p>
+                            </div>
+                            <div class="product-price">
+                                <p>₱<span>${price}</span>.00</p>
+                            </div>
+                            <div class="product-quantity">
+                                <input id="qnty" type="number" min="1" value=${quantity}>
+                            </div>
+                            <div class="product-total">
+                                <p>₱<span>${price * quantity}</span>.00</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>`));
+            })
+            calculateTotal(initialTotal)
+        }
+
         $(document).ready(function () {
 
             getItems();
+            let checked
+            $(document).on("click", ".product-wrapper", (function (e) {
+                console.log($(e.target));
+                if ($(e.target).is("input")) {
+                    return
+                }
 
-            let s = Number($('#qnty').val())
+                let checkBox = $(this).children(".check");
+                if (checkBox.prop("checked")) {
+                    checkBox.prop("checked", false)
+                } else {
+                    checkBox.prop("checked", true)
+                }
+            }));
 
-            function calculate(e, quantity) {
-                let price = 50 //change this later
-                product = quantity * price;
+            let s = parseFloat($('#qnty').val())
+
+            function calculate(e, quantity, price) {
+                let pric = parseFloat($(price).text())
+                product = quantity * pric;
                 $(e).text(product);
             }
 
-            function calculateTotal() {
-                let subTotal = 0;
-
-                ($(".product-total p span").each(function (index) {
-                    subTotal += parseFloat($(this).text());
-                }));
-                console.log("asd");
-                $("#cart-subtotal span").text(subTotal)
-                $("#cart-total span").text(subTotal + 15)
-            }
-
             $(document).on('input', "#qnty", function (e) {
-                let quantity = Number($(e.target).val())
-                let node = ($(e.target).parent().parent().children(".product-total").children().children("span"))
-                calculate(node, quantity)
+                let quantity = parseFloat($(e.target).val())
+                let node = ($(e.target).parent().parent().find(".product-total").find("span"))
+                let price = ($(e.target).parent().parent().find(".product-price").find("span"));
+                console.log(price);
+                calculate(node, quantity, price)
                 calculateTotal()
             })
 
 
+            $(window).on("beforeunload", function () {
+                $.each($(".product-wrapper"), function (index, el) {
+                    updateItems(el);
+                })
+            })
+
+
+
+            function removeItemFromDB(el) {
+                let itemID = $(el).parent().find("input").attr("name");
+                let data = { "itemID": itemID }
+                $.ajax({
+                    method: "POST",
+                    url: "../server/cart/delete.php",
+                    data: data,
+                    success: function (response) {
+                        let result = response
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr, status, error);
+                    }
+                })
+            }
+
+            function updateTotal(el) {
+
+                let pTotal = parseFloat($(el).parent().find(".product-total").find("span").text())
+                let subTotal = parseFloat($("#cart-subtotal span").text())
+                let newPrice = subTotal - pTotal;
+                $("#cart-subtotal span").text(newPrice)
+                $("#cart-total span").text(newPrice + 80)
+            }
+
+            function updateItems(el) {
+                let quantity = $(el).find(".product-quantity").find("#qnty").val()
+                let itemID = $(el).find("input").attr("name")
+                const data = { quantity: quantity, itemID: itemID }
+                console.log(itemID);
+                console.log(quantity);
+                $.ajax({
+                    method: "POST",
+                    url: "../server/cart/update.php",
+                    data: data,
+                    success: function (response) {
+                        let result = response
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr, status, error);
+                    }
+                })
+            }
+
+            $("#deleteBtn").click(function () {
+                $(".check:checked").map(function (i, el) {
+                    $(el).parent().slideUp(300, function () {
+                        updateTotal(el)
+                        removeItemFromDB(el)
+                        $(el).parent().remove()
+                    });
+                })
+            })
         })
 
     </script>

@@ -108,7 +108,7 @@
                 }
             })
 
-            function setElements(item, userLoggedIn) {
+            function setElements(item) {
                 let name = item["name"];
                 let price = item["price"];
                 let image = item["img"];
@@ -133,7 +133,7 @@
                     <p>Each pack contains <b>6</b> pieces.</p>
                     <div class="quantity">
                       <label for="qnty"><p>Quantity</p></label>
-                      <input type="number" id="qnty" name="qnty" value="0" min="0" max="${stock}">
+                      <input type="number" id="qnty" name="qnty" value="1" min="1" max="${stock}">
                       <div class="inc-dec">
                         <button id="inc"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
                         <button id="dec"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
@@ -199,12 +199,14 @@
                     return
                 }
                 let qnty = $("#qnty").val()
+
+                if (qnty === 0 || qnty === '0') return;
                 //itemID is very importanting
                 console.log(qnty);
                 let data = { quantity: qnty, itemID: value }
                 $.ajax({
                     method: "POST",
-                    url: "../../server/order/add.php",
+                    url: "../../server/cart/add.php",
                     data: data,
                     success: function (response) {
                         let result = response
