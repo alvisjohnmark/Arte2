@@ -6,7 +6,6 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <link href="../css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/cart.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
@@ -21,7 +20,7 @@
                 <span>crafts</span>
             </a>
         </div>
-        <navbar class="nav">
+        <navbar class="nav-desk">
             <ul>
                 <li><a href="./products/paper.html">Home</a></li>
                 <li><a href="./products/paper.html">About</a></li>
@@ -122,6 +121,7 @@
                 let image = item["img"];
                 let itemID = item["itemID"];
                 let quantity = item["quantity"];
+                let kind = item["kind"]
                 let src = `../assets/images/${image}`
                 initialTotal += (price * quantity)
                 $("section .products").append(
@@ -145,6 +145,7 @@
                             </div>
                             <div class="product-title">
                                 <p>${name}</p>
+                                <p>${kind}</p>
                             </div>
                             <div class="product-price">
                                 <p>₱<span>${price}</span>.00</p>

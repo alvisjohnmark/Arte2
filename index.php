@@ -13,42 +13,63 @@
 </head>
 
 <body>
-  <header id="header">
-    <div class="brand-name">
-      <a href="./index.php">
-        <span>Arte</span>
-        <span>crafts</span>
-      </a>
+  <header>
+    <div id="header">
+      <div id="bars">
+        <button class="mobile-menu">
+          <span></span>
+        </button>
+      </div>
+      <div class="brand-name">
+        <a href="./index.php">
+          <span>Arte</span>
+          <span>crafts</span>
+        </a>
+      </div>
+      <navbar class="nav-desk">
+        <ul>
+          <li><a href="./products/paper.php">About</a></li>
+          <li><a href="#">Contact</a></li>
+          <li>
+            <a href="./pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+          </li>
+          <li>
+            <a href="./pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+              <span>0</span>
+            </a>
+          </li>
+        </ul>
+      </navbar>
     </div>
-    <navbar class="nav">
-      <ul>
-        <li><a href="./products/paper.php">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li>
-          <a href="./pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
-        </li>
-        <li>
-          <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-        </li>
-        <li>
-          <!-- <div class="tooltip"> -->
-          <a href="./pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-            <span>0</span>
-          </a>
-          <!-- <span class="tooltiptext">No items in the cart</span>
-          </div> -->
-        </li>
-      </ul>
-    </navbar>
+    <div id="mobile" class="mobile">
+      <navbar class="mobile-nav">
+        <ul>
+          <li><a href="./pages/profile.php">Profile</a></li>
+          <li><a href="./pages/wishlist.php">Wishlist</a></li>
+          <li>
+            <a href="./pages/wishlist.php">About</a>
+          </li>
+          <li>
+            <a href="./forms/login.php">Contact</a>
+          </li>
+        </ul>
+      </navbar>
+    </div>
   </header>
 
   <main>
     <section class="main-content">
       <div class="container">
-        <h1>Locally-sourced Stationaries and Handcrafts</h1>
-        <div class="image-holder">
-          <img src="./assets/images/10 Ways to Self-Care During Quarantine - Society19 - Copy.jfif"
-            alt="notebook aesthetic" />
+        <div class="hero-section">
+          <div class="content">
+            <h1>Locally-sourced Stationaries and Handcrafts</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla porttitor lobortis erat ut scelerisque.
+              Nam blandit nisl nec purus tincidunt, accumsan fermentum metus facilisis. </p>
+            <button>Shop</button>
+          </div>
         </div>
       </div>
     </section>
@@ -68,10 +89,13 @@
             </div>
           </div>
           <div class="item">
-            <div class="image">
-              <img src="./assets/images/Personalised-Journal-Notebook-Custom-Name-Journal-Custom-Etsy-Copy.png"
-                alt="" />
-            </div>
+            <a href="./products/notebooks.php">
+              <div class="image">
+
+                <img src="./assets/images/Personalised-Journal-Notebook-Custom-Name-Journal-Custom-Etsy-Copy.png"
+                  alt="" />
+              </div>
+            </a>
             <div class="text">
               <p>Recycled Notebooks</p>
             </div>
@@ -148,6 +172,11 @@
   </footer>
   <!-- <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script> -->
   <script src="./js/animation.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+    integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="./js/animation.js">
+  </script>
 </body>
 
 </html>

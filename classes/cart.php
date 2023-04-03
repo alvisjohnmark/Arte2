@@ -49,7 +49,7 @@ class Cart extends DB
     {
         try {
             $ID = $this->customerId;
-            $stmt = $this->connect()->query("SELECT item.itemID, item.name, item.stock, item.price, item.category, item.kind, item.img, cart_items.quantity FROM ((item INNER JOIN cart_items on item.itemID = cart_items.itemID) INNER JOIN cart on cart.cartID = cart_items.cartID) WHERE cart.customerID = '$ID'");
+            $stmt = $this->connect()->query("SELECT item.itemID, item.name, item.stock, item.price, item.category, item.img, cart_items.quantity, kind.kind FROM (((item INNER JOIN cart_items on item.itemID = cart_items.itemID) INNER JOIN cart on cart.cartID = cart_items.cartID)INNER JOIN kind on kind.kindID = item.kind) WHERE cart.customerID = '$ID'");
             $result = $stmt->fetchALL();
             if (isset($result)) {
                 return $result;

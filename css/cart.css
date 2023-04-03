@@ -76,6 +76,14 @@ svg {
   width: 150px;
   height: 150px;
 }
+
+.product-title p:nth-child(2) {
+  font-size: 13px;
+  color: #b38168;
+  font-family: "Josefin Sans", sans-serif;
+  margin: 3px;
+}
+
 .totals {
   font-family: "Playfair Display", serif;
   margin: 50px 0;

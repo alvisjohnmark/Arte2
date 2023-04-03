@@ -141,7 +141,6 @@
                     </div>
                   </div>
                   <button id="cart" class="add-to-cart">Add to cart</button>
-    
                 </div>
               </div>
             </div>`
@@ -157,14 +156,20 @@
 
                 $(document).on('input', "#qnty", function (e) {
                     let cur = Number($("#qnty").val())
+                    if (cur == 0) {
 
-                    if (cur > s) { //change the number here
-                        let lastDigi = Math.floor(cur / 10);
-                        $("#qnty").val(lastDigi)
-                        return
+                        ($("#qnty").val(1))
+                    } else {
+
+
+
+                        if (cur > s) { //change the number here
+                            let lastDigi = Math.floor(cur / 10);
+                            $("#qnty").val(lastDigi)
+                            return
+                        }
+                        ($("#qnty").val(cur))
                     }
-                    ($("#qnty").val(cur))
-                    $('#stock').text(s - cur)
                 })
 
                 $(document).on('click', "#inc", function () {
@@ -175,7 +180,6 @@
 
                     cur += 1
                     $("#qnty").val(cur)
-                    $('#stock').text(s - cur)
                 });
 
                 $(document).on('click', "#dec", function () {
@@ -185,7 +189,6 @@
                     }
                     cur -= 1
                     $("#qnty").val(cur)
-                    $('#stock').text(s - cur)
                 });
             }
 

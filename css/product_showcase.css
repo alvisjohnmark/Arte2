@@ -1,16 +1,5 @@
-/* :root {
-  --primary-color: #dfccc5;
-  --secondary-color: #f4eee1;
-  --icon-color: #998076;
-  --highlight-color: #c8aea4;
-  --font-style-one: "Amsterdam";
-  --font-style-two: "Catamaran", sans-serif;
-  --font-style-three: "Open Sans", sans-serif;
-  --font-style-four: "Cormorant", serif;
-} */
-
 .outer-paper-products {
-  margin: 150px 0;
+  margin: 100px 0;
 }
 
 .outer-paper-products ul {
@@ -21,14 +10,14 @@
 
 .outer-paper-products li {
   position: relative;
-  font-size: 33px;
+  font-size: 18px;
   list-style: none;
   cursor: pointer;
 }
 
 .outer-paper-products ul > span {
   margin: 0 15px;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 input[type="number"]::-webkit-inner-spin-button {

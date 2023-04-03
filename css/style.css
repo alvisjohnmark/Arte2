@@ -31,19 +31,19 @@ body {
 header {
   top: 0;
   position: fixed;
-  display: flex;
+  z-index: 9;
   width: 100%;
+}
+
+#header {
+  position: relative;
+  display: flex;
   justify-content: space-between;
   background-color: var(--secondary-color);
   align-items: center;
-  z-index: 5;
   box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+  padding: 0 45px;
 }
-
-/* .shrink {
-  font-size: 24px;
-} */
-
 img {
   object-fit: cover;
   height: 100%;
@@ -63,7 +63,6 @@ section:not(:first-child) {
 
 .brand-name {
   position: relative;
-  margin: 0 0 0 44px;
 }
 
 .brand-name span {
@@ -83,11 +82,7 @@ section:not(:first-child) {
   left: 65%;
 }
 
-.nav {
-  margin: 0 44px 0 0;
-}
-
-.nav ul {
+.nav-desk ul {
   font-family: var(--font-style-three);
   display: flex;
   list-style: none;
@@ -96,61 +91,23 @@ section:not(:first-child) {
   align-items: center;
 }
 
-.nav ul li {
+.nav-desk ul li {
   position: relative;
   padding: 0 1em;
 }
 
-.nav .fa {
+.nav-desk .fa {
   color: var(--icon-color);
   font-size: 24px;
 }
 
-.nav .fa:hover {
+.nav-desk .fa:hover {
   color: #9980765c;
 }
 
 a {
   text-decoration: none;
   color: black;
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 300px;
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
-  text-align: center;
-  padding: 5px 0;
-  /* border-radius: 6px; */
-  top: 130%;
-  left: 50%;
-  margin-left: -245px;
-
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
-
-.tooltip .tooltiptext::after {
-  content: " ";
-  position: absolute;
-  bottom: 100%; /* At the top of the tooltip */
-  left: 80%;
-  margin-left: -5px;
-  border-width: 10px;
-  border-style: solid;
-  border-color: transparent transparent rgb(255, 255, 255) transparent;
 }
 
 main {
@@ -161,4 +118,121 @@ footer {
   width: 100%;
   height: 300px;
   background-color: var(--highlight-color);
+}
+
+#bars button {
+  width: 45px;
+  background: transparent;
+  border: none;
+  height: 35px;
+  padding: 0px;
+  overflow: hidden;
+}
+
+#bars button:focus {
+  outline: none;
+}
+
+.mobile-menu span {
+  display: inline-block;
+  width: 60%;
+  height: 2px;
+  background: var(--icon-color);
+  position: relative;
+  transition: all 0.2s;
+}
+
+.mobile-menu span:before,
+.mobile-menu span:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  background: var(--icon-color);
+  height: 2px;
+  left: 0px;
+  transition: all 0.3s;
+}
+
+.mobile-menu span:before {
+  top: 10px;
+}
+
+.mobile-menu span:after {
+  bottom: 10px;
+}
+
+button.mobile-menu span.active {
+  background: #fff;
+}
+
+#bars button.mobile-menu span.active:after,
+button.mobile-menu span.active:before {
+  color: var(--icon-color);
+  top: 0px;
+  left: 0px;
+}
+
+#bars button.mobile-menu span.active:after {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+}
+
+#bars button.mobile-menu span.active:before {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+}
+
+#bars {
+  display: none;
+}
+
+#mobile {
+  display: none;
+  position: absolute;
+  width: 100vw;
+  z-index: -1;
+  transition: all 0.5s ease-in-out;
+}
+
+.mobile {
+  transform: translateY(-370px);
+}
+
+.mobile.down {
+  transform: translateY(0px);
+}
+
+.mobile-nav ul li {
+  border-bottom: 1px solid var(--icon-color);
+  text-align: center;
+  width: 100%;
+  padding: 30px;
+  background-color: white;
+}
+
+.mobile-nav ul li a {
+  font-size: 1.4rem;
+  color: var(--icon-color);
+  font-family: var(--font-style-three);
+}
+
+@media screen and (max-width: 769px) {
+  #mobile {
+    display: block;
+  }
+  #header {
+    padding: 0 24px;
+  }
+
+  #bars {
+    display: block;
+  }
+
+  .nav-desk ul li:not(:last-child) {
+    display: none;
+  }
 }

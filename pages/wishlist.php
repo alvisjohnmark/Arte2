@@ -14,33 +14,51 @@
 </head>
 
 <body>
-    <header id="header">
-        <div class="brand-name">
-            <a href="../index.php">
-                <span>Arte</span>
-                <span>crafts</span>
-            </a>
-        </div>
-        <navbar class="nav">
-            <ul>
-                <li><a href="./products/paper.php">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li>
-                    <a href="#"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="../forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <div class="tooltip">
-                        <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+    <header>
+        <div id="header">
+            <div id="bars">
+                <button class="mobile-menu">
+                    <span></span>
+                </button>
+            </div>
+            <div class="brand-name">
+                <a href="../index.php">
+                    <span>Arte</span>
+                    <span>crafts</span>
+                </a>
+            </div>
+            <navbar class="nav-desk">
+                <ul>
+                    <li><a href="./products/paper.php">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <a href="./pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="./pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
-                        <span class="tooltiptext">No items in the cart</span>
-                    </div>
-                </li>
-            </ul>
-        </navbar>
+                    </li>
+                </ul>
+            </navbar>
+        </div>
+        <div id="mobile" class="mobile">
+            <navbar class="mobile-nav">
+                <ul>
+                    <li><a href="./pages/profile.php">Profile</a></li>
+                    <li><a href="./pages/wishlist.php">Wishlist</a></li>
+                    <li>
+                        <a href="./pages/wishlist.php">About</a>
+                    </li>
+                    <li>
+                        <a href="./forms/login.php">Contact</a>
+                    </li>
+                </ul>
+            </navbar>
+        </div>
     </header>
 
     <?php
@@ -70,6 +88,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../js/animation.js"></script>
     <script>
         $(document).ready(function () {
             $.ajax({
@@ -90,7 +109,21 @@
         $(document).on('click', "#card", function (e) {
             // console.log(e.currentTarget);
             if ($(e.target).is("#heart")) {
+                const dataObj = ($(this).attr("data-item-id"));
+                data = { itemID: dataObj }
                 $(e.currentTarget).fadeOut(300)
+                $.ajax({
+                    method: "POST",
+                    url: "../server/wishlist/delete.php",
+                    data: data,
+                    success: function (response) {
+                        let result = response
+                        console.log(response);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr, status, error);
+                    }
+                })
             } else {
                 let ID = $(this).attr("data-item-id")
                 window.location.href = `http://localhost/ARTE/products/papers/paper.php?itemID=${ID}`
@@ -104,6 +137,7 @@
                 let name = item["name"];
                 let price = item["price"];
                 let itemID = item["itemID"]
+                let kind = item["kind"]
                 let src = `../assets/images/${image}`
                 $("section .inner-outer-products .card-container").append(
                     $(`<div id="card" class="card" data-item-id="${itemID}">
@@ -113,7 +147,7 @@
                 </div>
                 <div class="detail">
                     <p>${name}</p>
-                    <p>Paper</p>
+                    <p>${kind}</p>
                     <p>₱${price}.00</p>
                 </div>
             </div>`));

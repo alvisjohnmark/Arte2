@@ -1,16 +1,5 @@
-/* :root {
-  --primary-color: #dfccc5;
-  --secondary-color: #f4eee1;
-  --icon-color: #998076;
-  --highlight-color: #c8aea4;
-  --font-style-one: "Amsterdam";
-  --font-style-two: "Catamaran", sans-serif;
-  --font-style-three: "Open Sans", sans-serif;
-  --font-style-four: "Cormorant", serif;
-} */
-
 .outer-paper-products {
-  margin: 150px 0;
+  margin: 100px 0;
 }
 
 .outer-paper-products ul {
@@ -21,21 +10,23 @@
 
 .outer-paper-products li {
   position: relative;
-  font-size: 33px;
+  font-size: 18px;
   list-style: none;
   cursor: pointer;
 }
 
 .outer-paper-products ul > span {
   margin: 0 15px;
-  font-size: 22px;
+  font-size: 18px;
 }
 
 .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, max-content));
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  /* grid-template-columns: repeat(auto-fit, minmax(250px, max-content)); */
   gap: 40px;
-  justify-content: center;
+
   align-items: center;
 }
 
@@ -64,6 +55,7 @@
   margin-top: 10px;
   font-size: 20px;
 }
+
 .card .detail p:nth-child(2) {
   font-size: 13px;
   color: #b38168;
@@ -91,11 +83,6 @@
   left: -40px;
   font-size: 12px;
   width: 110px;
-
-  /* opacity: 0;
-    display: none; */
-  /* transition: all 0.3s ease-in;
-  transform: scale(1.2); */
 }
 
 .card span {
@@ -104,67 +91,3 @@
   right: 20px;
   cursor: pointer;
 }
-/* .card span:hover {
-  display: none;
-} */
-
-/* .paper-products {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
-  grid-gap: 16px;
-  justify-content: center;
-  padding: initial;
-  transition: all 0.2s ease-in;
-}
-
-.outer-paper-products {
-  margin: 150px 0;
-}
-
-.outer-paper-products ul {
-  margin: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.outer-paper-products li {
-  position: relative;
-  font-size: 33px;
-  list-style: none;
-  cursor: pointer;
-}
-
-.outer-paper-products ul > span {
-  margin: 0 15px;
-  font-size: 22px;
-}
-
-.inner-product-products {
-  position: relative;
-}
-
-.product {
-  position: relative;
-  background-color: var(--primary-color);
-  text-align: center;
-  width: 300px;
-  height: 400px;
-  border: 1px solid black;
-}
-
-.image-holder {
-  padding: 10px;
-  width: 100%;
-  height: 300px;
-}
-
-img {
-  cursor: pointer;
-}
-
-.product #PRP {
-  font-size: 20px;
-}
-.product p {
-  margin: 15px 0;
-} */
