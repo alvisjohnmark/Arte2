@@ -147,6 +147,25 @@ class Cart extends DB
             die();
         }
     }
+
+    public function getItemsQuantity()
+    {
+        try {
+            $ID = $this->customerId;
+            if ($ID) {
+                $stmt = $this->connect()->query("SELECT SUM(cart_items.quantity) FROM cart_items INNER JOIN cart on cart_items.cartID = cart.cartID WHERE cart.customerID = '$ID'");
+                $result = $stmt->fetchALL();
+                if (isset($result)) {
+                    return $result;
+                } else {
+                    return 0;
+                }
+            }
+            return 0;
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
 }
 
 

@@ -105,6 +105,16 @@ section:not(:first-child) {
   color: #9980765c;
 }
 
+.nav-desk span {
+  position: absolute;
+  right: -15px;
+  height: 26px;
+  width: 26px;
+  background-color: var(--highlight-color);
+  border-radius: 50%;
+  text-align: center;
+}
+
 a {
   text-decoration: none;
   color: black;
@@ -162,7 +172,7 @@ footer {
 }
 
 button.mobile-menu span.active {
-  background: #fff;
+  background-color: var(--secondary-color);
 }
 
 #bars button.mobile-menu span.active:after,
@@ -215,7 +225,7 @@ button.mobile-menu span.active:before {
 }
 
 .mobile-nav ul li a {
-  font-size: 1.4rem;
+  font-size: 1rem;
   color: var(--icon-color);
   font-family: var(--font-style-three);
 }

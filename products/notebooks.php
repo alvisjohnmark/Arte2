@@ -15,33 +15,51 @@
 </head>
 
 <body>
-    <header id="header">
-        <div class="brand-name">
-            <a href="../index.php">
-                <span>Arte</span>
-                <span>crafts</span>
-            </a>
-        </div>
-        <navbar class="nav">
-            <ul>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li>
-                    <a href="../pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <div class="tooltip">
-                        <a href="#"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+    <header>
+        <div id="header">
+            <div id="bars">
+                <button class="mobile-menu">
+                    <span></span>
+                </button>
+            </div>
+            <div class="brand-name">
+                <a href="../index.php">
+                    <span>Arte</span>
+                    <span>crafts</span>
+                </a>
+            </div>
+            <navbar class="nav-desk">
+                <ul>
+                    <li><a href="./products/paper.php">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <a href="../pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="../forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="../pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
-                        <span class="tooltiptext">No items in the cart</span>
-                    </div>
-                </li>
-            </ul>
-        </navbar>
+                    </li>
+                </ul>
+            </navbar>
+        </div>
+        <div id="mobile" class="mobile">
+            <navbar class="mobile-nav">
+                <ul>
+                    <li><a href="../pages/profile.php">Profile</a></li>
+                    <li><a href="../pages/wishlist.php">Wishlist</a></li>
+                    <li>
+                        <a href="../pages/wishlist.php">About</a>
+                    </li>
+                    <li>
+                        <a href="../forms/login.php">Contact</a>
+                    </li>
+                </ul>
+            </navbar>
+        </div>
     </header>
     <main>
         <section class="paper">
@@ -67,6 +85,24 @@
     <footer></footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $.ajax({
+                method: "GET",
+                url: "../server/cart/getItemsQnty.php",
+                success: async function (response) {
+                    let result = await JSON.parse(response)
+                    if (result.data[0][0]) {
+                        $(".nav-desk").find("span").text(result.data[0][0])
+                    } else {
+                        console.log("No User");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        });
 
         $(document).ready(async function () {
             $.ajax({
@@ -81,6 +117,8 @@
                 }
             })
         });
+
+
 
         function setElements(params) {
 

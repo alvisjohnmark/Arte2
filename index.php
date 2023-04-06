@@ -171,11 +171,32 @@
     ?>
   </footer>
   <!-- <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script> -->
-  <script src="./js/animation.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
     integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./js/animation.js">
+  </script>
+  <script>
+    $(document).ready(function () {
+      $.ajax({
+        method: "GET",
+        url: "./server/cart/getItemsQnty.php",
+        success: async function (response) {
+          let result = await JSON.parse(response)
+          if (result.data[0][0]) {
+
+            $(".nav-desk").find("span").text(result.data[0][0])
+          } else {
+            console.log("No User");
+          }
+
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr, status, error);
+        }
+      })
+    });
+
   </script>
 </body>
 

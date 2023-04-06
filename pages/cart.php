@@ -13,45 +13,75 @@
 </head>
 
 <body>
-    <header id="header">
-        <div class="brand-name">
-            <a href="../index.php">
-                <span>Arte</span>
-                <span>crafts</span>
-            </a>
+    <header>
+        <div id="header">
+            <div id="bars">
+                <button class="mobile-menu">
+                    <span></span>
+                </button>
+            </div>
+            <div class="brand-name">
+                <a href="../index.php">
+                    <span>Arte</span>
+                    <span>crafts</span>
+                </a>
+            </div>
+            <navbar class="nav-desk">
+                <ul>
+                    <li><a href="./products/paper.php">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li>
+                        <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                    </li>
+                    <li>
+                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            <span>0</span>
+                        </a>
+                    </li>
+                </ul>
+            </navbar>
         </div>
-        <navbar class="nav-desk">
-            <ul>
-                <li><a href="./products/paper.html">Home</a></li>
-                <li><a href="./products/paper.html">About</a></li>
-                <li><a href="#">Contact</a></li>
-                <li>
-                    <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                </li>
-                <li>
-                    <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                        <span>0</span>
-                    </a>
-                </li>
-            </ul>
-        </navbar>
+        <div id="mobile" class="mobile">
+            <navbar class="mobile-nav">
+                <ul>
+                    <li><a href="./profile.php">Profile</a></li>
+                    <li><a href="./wishlist.php">Wishlist</a></li>
+                    <li>
+                        <a href="./wishlist.php">About</a>
+                    </li>
+                    <li>
+                        <a href="../forms/login.php">Contact</a>
+                    </li>
+                </ul>
+            </navbar>
+        </div>
     </header>
 
     <section>
         <div class="container">
 
             <h1>Shopping Cart</h1>
-            <button id="deleteBtn" disabled><i class="fa fa-trash" aria-hidden="true"></i></button>
+            <div class="delete">
+                <div class="delete-button">
+                    <button id="deleteBtn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                </div>
+                <div class="delete-confirmation">
+                    <div style="display: flex;">
+                        <button>Confirm</button>
+                        <button>Cancel</button>
+                    </div>
+                </div>
+            </div>
 
             <div class="products">
             </div>
             <div class="totals">
                 <div class="totals-item">
                     <label>Subtotal</label>
-                    <div class="totals-value" id="cart-subtotal">₱<span>100</span></div>
+                    <div class="totals-value" id="cart-subtotal">₱<span>100</span>.00</div>
                 </div>
                 <div class="totals-item">
                     <label>Shipping</label>
@@ -59,7 +89,7 @@
                 </div>
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
-                    <div class="totals-value" id="cart-total">₱<span>100</span></div>
+                    <div class="totals-value" id="cart-total">₱<span>100</span>.00</div>
                 </div>
             </div>
             <button class="checkout">Checkout</button>
@@ -78,10 +108,25 @@
 
     <script>
 
+        $(document).ready(function () {
+            $.ajax({
+                method: "GET",
+                url: "../server/cart/getItemsQnty.php",
+                success: async function (response) {
+                    let result = await JSON.parse(response)
+                    if (result.data[0][0]) {
+                        $(".nav-desk").find("span").text(result.data[0][0])
+                    } else {
+                        console.log("No User");
+                    }
 
-        $(document).on("click", ".fa-shopping-cart", function () {
-            console.log("Hey");
-        })
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        });
+
 
         function calculateTotal(total = null) {
             console.log("dsdsd");
@@ -151,7 +196,7 @@
                                 <p>₱<span>${price}</span>.00</p>
                             </div>
                             <div class="product-quantity">
-                                <input id="qnty" type="number" min="1" value=${quantity}>
+                                <input class="qnty" type="number" min="1" value=${quantity}>
                             </div>
                             <div class="product-total">
                                 <p>₱<span>${price * quantity}</span>.00</p>
@@ -179,9 +224,13 @@
                 } else {
                     checkBox.prop("checked", true)
                 }
+                if ($(".check:checked").length <= 0) {
+                    console.log("Zero");
+                    $(".delete-confirmation").removeClass("expand")
+                }
             }));
 
-            let s = parseFloat($('#qnty').val())
+            let s = parseFloat($('.qnty').val())
 
             function calculate(e, quantity, price) {
                 let pric = parseFloat($(price).text())
@@ -189,15 +238,24 @@
                 $(e).text(product);
             }
 
-            $(document).on('input', "#qnty", function (e) {
+            $(document).on('input', ".qnty", function (e) {
                 let quantity = parseFloat($(e.target).val())
                 let node = ($(e.target).parent().parent().find(".product-total").find("span"))
                 let price = ($(e.target).parent().parent().find(".product-price").find("span"));
-                console.log(price);
+
+                let sum = quantitySum()
+                $(".nav-desk").find("span").text(sum)
                 calculate(node, quantity, price)
                 calculateTotal()
             })
 
+            function quantitySum() {
+                let sum = 0
+                $('.qnty').each(function () {
+                    sum += parseFloat($(this).val())
+                })
+                return sum
+            }
 
             $(window).on("beforeunload", function () {
                 $.each($(".product-wrapper"), function (index, el) {
@@ -234,7 +292,7 @@
             }
 
             function updateItems(el) {
-                let quantity = $(el).find(".product-quantity").find("#qnty").val()
+                let quantity = $(el).find(".product-quantity").find(".qnty").val()
                 let itemID = $(el).find("input").attr("name")
                 const data = { quantity: quantity, itemID: itemID }
                 console.log(itemID);
@@ -253,7 +311,8 @@
                 })
             }
 
-            $("#deleteBtn").click(function () {
+
+            $(document).on("click", ".delete-confirmation button:first-child", function () {
                 $(".check:checked").map(function (i, el) {
                     $(el).parent().slideUp(300, function () {
                         updateTotal(el)
@@ -261,6 +320,22 @@
                         $(el).parent().remove()
                     });
                 })
+                $(".delete-confirmation").removeClass("expand")
+            })
+            $(document).on("click", ".delete-confirmation button:last-child", function () {
+                $(".delete-confirmation").removeClass("expand")
+                $(".check:checked").map(function (i, el) {
+                    $(el).prop("checked", false)
+                })
+            })
+
+
+            $(".delete").click(function () {
+                if ($(".check:checked").length <= 0) {
+                    console.log("Select an item");
+                    return
+                }
+                $(".delete-confirmation").addClass("expand")
             })
         })
 

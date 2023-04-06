@@ -22,7 +22,7 @@
                 </button>
             </div>
             <div class="brand-name">
-                <a href="../index.php">
+                <a href="./index.php">
                     <span>Arte</span>
                     <span>crafts</span>
                 </a>
@@ -32,13 +32,13 @@
                     <li><a href="./products/paper.php">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li>
-                        <a href="./pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                        <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
                     </li>
@@ -60,7 +60,6 @@
             </navbar>
         </div>
     </header>
-
     <?php
     if (isset($_SESSION["customerID"])) { ?>
         <!--Do a while loop-->
@@ -90,6 +89,26 @@
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../js/animation.js"></script>
     <script>
+
+
+        $(document).ready(function () {
+            $.ajax({
+                method: "GET",
+                url: "../server/cart/getItemsQnty.php",
+                success: async function (response) {
+                    let result = await JSON.parse(response)
+                    if (rresult.data[0][0]) {
+                        $(".nav-desk").find("span").text(result.data[0][0])
+                    } else {
+                        console.log("No User");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        });
         $(document).ready(function () {
             $.ajax({
                 method: "GET",

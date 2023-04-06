@@ -134,14 +134,80 @@ svg {
   cursor: pointer;
 }
 
-button {
-  background: none;
-  color: inherit;
-  border: none;
-  padding: 0;
-  font: inherit;
+.delete {
+  position: absolute;
+  padding: 10px 0;
+  top: -20px;
+  display: flex;
+  align-items: center;
+  right: 20px;
+}
+
+#deleteBtn {
+  color: var(--icon-color);
+  background-color: var(--secondary-color);
+}
+
+.delete-button {
+  transform: translateX(15px);
+  float: left;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  transition: 0.4s;
+}
+
+.delete-button button {
   cursor: pointer;
-  outline: inherit;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  color: inherit;
+  border: 1px solid black;
+}
+
+.delete-confirmation {
+  border: none;
+  background: none;
+  outline: none;
+  float: left;
+  padding: 0;
+  color: white;
+  font-size: 16px;
+  transition: 0.4s;
+  line-height: 40px;
+  width: 0px;
+  overflow-x: hidden;
+}
+
+.expand {
+  width: 150px;
+}
+
+.delete-confirmation button {
+  cursor: pointer;
+  height: 30px;
+}
+
+.delete-confirmation button:hover:first-child,
+.delete-confirmation button:hover:last-child,
+#deleteBtn:hover {
+  background-color: var(--primary-color);
+}
+
+.delete-confirmation button:first-child {
+  background-color: var(--secondary-color);
+  color: green;
+  padding-left: 5px;
+  width: 80px;
+  border: 1px solid black;
+}
+.delete-confirmation button:last-child {
+  background-color: var(--secondary-color);
+  color: red;
+  width: 70px;
+  border: 1px solid black;
+  border-radius: 0 20px 20px 0;
 }
 
 @media screen and (max-width: 990px) {
