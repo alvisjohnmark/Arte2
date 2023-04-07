@@ -23,7 +23,7 @@
         </button>
       </div>
       <div class="brand-name">
-        <a href="./index.php">
+        <a href="../index.php">
           <span>Arte</span>
           <span>crafts</span>
         </a>

@@ -128,10 +128,17 @@ svg {
   font-family: "Josefin Sans", sans-serif;
   margin-right: 20px;
 }
-
 .checkout:hover {
+}
+
+.checkout:hover,
+button:disabled,
+button[disabled] {
   background-color: var(--primary-color);
-  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 .delete {

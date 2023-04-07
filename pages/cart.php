@@ -108,7 +108,27 @@
 
     <script>
 
+        function notify(message) {
+            // if ($(".notify") >= 1) return
+            let div = document.createElement("div");
+            div.innerHTML = message
+            div.classList.add("notify")
+            $("body").prepend(div);
+
+            setTimeout(function () {
+                div.remove();
+            }, 2000)
+        }
+
         $(document).ready(function () {
+
+            const params = new Proxy(new URLSearchParams(window.location.search), {
+                get: (searchParams, prop) => searchParams.get(prop),
+            });
+            let value = params.itemID; // "some_value"
+            if (params.delete == "True") {
+                notify("Items Deleted!");
+            }
             $.ajax({
                 method: "GET",
                 url: "../server/cart/getItemsQnty.php",
@@ -166,6 +186,7 @@
                 let image = item["img"];
                 let itemID = item["itemID"];
                 let quantity = item["quantity"];
+                let stock = item["stock"];
                 let kind = item["kind"]
                 let src = `../assets/images/${image}`
                 initialTotal += (price * quantity)
@@ -196,7 +217,7 @@
                                 <p>₱<span>${price}</span>.00</p>
                             </div>
                             <div class="product-quantity">
-                                <input class="qnty" type="number" min="1" value=${quantity}>
+                                <input class="qnty" type="number" min="1" max=${stock} value=${quantity}>
                             </div>
                             <div class="product-total">
                                 <p>₱<span>${price * quantity}</span>.00</p>
@@ -207,6 +228,27 @@
             })
             calculateTotal(initialTotal)
         }
+
+        //Checkout
+        $(".checkout").click(function () {
+            if ($(".check:checked").length > 0) {
+                console.log("Noway");
+                return
+            }
+
+            $.ajax({
+                method: "GET",
+                url: "../server/cart/placed.php",
+                success: function (response) {
+                    // let result = JSON.parse(response);
+                    console.log(response);
+                    // result.data ? console.log("Success") : console.log("Failure");
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        })
 
         $(document).ready(function () {
 
@@ -227,6 +269,9 @@
                 if ($(".check:checked").length <= 0) {
                     console.log("Zero");
                     $(".delete-confirmation").removeClass("expand")
+                    $(".checkout").prop("disabled", false)
+                } else {
+                    $(".checkout").prop("disabled", true)
                 }
             }));
 
@@ -238,6 +283,8 @@
                 $(e).text(product);
             }
 
+            let time_out_running = null;
+
             $(document).on('input', ".qnty", function (e) {
                 let quantity = parseFloat($(e.target).val())
                 let node = ($(e.target).parent().parent().find(".product-total").find("span"))
@@ -247,6 +294,19 @@
                 $(".nav-desk").find("span").text(sum)
                 calculate(node, quantity, price)
                 calculateTotal()
+
+                if (time_out_running) {
+                    clearTimeout(time_out_running);
+                    time_out_running = null;
+                }
+
+                if (!time_out_running) {
+                    time_out_running = setTimeout(function () {
+                        $.each($(".product-wrapper"), function (index, el) {
+                            updateItems(el);
+                        })
+                    }, 2000)
+                }
             })
 
             function quantitySum() {
@@ -257,11 +317,11 @@
                 return sum
             }
 
-            $(window).on("beforeunload", function () {
-                $.each($(".product-wrapper"), function (index, el) {
-                    updateItems(el);
-                })
-            })
+            // $(window).on("beforeunload", function () {
+            //     $.each($(".product-wrapper"), function (index, el) {
+            //         updateItems(el);
+            //     })
+            // })
 
 
 
@@ -283,7 +343,6 @@
             }
 
             function updateTotal(el) {
-
                 let pTotal = parseFloat($(el).parent().find(".product-total").find("span").text())
                 let subTotal = parseFloat($("#cart-subtotal span").text())
                 let newPrice = subTotal - pTotal;
@@ -295,8 +354,6 @@
                 let quantity = $(el).find(".product-quantity").find(".qnty").val()
                 let itemID = $(el).find("input").attr("name")
                 const data = { quantity: quantity, itemID: itemID }
-                console.log(itemID);
-                console.log(quantity);
                 $.ajax({
                     method: "POST",
                     url: "../server/cart/update.php",
@@ -321,18 +378,31 @@
                     });
                 })
                 $(".delete-confirmation").removeClass("expand")
+
+                setTimeout(function () {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    urlParams.set('delete', 'True');
+                    window.location.search = urlParams; // then reload the page.(3)
+                }, 500);
             })
+
+
             $(document).on("click", ".delete-confirmation button:last-child", function () {
                 $(".delete-confirmation").removeClass("expand")
                 $(".check:checked").map(function (i, el) {
                     $(el).prop("checked", false)
                 })
+                $(".checkout").prop("disabled", false)
             })
+
+
+
 
 
             $(".delete").click(function () {
                 if ($(".check:checked").length <= 0) {
                     console.log("Select an item");
+                    notify("Please select item(s)")
                     return
                 }
                 $(".delete-confirmation").addClass("expand")
