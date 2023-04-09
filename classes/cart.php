@@ -5,6 +5,7 @@ class Cart extends DB
     private $itemID;
     private $quantity;
     private $cartID = 0;
+    private $stock = null;
 
     private $prevQnty;
     public function __construct($customerId, $itemID = null, $quantity = null)
@@ -21,9 +22,13 @@ class Cart extends DB
         }
         $insertCart = $this->insertCart();
         $prevQnty = $this->userAddedSameItem();
+        $this->getItemStock(); //set the number of stock of the item
         try {
             if ($prevQnty) {
                 $sum = $prevQnty + $this->quantity;
+                if ($sum > $this->stock) {
+                    $sum = $this->stock;
+                }
                 $this->updateCartItems($sum);
             } else {
                 if ($insertCart) {
@@ -42,6 +47,23 @@ class Cart extends DB
         } catch (PDOException $e) {
             return "Error" . $e . ".";
             // die();
+        }
+    }
+
+    private function getItemStock()
+    {
+        try {
+            $ID = $this->itemID;
+            $stmt = $this->connect()->query("SELECT item.stock FROM `item` WHERE itemID = '$ID'");
+            $result = $stmt->fetchALL();
+            if (isset($result[0]["stock"])) {
+                $this->stock = $result[0][0];
+                return;
+            } else {
+                return false;
+            }
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
         }
     }
 

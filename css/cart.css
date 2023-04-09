@@ -40,7 +40,8 @@ input[type="checkbox"] {
   display: none;
 }
 
-.check:checked + label svg g path {
+.check:checked + label svg g path,
+.select-all:checked + label svg g path {
   stroke-dashoffset: 0;
 }
 
@@ -49,6 +50,22 @@ svg {
   top: 20px;
   right: 20px;
   cursor: pointer;
+}
+.label-select-all {
+  display: flex;
+  align-items: center;
+}
+
+.label-select-all,
+.label-select-all svg {
+  position: relative;
+  margin-bottom: 5px;
+  top: 3px;
+  right: 0;
+}
+
+.select-all:checked + svg g path {
+  stroke-dashoffset: 0;
 }
 
 .path1 {
@@ -128,8 +145,6 @@ svg {
   font-family: "Josefin Sans", sans-serif;
   margin-right: 20px;
 }
-.checkout:hover {
-}
 
 .checkout:hover,
 button:disabled,
@@ -144,7 +159,7 @@ button:disabled {
 .delete {
   position: absolute;
   padding: 10px 0;
-  top: -20px;
+  top: 25px;
   display: flex;
   align-items: center;
   right: 20px;

@@ -62,8 +62,20 @@
 
     <section>
         <div class="container">
+            <h1>My shopping cart</h1>
+            <input type="checkbox" class="check" name=select-all>
+            <label for=select-all class="label-select-all">
+                <svg viewBox="0 0 100 100" height="50" width="50" class="select-all-svg">
+                    <rect x="30" y="20" width="50" height="50" stroke="black" fill="none" />
+                    <g transform="translate(0,-952.36216)" id="layer1">
+                        <path id="path4146"
+                            d="m 55,978 c -73,19 46,71 15,2 C 60,959 13,966 30,1007 c 12,30 61,13 46,-23" fill="none"
+                            stroke="black" stroke-width="3" class="path1" />
+                    </g>
+                </svg>
+                <span>Select All</span>
+            </label>
 
-            <h1>Shopping Cart</h1>
             <div class="delete">
                 <div class="delete-button">
                     <button id="deleteBtn"><i class="fa fa-trash" aria-hidden="true"></i></button>
@@ -126,9 +138,12 @@
                 get: (searchParams, prop) => searchParams.get(prop),
             });
             let value = params.itemID; // "some_value"
-            if (params.delete == "True") {
+            if (sessionStorage.getItem("add") == "True") {
                 notify("Items Deleted!");
             }
+            sessionStorage.setItem("add", "False") //stores in a session
+
+
             $.ajax({
                 method: "GET",
                 url: "../server/cart/getItemsQnty.php",
@@ -217,7 +232,7 @@
                                 <p>₱<span>${price}</span>.00</p>
                             </div>
                             <div class="product-quantity">
-                                <input class="qnty" type="number" min="1" max=${stock} value=${quantity}>
+                                <input class="qnty" type="number" min="1" max=${stock} value=${quantity > stock ? stock : quantity}>
                             </div>
                             <div class="product-total">
                                 <p>₱<span>${price * quantity}</span>.00</p>
@@ -275,6 +290,19 @@
                 }
             }));
 
+            $(".select-all-svg").click(function () {
+
+                let checkBoxes = $(".check");
+                if (checkBoxes.prop("checked")) {
+                    checkBoxes.prop("checked", false)
+                    $(".checkout").prop("disabled", false)
+                } else {
+                    checkBoxes.prop("checked", true)
+                    $(".checkout").prop("disabled", true)
+                }
+
+            })
+
             let s = parseFloat($('.qnty').val())
 
             function calculate(e, quantity, price) {
@@ -310,6 +338,7 @@
             })
 
             function quantitySum() {
+                console.log("d");
                 let sum = 0
                 $('.qnty').each(function () {
                     sum += parseFloat($(this).val())
@@ -380,9 +409,8 @@
                 $(".delete-confirmation").removeClass("expand")
 
                 setTimeout(function () {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    urlParams.set('delete', 'True');
-                    window.location.search = urlParams; // then reload the page.(3)
+                    sessionStorage.setItem("add", "True");
+                    location.reload()
                 }, 500);
             })
 

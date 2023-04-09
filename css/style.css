@@ -232,6 +232,7 @@ button.mobile-menu span.active:before {
 
 .notify {
   border: 1px solid black;
+  background-color: var(--secondary-color);
   width: fit-content;
   position: absolute;
   position: fixed;
