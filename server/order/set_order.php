@@ -1,10 +1,11 @@
-<?php if (isset($_GET)) {
+<?php if (isset($_POST['items'])) {
     session_start();
     include "../../classes/DB.php";
-    include "../../classes/cart.php";
+    include "../../classes/order.php";
     try {
-        $cart = new Cart(isset($_SESSION["customerID"]) ? $_SESSION["customerID"] : null);
-        $msg = $cart->placeorder();
+        $items = $_POST["items"];
+        $order = new Order(isset($_SESSION["customerID"]) ? $_SESSION["customerID"] : null, $items);
+        $msg = $order->setOrder();
         echo json_encode(["data" => $msg]);
         http_response_code(200);
     } catch (\Throwable $e) {

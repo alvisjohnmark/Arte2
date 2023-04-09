@@ -93,7 +93,7 @@
             <div class="totals">
                 <div class="totals-item">
                     <label>Subtotal</label>
-                    <div class="totals-value" id="cart-subtotal">₱<span>100</span>.00</div>
+                    <div class="totals-value" id="cart-subtotal">₱<span>00</span>.00</div>
                 </div>
                 <div class="totals-item">
                     <label>Shipping</label>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
-                    <div class="totals-value" id="cart-total">₱<span>100</span>.00</div>
+                    <div class="totals-value" id="cart-total">₱<span>00</span>.00</div>
                 </div>
             </div>
             <button class="checkout">Checkout</button>
@@ -134,6 +134,18 @@
 
         $(document).ready(function () {
 
+            $.ajax({
+                method: "GET",
+                url: "../server/order/get_orders.php",
+                success: async function (response) {
+                    let result = await JSON.parse(response)
+                    console.log(result.data);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
@@ -163,20 +175,7 @@
         });
 
 
-        function calculateTotal(total = null) {
-            console.log("dsdsd");
-            if (!total) {
-                let subTotal = 0;
-                ($(".product-total p span").each(function (index) {
-                    subTotal += parseFloat($(this).text());
-                }));
-                $("#cart-subtotal span").text(subTotal)
-                $("#cart-total span").text(subTotal + 80)
-            } else {
-                $("#cart-subtotal span").text(total)
-                $("#cart-total span").text(total + 80)
-            }
-        }
+
 
         function getItems() {
             $.ajax({
@@ -204,7 +203,6 @@
                 let stock = item["stock"];
                 let kind = item["kind"]
                 let src = `../assets/images/${image}`
-                initialTotal += (price * quantity)
                 $("section .products").append(
                     $(`<div class="line"></div>
                 <div class="product-wrapper">
@@ -241,36 +239,16 @@
                     </label>
                 </div>`));
             })
-            calculateTotal(initialTotal)
         }
 
-        //Checkout
-        $(".checkout").click(function () {
-            if ($(".check:checked").length > 0) {
-                console.log("Noway");
-                return
-            }
-
-            $.ajax({
-                method: "GET",
-                url: "../server/cart/placed.php",
-                success: function (response) {
-                    // let result = JSON.parse(response);
-                    console.log(response);
-                    // result.data ? console.log("Success") : console.log("Failure");
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr, status, error);
-                }
-            })
-        })
 
         $(document).ready(function () {
 
+
             getItems();
             let checked
+
             $(document).on("click", ".product-wrapper", (function (e) {
-                console.log($(e.target));
                 if ($(e.target).is("input")) {
                     return
                 }
@@ -282,28 +260,33 @@
                     checkBox.prop("checked", true)
                 }
                 if ($(".check:checked").length <= 0) {
-                    console.log("Zero");
                     $(".delete-confirmation").removeClass("expand")
-                    $(".checkout").prop("disabled", false)
-                } else {
-                    $(".checkout").prop("disabled", true)
                 }
+                calculateTotal()
             }));
 
-            $(".select-all-svg").click(function () {
 
-                let checkBoxes = $(".check");
-                if (checkBoxes.prop("checked")) {
-                    checkBoxes.prop("checked", false)
-                    $(".checkout").prop("disabled", false)
-                } else {
-                    checkBoxes.prop("checked", true)
-                    $(".checkout").prop("disabled", true)
-                }
-
-            })
 
             let s = parseFloat($('.qnty').val())
+
+            function calculateTotal(all = null) {
+                let total = 0
+                $(".check:checked").each(function (index) {
+                    if (all && index == 0) {
+                        return
+                    }
+                    if ($(this).parent().find(".product-total").find("span").length > 1) return;
+                    let val = parseFloat($(this).parent().find(".product-total").find("span").text())
+                    total += val
+                })
+                if (total) {
+                    $("#cart-subtotal span").text(total)
+                    $("#cart-total span").text(total + 80)
+                } else {
+                    $("#cart-subtotal span").text(00)
+                    $("#cart-total span").text(00)
+                }
+            }
 
             function calculate(e, quantity, price) {
                 let pric = parseFloat($(price).text())
@@ -371,14 +354,6 @@
                 })
             }
 
-            function updateTotal(el) {
-                let pTotal = parseFloat($(el).parent().find(".product-total").find("span").text())
-                let subTotal = parseFloat($("#cart-subtotal span").text())
-                let newPrice = subTotal - pTotal;
-                $("#cart-subtotal span").text(newPrice)
-                $("#cart-total span").text(newPrice + 80)
-            }
-
             function updateItems(el) {
                 let quantity = $(el).find(".product-quantity").find(".qnty").val()
                 let itemID = $(el).find("input").attr("name")
@@ -397,11 +372,24 @@
                 })
             }
 
+            $(".select-all-svg").click(function () {
+                //TODO: check the Select all checkbox when all products are selected
+
+                let checkBoxes = $(".check");
+                if (checkBoxes.prop("checked")) {
+                    checkBoxes.prop("checked", false)
+                } else {
+                    checkBoxes.prop("checked", true)
+                }
+                calculateTotal(true)
+
+            })
+
 
             $(document).on("click", ".delete-confirmation button:first-child", function () {
                 $(".check:checked").map(function (i, el) {
                     $(el).parent().slideUp(300, function () {
-                        updateTotal(el)
+
                         removeItemFromDB(el)
                         $(el).parent().remove()
                     });
@@ -420,11 +408,9 @@
                 $(".check:checked").map(function (i, el) {
                     $(el).prop("checked", false)
                 })
-                $(".checkout").prop("disabled", false)
+                calculateTotal()
+
             })
-
-
-
 
 
             $(".delete").click(function () {
@@ -434,6 +420,35 @@
                     return
                 }
                 $(".delete-confirmation").addClass("expand")
+            })
+
+            //Checkout
+            $(".checkout").click(function () {
+                if ($(".check:checked").length <= 0) {
+                    console.log("Noway");
+                    notify("Please select item(s)")
+                    return
+                }
+                let items = []
+
+                $(".check:checked").each(function () {
+                    items.push(parseInt($(this).attr("name")))
+                })
+                let data = { "items": items }
+
+                $.ajax({
+                    method: "POST",
+                    url: "../server/order/set_order.php",
+                    data: data,
+                    success: function (response) {
+                        // let result = JSON.parse(response);
+                        console.log(response);
+                        // result.data ? console.log("Success") : console.log("Failure");
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr, status, error);
+                    }
+                })
             })
         })
 
