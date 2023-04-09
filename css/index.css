@@ -88,9 +88,9 @@ h2 {
 
 .items {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(185px, max-content));
   justify-content: center;
   grid-gap: 80px;
-  grid-template-columns: repeat(auto-fit, minmax(185px, max-content));
   padding: 0 20px;
 }
 

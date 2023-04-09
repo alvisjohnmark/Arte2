@@ -106,11 +106,28 @@
             })
         });
 
+        function notify() {
+            let div = document.createElement("div");
+            div.innerHTML = "Item Added!"
+            div.classList.add("notify")
+            $("body").prepend(div);
+
+            setTimeout(function () {
+                if ($('.notify').length > 0) {
+                    div.remove();
+                }
+            }, 2000)
+        }
+
         $(document).ready(function () {
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
             let value = params.itemID; // "some_value"
+            if (sessionStorage.getItem("add") == "True") {
+                notify();
+            }
+            sessionStorage.setItem("add", "False")
 
             $.ajax({
                 method: "GET",
@@ -156,11 +173,11 @@
               </div>
               <div class="item-detail">
                 <p>${name}</p>
-                <p>₱${price}.00</p>
+                <div style="display:flex;"><p>₱${price}.00 </p><div class="wishlist" data-beat=${true}><i class="fa fa-heart wishlist-add" aria-hidden="true"></i>
+                </div></div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
                   et dolore magna aliqua.</p>
-                <div class="wishlist" data-beat=${true}><i class="fa fa-heart wishlist-add" aria-hidden="true"></i>
-                </div>
+                
                 <div class="lower">
                   <div class="quantity-wrapper">
                     <p>Stocks remaining: <b id=stock>${stock}</b>.</p>
@@ -248,16 +265,26 @@
                     success: function (response) {
                         let result = response
                         console.log(result);
-                        // window.location.reload();
+                        // const urlParams = new URLSearchParams(window.location.search);
+                        // urlParams.set('add', 'True');
+                        // window.location.search = urlParams;
+                        sessionStorage.setItem("add", "True");
+                        location.reload()
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr, status, error);
                     }
                 })
 
-
             });
+
+
+
+
+
         }
+
+
 
         //WISHLIST
         function wishlist(value, userLoggedIn) {
