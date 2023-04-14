@@ -11,7 +11,6 @@ class Wishlist extends DB
 
     public function setToWishlist()
     {
-
         if ($this->itemExist())
             return;
         try {
@@ -24,7 +23,6 @@ class Wishlist extends DB
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }
-
     }
 
     public function deleteFromWishlist()

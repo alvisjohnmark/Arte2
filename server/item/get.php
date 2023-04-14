@@ -7,7 +7,7 @@ if (isset($_GET["itemID"])) {
 
 
     try {
-        $item = new Item($_GET["itemID"]);
+        $item = new Item($ID = $_GET["itemID"]);
         $msg = $item->getItem();
         echo json_encode(["data" => $msg]);
         http_response_code(200);

@@ -1,4 +1,4 @@
-<!-- <?php session_start(); ?> -->
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,7 +34,7 @@
             <a href="./pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
           </li>
           <li>
-            <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+            <a href="./pages/profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
           </li>
           <li>
             <a href="./pages/cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -161,6 +161,7 @@
   <footer>
     asd
     <?php
+    echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
 
     if (isset($_SESSION["customerID"])) {
       echo $_SESSION["customerID"];

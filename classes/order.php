@@ -5,11 +5,13 @@ class Order extends DB
     private $customerId;
     private $items;
     private $orderID;
+    private $cost;
 
-    public function __construct($customerId, $items = NULL)
+    public function __construct($customerId, $items = NULL, $cost = 0)
     {
         $this->customerId = $customerId;
         $this->items = $items;
+        $this->cost = $cost;
     }
 
     private function getInsertedOrderID()
@@ -43,8 +45,9 @@ class Order extends DB
     public function setOrder()
     {
         try {
-            $stmt = $this->connect()->prepare("INSERT INTO `placedorder`(`customerID`, `status`, `time_placed`) VALUES (?,1, NOW());");
+            $stmt = $this->connect()->prepare("INSERT INTO `placedorder`(`customerID`, `status`, `time_placed`, `cost`) VALUES (?,1, NOW(), ?);");
             $stmt->bindParam(1, $this->customerId, PDO::PARAM_INT);
+            $stmt->bindParam(2, $this->cost, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 $this->orderID = $this->getInsertedOrderID();
                 foreach ($this->items as $item) {
@@ -59,12 +62,12 @@ class Order extends DB
         }
     }
 
-    private function getOderIds()
+    public function getOrders()
     {
         try {
             $ID = $this->customerId;
             if ($ID) {
-                $stmt = $this->connect()->query("SELECT `orderID` FROM `placedorder` WHERE customerID = '$ID'");
+                $stmt = $this->connect()->query("SELECT `orderID`, `time_placed`,`cost`, status.status FROM `placedorder` INNER JOIN status on status.statusID = placedorder.status  WHERE customerID = '$ID' ORDER BY orderID");
                 $result = $stmt->fetchALL();
                 if (isset($result)) {
                     return $result;
@@ -77,20 +80,17 @@ class Order extends DB
             return "Error" . $e . ".";
         }
     }
-    public function getCustomerOrders()
+    public function getOrderItems($orderID)
     {
         try {
-            $ids = $this->getOderIds();
-            $array = array();
-            foreach ($ids as $id) {
-                $curID = $id["orderID"];
-                $stmt = $this->connect()->query("SELECT `itemID`, `quantity`,  `orderID`  FROM `cart_items` WHERE orderID = '$curID'");
-                $result = $stmt->fetchALL();
-                if (isset($result)) {
-                    $array[$curID] = $result;
-                }
+            $stmt = $this->connect()->query("SELECT placedorder.cost, item.name, item.img, cart_items.quantity FROM `placedorder`INNER JOIN cart_items on cart_items.orderID = placedorder.orderID INNER JOIN item on item.itemID = cart_items.itemID WHERE placedorder.orderID = '$orderID'");
+            $result = $stmt->fetchALL();
+            if (isset($result)) {
+                return $result;
+
+            } else {
+                return 0;
             }
-            return $array;
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }

@@ -1,23 +1,23 @@
 .outer-paper-products {
-  margin: 150px 0 100px 0;
+  margin: 10rem 0 14rem 0;
 }
 
 .outer-paper-products ul {
-  margin: 20px;
+  margin: 1rem;
   display: flex;
   align-items: center;
 }
 
 .outer-paper-products li {
   position: relative;
-  font-size: 18px;
+  font-size: 1rem;
   list-style: none;
   cursor: pointer;
 }
 
 .outer-paper-products ul > span {
-  margin: 0 15px;
-  font-size: 18px;
+  margin: 0 1rem;
+  font-size: 1rem;
 }
 
 .card-container {
@@ -51,35 +51,35 @@
 
 .card .detail p:nth-child(1) {
   margin-top: 10px;
-  font-size: 20px;
+  font-size: 1.3rem;
 }
 
 .card .detail p:nth-child(2) {
-  font-size: 13px;
+  font-size: 0.8rem;
   color: #b38168;
   font-family: "Josefin Sans", sans-serif;
   margin: 3px;
 }
 .card .detail p:nth-child(3) {
-  font-size: 18px;
+  font-size: 1rem;
   padding-bottom: 20px;
 }
 
 .card .fa {
-  font-size: 32px;
+  font-size: 2rem;
   color: #896f61;
 }
 
 .card .fa-heart:hover::after {
   content: "Remove from wishlist";
   position: absolute;
-  color: black;
+  color: #353935;
   background: var(--secondary-color);
   padding: 3px;
   border-radius: 3px;
   top: -20px;
   left: -40px;
-  font-size: 12px;
+  font-size: 0.4rem;
   width: 110px;
 }
 

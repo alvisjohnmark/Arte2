@@ -34,7 +34,7 @@
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -93,7 +93,7 @@
             <div class="totals">
                 <div class="totals-item">
                     <label>Subtotal</label>
-                    <div class="totals-value" id="cart-subtotal">₱<span>00</span>.00</div>
+                    <div class="totals-value" id="cart-subtotal">₱<span>0</span>.00</div>
                 </div>
                 <div class="totals-item">
                     <label>Shipping</label>
@@ -101,7 +101,7 @@
                 </div>
                 <div class="totals-item totals-item-total">
                     <label>Grand Total</label>
-                    <div class="totals-value" id="cart-total">₱<span>00</span>.00</div>
+                    <div class="totals-value" id="cart-total">₱<span>0</span>.00</div>
                 </div>
             </div>
             <button class="checkout">Checkout</button>
@@ -133,18 +133,6 @@
         }
 
         $(document).ready(function () {
-
-            $.ajax({
-                method: "GET",
-                url: "../server/order/get_orders.php",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
-                    console.log(result.data);
-                },
-                error: function (xhr, status, error) {
-                    console.error(xhr, status, error);
-                }
-            })
 
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
@@ -243,8 +231,6 @@
 
 
         $(document).ready(function () {
-
-
             getItems();
             let checked
 
@@ -328,14 +314,6 @@
                 })
                 return sum
             }
-
-            // $(window).on("beforeunload", function () {
-            //     $.each($(".product-wrapper"), function (index, el) {
-            //         updateItems(el);
-            //     })
-            // })
-
-
 
             function removeItemFromDB(el) {
                 let itemID = $(el).parent().find("input").attr("name");
@@ -430,28 +408,28 @@
                     return
                 }
                 let items = []
+                let cost = parseFloat($("#cart-total span").text(total + 80))
 
                 $(".check:checked").each(function () {
                     items.push(parseInt($(this).attr("name")))
                 })
-                let data = { "items": items }
+                let data = { "items": items, "cost": cost }
 
-                $.ajax({
-                    method: "POST",
-                    url: "../server/order/set_order.php",
-                    data: data,
-                    success: function (response) {
-                        // let result = JSON.parse(response);
-                        console.log(response);
-                        // result.data ? console.log("Success") : console.log("Failure");
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr, status, error);
-                    }
-                })
+                // $.ajax({
+                //     method: "POST",
+                //     url: "../server/order/set_order.php",
+                //     data: data,
+                //     success: function (response) {
+                //         // let result = JSON.parse(response);
+                //         console.log(response);
+                //         // result.data ? console.log("Success") : console.log("Failure");
+                //     },
+                //     error: function (xhr, status, error) {
+                //         console.error(xhr, status, error);
+                //     }
+                // })
             })
         })
-
     </script>
 </body>
 

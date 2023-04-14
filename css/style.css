@@ -71,12 +71,12 @@ section:not(:first-child) {
 
 .brand-name span:nth-child(1) {
   font-family: var(--font-style-one);
-  font-size: 34px;
+  font-size: 2rem;
 }
 
 .brand-name span:nth-child(2) {
   position: absolute;
-  font-size: 21px;
+  font-size: 1.4rem;
   font-family: var(--font-style-two);
   bottom: 0;
   left: 65%;
@@ -86,7 +86,7 @@ section:not(:first-child) {
   font-family: var(--font-style-three);
   display: flex;
   list-style: none;
-  font-size: 16px;
+  font-size: 1rem;
   justify-content: center;
   align-items: center;
 }
@@ -98,7 +98,7 @@ section:not(:first-child) {
 
 .nav-desk .fa {
   color: var(--icon-color);
-  font-size: 24px;
+  font-size: 1.6rem;
 }
 
 .nav-desk .fa:hover {
@@ -117,7 +117,7 @@ section:not(:first-child) {
 
 a {
   text-decoration: none;
-  color: black;
+  color: #353935;
 }
 
 main {
@@ -220,8 +220,8 @@ button.mobile-menu span.active:before {
   border-bottom: 1px solid var(--icon-color);
   text-align: center;
   width: 100%;
-  padding: 30px;
-  background-color: white;
+  padding: 2rem;
+  background-color: #fffff0;
 }
 
 .mobile-nav ul li a {
@@ -231,12 +231,12 @@ button.mobile-menu span.active:before {
 }
 
 .notify {
-  border: 1px solid black;
+  border: 1px solid #353935;
   background-color: var(--secondary-color);
   width: fit-content;
   position: absolute;
   position: fixed;
-  padding: 10px 20px;
+  padding: 0.6rem 1.2rem;
   top: 25%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -264,7 +264,7 @@ button.mobile-menu span.active:before {
     display: block;
   }
   #header {
-    padding: 0 24px;
+    padding: 0 1.5rem;
   }
 
   #bars {

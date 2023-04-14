@@ -44,11 +44,11 @@
   background-clip: text;
 }
 .hero-section .content p {
-  padding: 0 70px;
-  font-size: 18px;
+  padding: 0 7rem;
+  font-size: 1rem;
   color: white;
   text-shadow: 0px 1px 9px rgb(87, 87, 87);
-  margin: 20px 0;
+  margin: 1rem 0;
 }
 
 .hero-section button {
@@ -58,7 +58,7 @@
   padding: 15px 50px;
   color: var(--icon-color);
   background-color: var(--secondary-color);
-  /* border: 2px solid black; */
+  /* border: 2px solid 	#353935; */
   /* outline: none; */
   /* color: inherit; */
   font-weight: 900;
@@ -69,7 +69,7 @@
 }
 
 .hero-section button:hover {
-  color: black;
+  color: #353935;
 }
 
 /*Product Section*/
@@ -83,7 +83,7 @@ h2 {
 
   font-family: var(--font-style-four);
   font-weight: 200;
-  margin: 50px;
+  margin: 5rem;
 }
 
 .items {
@@ -91,7 +91,7 @@ h2 {
   grid-template-columns: repeat(auto-fit, minmax(185px, max-content));
   justify-content: center;
   grid-gap: 80px;
-  padding: 0 20px;
+  padding: 0 1rem;
 }
 
 .item {
@@ -102,7 +102,7 @@ h2 {
 }
 
 .products .item:nth-child(even) {
-  margin-top: 50px;
+  margin-top: 4rem;
 }
 
 .item .image {
@@ -135,6 +135,6 @@ h2 {
 
 @media screen and (max-width: 425px) {
   .hero-section .content p {
-    padding: 0 10px;
+    padding: 0 1rem;
   }
 }

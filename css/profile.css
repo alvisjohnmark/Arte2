@@ -1,0 +1,104 @@
+.profile-wrapper {
+  position: relative;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 2fr;
+  font-family: var(--font-style-three);
+  padding: 10px;
+}
+
+.profile {
+  width: 100%;
+  text-align: center;
+}
+
+.profile-image {
+  margin: auto;
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-top: 50px;
+}
+
+.profile-details {
+  margin: 20px;
+}
+
+.profile-details p {
+  margin: 5px 0;
+}
+
+.name {
+  font-size: 1.3rem;
+}
+
+img {
+  border-radius: 50%;
+}
+
+.table-container {
+  width: 100%;
+  height: 400px;
+  overflow-y: scroll;
+  box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+    rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+th {
+  top: 0;
+  position: sticky;
+  background-color: var(--highlight-color);
+}
+
+tr td:last-child:hover {
+  cursor: pointer;
+}
+
+td,
+th {
+  padding: 15px;
+  text-align: left;
+}
+
+table {
+  width: 100%;
+  font-size: 1rem;
+}
+
+.my-orders,
+.profile {
+  width: 100%;
+  padding: 5px 10px;
+}
+
+.my-orders p {
+  font-size: 2rem;
+  margin: 0 0 10px 0;
+}
+
+@media screen and (max-width: 769px) {
+  .profile-wrapper {
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .profile {
+    background-color: var(--highlight-color);
+    border-radius: 50px;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  section:not(:first-child) {
+    margin: 50px 0;
+    padding: 50px 0;
+  }
+  .table {
+    font-size: 0.8rem;
+  }
+
+  td,
+  th {
+    padding: 10px 5px;
+  }
+}

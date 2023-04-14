@@ -9,7 +9,7 @@ input[type="checkbox"]:checked + label div.product {
 
 .line {
   width: 100%;
-  border-top: 1px solid black;
+  border-top: 1px solid #353935;
 }
 
 /* input[type="number"] {
@@ -146,14 +146,8 @@ svg {
   margin-right: 20px;
 }
 
-.checkout:hover,
-button:disabled,
-button[disabled] {
+.checkout:hover {
   background-color: var(--primary-color);
-}
-
-button:disabled {
-  cursor: not-allowed;
 }
 
 .delete {
@@ -185,7 +179,7 @@ button:disabled {
   height: 35px;
   border-radius: 50%;
   color: inherit;
-  border: 1px solid black;
+  border: 1px solid #353935;
 }
 
 .delete-confirmation {
@@ -222,13 +216,13 @@ button:disabled {
   color: green;
   padding-left: 5px;
   width: 80px;
-  border: 1px solid black;
+  border: 1px solid #353935;
 }
 .delete-confirmation button:last-child {
   background-color: var(--secondary-color);
   color: red;
   width: 70px;
-  border: 1px solid black;
+  border: 1px solid #353935;
   border-radius: 0 20px 20px 0;
 }
 

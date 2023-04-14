@@ -132,7 +132,7 @@ i {
 
 .signs a {
   text-decoration: none;
-  color: black;
+  color: #353935;
   font-family: var(--font-style-four);
   font-weight: bold;
 }

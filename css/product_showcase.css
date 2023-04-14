@@ -1,25 +1,25 @@
 .outer-paper-products {
-  margin: 150px 0 100px 0;
+  /* margin: 150px 0 100px 0; */
+  margin: 10rem 0 14rem 0;
 }
 
 .outer-paper-products ul {
-  margin: 20px;
+  margin: 1.3rem;
   display: flex;
   align-items: center;
 }
 
 .outer-paper-products li {
   position: relative;
-  font-size: 18px;
+  font-size: 1rem;
   list-style: none;
   cursor: pointer;
 }
 
 .outer-paper-products ul > span {
-  margin: 0 15px;
-  font-size: 18px;
+  margin: 0 1rem;
+  font-size: 1rem;
 }
-
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
@@ -27,7 +27,7 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   background-color: var(--primary-color);
   padding: 8px 4px;
-  font-size: 16px;
+  font-size: 1rem;
   text-align: center;
   width: 50px;
   outline: inherit;
@@ -51,21 +51,21 @@ input[type="number"] {
 .item-detail {
   position: relative;
   max-width: 400px;
-  padding: 20px;
+  padding: 1.3rem;
 }
 
 p {
   font-family: "Playfair Display", serif;
 }
 .item-detail p:nth-child(1) {
-  font-size: 30px;
+  font-size: 2rem;
 }
 .item-detail p:nth-child(2) {
-  font-size: 24px;
+  font-size: 1.5rem;
   margin: 5px 0;
 }
 .item-detail p:nth-child(3) {
-  font-size: 13px;
+  font-size: 0.8rem;
   margin: 5px 0;
   /* width: 200px; */
 }
@@ -78,11 +78,11 @@ p {
 
 .quantity-wrapper p:nth-child(1) {
   margin-bottom: 5px;
-  font-size: 16px;
+  font-size: 1rem;
 }
 .quantity-wrapper p:nth-child(2) {
   font-family: "Josefin Sans", sans-serif;
-  font-size: 13px;
+  font-size: 0.8rem;
   color: rgb(105, 4, 4);
 }
 
@@ -101,14 +101,14 @@ p {
   background: none;
   color: inherit;
   border: none;
-  padding: 0 10px;
+  padding: 0 0.3rem;
   font: inherit;
   cursor: pointer;
   outline: inherit;
 }
 
 .fa-caret-up {
-  font-size: 29px;
+  font-size: 1.7rem;
 }
 
 .lower-detail {
@@ -125,23 +125,23 @@ p {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  padding: 12px 25px;
+  padding: 0.4rem 1.3rem;
   background-color: var(--highlight-color);
 }
 
 .wishlist {
   padding: 11px 14px;
-  font-size: 28px;
+  font-size: 2rem;
 }
 
 .fa-heart {
   cursor: pointer;
-  color: white;
+  color: #fffff0;
   /* color: var(--icon-color); */
 }
 
 .inc-dec button:hover {
-  background-color: white;
+  background-color: #fffff0;
 }
 
 .add-to-cart {
