@@ -1,0 +1,102 @@
+.letter-writing-container {
+  font-family: var(--font-style-three);
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  background-color: var(--primary-color);
+  color: #353935;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+form,
+select,
+h1,
+p {
+  margin: 1rem 0;
+}
+
+select,
+input {
+  width: 70%;
+  padding: 20px 25px;
+  outline: none;
+  border: solid #35393575 1px;
+  appearance: none;
+  font-size: 1.05rem;
+}
+
+select {
+  background: url("../assets/svg/down-arrow-of-angle-svgrepo-com.svg") no-repeat
+    calc(92% + 3px) center/12px;
+}
+
+input {
+  margin-top: 2rem;
+  background: var(--icon-color);
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+select:focus,
+input:hover {
+  border: 1px solid var(--icon-color) !important;
+
+  box-shadow: 0 0 3px var(--icon-color) !important;
+}
+
+.image-showcase-container,
+.selection {
+  padding: 2rem;
+}
+
+.image-showcase {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 100%;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+}
+
+.selection h1:nth-child(1) {
+  color: var(--icon-color);
+  font-size: 1.67rem;
+}
+
+@media screen and (max-width: 1025px) {
+  .letter-writing-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .letter-writing-container {
+    padding: 0;
+  }
+
+  .selection {
+    padding-top: 0;
+  }
+
+  h1 {
+    padding: 0;
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 769px) {
+  .letter-writing-container {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 426px) {
+  select,
+  input {
+    width: 100%;
+  }
+}

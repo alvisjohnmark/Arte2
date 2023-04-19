@@ -122,11 +122,22 @@ p {
 }
 
 .add-to-cart {
+  font-family: "Josefin Sans", sans-serif;
   position: absolute;
   bottom: 20px;
   right: 20px;
-  padding: 0.4rem 1.3rem;
-  background-color: var(--highlight-color);
+  padding: 15px 25px;
+  outline: none;
+  background-color: var(--icon-color);
+  border: solid #35393575 1px;
+  color: whitesmoke;
+  cursor: pointer;
+}
+
+.add-to-cart:hover {
+  border: 1px solid var(--icon-color) !important;
+
+  box-shadow: 0 0 3px var(--icon-color) !important;
 }
 
 .wishlist {
@@ -142,14 +153,6 @@ p {
 
 .inc-dec button:hover {
   background-color: #fffff0;
-}
-
-.add-to-cart {
-  font-family: "Josefin Sans", sans-serif;
-}
-.add-to-cart:hover {
-  cursor: pointer;
-  background-color: var(--secondary-color);
 }
 
 /* .add-to-cart p {

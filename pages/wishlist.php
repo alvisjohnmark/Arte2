@@ -1,4 +1,4 @@
-<!-- <?php session_start(); ?> -->
+<?php include "../global/user.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,7 +22,7 @@
                 </button>
             </div>
             <div class="brand-name">
-                <a href="./index.php">
+                <a href="../index.php">
                     <span>Arte</span>
                     <span>crafts</span>
                 </a>
@@ -35,10 +35,12 @@
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href=<?php $userLoggedIn ? print "./profile.php" : print "../forms/login.php" ?>><i
+                                class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <a href=<?php $userLoggedIn ? print "./cart.php" : print "../forms/login.php" ?>><i
+                                class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
                     </li>
@@ -78,16 +80,42 @@
             <?php
     }
     ?>
-    <footer>
-        <?php
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="links">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Contribute</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by
+                            <a href="#">ArteArts</a>.
+                        </p>
+                    </div>
 
-        echo $_SESSION["customerID"] ?>
-        asd
+                    <div class="icons">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="#"><i class="fa fa-facebook"> </i></a></li>
+                            <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a class="github" href="#"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="../js/animation.js"></script>
+    <script src="../global/js/animation.js"></script>
     <script>
 
 
@@ -97,7 +125,7 @@
                 url: "../server/cart/getItemsQnty.php",
                 success: async function (response) {
                     let result = await JSON.parse(response)
-                    if (rresult.data[0][0]) {
+                    if (result.data[0][0]) {
                         $(".nav-desk").find("span").text(result.data[0][0])
                     } else {
                         console.log("No User");
@@ -151,15 +179,16 @@
 
 
         function setElements(params) {
-            params.data.forEach(item => {
-                let image = item["img"];
-                let name = item["name"];
-                let price = item["price"];
-                let itemID = item["itemID"]
-                let kind = item["kind"]
-                let src = `../assets/images/${image}`
-                $("section .inner-outer-products .card-container").append(
-                    $(`<div id="card" class="card" data-item-id="${itemID}">
+            params.data.length > 0 ?
+                params.data.forEach(item => {
+                    let image = item["img"];
+                    let name = item["name"];
+                    let price = item["price"];
+                    let itemID = item["itemID"]
+                    let kind = item["kind"]
+                    let src = `../assets/images/${image}`
+                    $("section .inner-outer-products .card-container").append(
+                        $(`<div id="card" class="card" data-item-id="${itemID}">
                 <div class="image-holder">
                     <img src=${src} loading="lazy">
                     <span><i id="heart" class="fa fa-heart" aria-hidden="true"></i></span>
@@ -170,7 +199,7 @@
                     <p>₱${price}.00</p>
                 </div>
             </div>`));
-            })
+                }) : $("section .inner-outer-products .card-container").append("<div>You haven't added in your wishlist.</div>")
         }
 
         // $(document).on("click",, function () {

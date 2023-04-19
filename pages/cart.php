@@ -1,4 +1,4 @@
-<?php echo ""; ?>
+<?php include "../global/user.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../css/style.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/cart.css">
+    <link rel="stylesheet" href="../css/checkout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Arte crafts</title>
 </head>
@@ -34,10 +35,12 @@
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href=<?php $userLoggedIn ? print "./profile.php" : print "../forms/login.php" ?>><i
+                                class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <a href=<?php $userLoggedIn ? print "./cart.php" : print "../forms/login.php" ?>><i
+                                class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
                     </li>
@@ -62,6 +65,13 @@
 
     <section>
         <div class="container">
+            <p id="cart-id" style="display: none;">Cart ID <span>
+                    <?php if (isset($_SESSION["customerID"])) {
+                        echo $_SESSION["customerID"];
+                    } else {
+                        echo 0;
+                    } ?>
+                </span></p>
             <h1>My shopping cart</h1>
             <input type="checkbox" class="check" name=select-all>
             <label for=select-all class="label-select-all">
@@ -89,6 +99,7 @@
             </div>
 
             <div class="products">
+                <ul></ul>
             </div>
             <div class="totals">
                 <div class="totals-item">
@@ -107,17 +118,44 @@
             <button class="checkout">Checkout</button>
         </div>
     </section>
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="links">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Contribute</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by
+                            <a href="#">ArteArts</a>.
+                        </p>
+                    </div>
 
-    <footer>
-        asd
+                    <div class="icons">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="#"><i class="fa fa-facebook"> </i></a></li>
+                            <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a class="github" href="#"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
     </footer>
     <!-- <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script> -->
     <!-- <script src="./js/animation.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-
+    <script src="../global/js/animation.js"></script>
     <script>
 
         function notify(message) {
@@ -139,7 +177,7 @@
             });
             let value = params.itemID; // "some_value"
             if (sessionStorage.getItem("add") == "True") {
-                notify("Items Deleted!");
+                notify("Item(s) Deleted!");
             }
             sessionStorage.setItem("add", "False") //stores in a session
 
@@ -181,18 +219,18 @@
         }
 
         function setElements(params) {
-            let initialTotal = 0;
-            params.data.forEach(item => {
-                let name = item["name"];
-                let price = item["price"];
-                let image = item["img"];
-                let itemID = item["itemID"];
-                let quantity = item["quantity"];
-                let stock = item["stock"];
-                let kind = item["kind"]
-                let src = `../assets/images/${image}`
-                $("section .products").append(
-                    $(`<div class="line"></div>
+            params.data.length > 0 ?
+                params.data.forEach(item => {
+                    let name = item["name"];
+                    let price = item["price"];
+                    let image = item["img"];
+                    let itemID = item["itemID"];
+                    let quantity = item["quantity"];
+                    let stock = item["stock"];
+                    let kind = item["kind"]
+                    let src = `../assets/images/${image}`
+                    $("section .products ul").append(
+                        $(`<li><div class="line"></div>
                 <div class="product-wrapper">
                     <input type="checkbox" class="check" name=${itemID}>
                     <label for=${itemID} class="label">
@@ -225,8 +263,8 @@
                             </div>
                         </div>
                     </label>
-                </div>`));
-            })
+                </div></li>`));
+                }) : $("section .products").append("<div>No items in your cart.</div>")
         }
 
 
@@ -407,28 +445,24 @@
                     notify("Please select item(s)")
                     return
                 }
-                let items = []
-                let cost = parseFloat($("#cart-total span").text(total + 80))
+                let items_list = []
 
                 $(".check:checked").each(function () {
-                    items.push(parseInt($(this).attr("name")))
+                    items_list.push(parseInt($(this).attr("name")));
                 })
-                let data = { "items": items, "cost": cost }
 
-                // $.ajax({
-                //     method: "POST",
-                //     url: "../server/order/set_order.php",
-                //     data: data,
-                //     success: function (response) {
-                //         // let result = JSON.parse(response);
-                //         console.log(response);
-                //         // result.data ? console.log("Success") : console.log("Failure");
-                //     },
-                //     error: function (xhr, status, error) {
-                //         console.error(xhr, status, error);
-                //     }
-                // })
+                let cartID = $("#cart-id").find("span").text().trim()
+                console.log(cartID);
+
+                let url = `http://localhost/ARTE/pages/checkout.php?items=${items_list}&cartID=${cartID}`
+                window.location = url
+
+
+                // setOrderSummary()
+                // $(".checkout-wrapper").addClass("show");
             })
+
+
         })
     </script>
 </body>

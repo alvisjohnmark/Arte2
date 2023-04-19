@@ -1,0 +1,84 @@
+.header {
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.box-form {
+  font-family: var(--font-style-three);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background-color: var(--primary-color);
+  margin: 1rem;
+}
+
+.larger {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input,
+select {
+  width: 100%;
+  margin: 5px 0px;
+  padding: 15px 20px;
+  outline: none;
+  border: solid #35393575 1px;
+}
+
+select {
+  width: 50%;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  padding: 1rem;
+  outline: none;
+}
+
+input:focus,
+textarea:focus {
+  border: 1px solid var(--icon-color) !important;
+
+  box-shadow: 0 0 3px var(--icon-color) !important;
+}
+
+.input-box {
+  padding: 10px 0;
+}
+
+.side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1.5rem;
+}
+
+@media only screen and (max-width: 1024px) {
+  .box-form {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: 1rem 4rem;
+  }
+}
+
+@media only screen and (max-width: 520px) {
+  .box-form {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: 1rem;
+  }
+}

@@ -1,4 +1,4 @@
-<?php session_start(); ?>
+<?php include "../global/user.php" ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,8 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="../css/style.css" rel="stylesheet" />
-    <link href="../css/items.css" rel="stylesheet" />
     <link href="../css/profile.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../css/checkout.css">
+    <link href="../css/items.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <title>Arte crafts</title>
 </head>
@@ -35,7 +36,7 @@
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href="./forms/login.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
@@ -91,44 +92,110 @@
 
         </div>
     </section>
-    <div class="order-items-wrapper-overlay"></div>
-    <div class="order-items-wrapper">
+    <div class="order-summary-overlay"></div>
+    <div class="order-summary">
         <i style="font-size: 1.5rem;" class="fa fa-times" aria-hidden="true"></i>
-        <h2>Items</h2>
-        <div class="order-items">
-            <div class="items">
+        <div class="summary">
+            <p>Order Summary</p>
+            <ul>
+            </ul>
 
+            <hr>
+            <div class="sub total">
+                <p>Subtotal</p>
+                <p>₱<span></span>.00</p>
+            </div>
+            <div class="shipping total">
+                <p>Shipping</p>
+                <p>₱<span></span>.00</p>
+            </div>
+            <hr>
+            <div class="order total">
+                <p>Order Total</p>
+                <p>₱<span></span>.00</p>
             </div>
         </div>
-        <div class="total fixed">
-            <span> <b>Total:</b>
-                <span>
-                    23123
-                </span>
-                PHP
-            </span>
-            <button>Cancel Order</button>
-        </div>
+        <form action="" method="post">
+            <input type="button" value="Cancel Order" id="cancel-order-button">
+        </form>
     </div>
 
-    <footer>
-        asd
-        <?php
-        echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="links">
+                    <h6>Quick Links</h6>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Contribute</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <hr>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div>
+                        <p class="copyright-text">Copyright &copy; 2023 All Rights Reserved by
+                            <a href="#">ArteArts</a>.
+                        </p>
+                    </div>
 
-        if (isset($_SESSION["customerID"])) {
-            echo $_SESSION["customerID"];
-        } else {
-            echo "Po";
-        }
-
-        ?>
+                    <div class="icons">
+                        <ul class="social-icons">
+                            <li><a class="facebook" href="#"><i class="fa fa-facebook"> </i></a></li>
+                            <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
+                            <li><a class="github" href="#"><i class="fa fa-github"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="../global/js/animation.js"></script>
     <script>
+
+        function notify(msg) {
+            let div = document.createElement("div");
+            div.innerHTML = msg
+            div.classList.add("notify")
+            $("body").prepend(div);
+
+            setTimeout(function () {
+                if ($('.notify').length > 0) {
+                    div.remove();
+                }
+            }, 2000)
+        }
+
+        $(document).ready(function () {
+            if (sessionStorage.getItem("cancel") == "True") {
+                notify("Order Cancelled");
+            }
+            sessionStorage.setItem("cancel", "False")
+            $.ajax({
+                method: "GET",
+                url: "../server/cart/getItemsQnty.php",
+                success: async function (response) {
+                    let result = await JSON.parse(response)
+                    if (result.data[0][0]) {
+                        $(".nav-desk").find("span").text(result.data[0][0])
+                    } else {
+                        console.log("No User");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        });
+
+
         $(document).ready(function () {
             $.ajax({
                 method: "GET",
@@ -163,31 +230,35 @@
 
 
         function setItems(params) {
-            $(".order-items .items").empty() //remove the existing child elements
+            $(".order-summary ul").empty() //remove the existing child elements
+            console.log(params);
+            // $(".order-summary ul").prop("id", "")
             params.forEach(item => {
-                $(".order-items .items").append(`<div class="item">
-                    <span><img src="../assets/images/PRP.png" alt=""></span>
+                $(".order-summary ul").append(`<li>
+                    <img src="" alt="">
                     <div>
                         <p>${item["name"]}</p>
-                        <p>Paper</p>
+                        <p>Qnty: <span>${item["quantity"]}</span></p>
+                        <p>₱<span>${item["cost"]}.00</span></p>
                     </div>
-                    <span>x</span>
-                    <span>${item["quantity"]}</span>
-                </div>`)
-                $(".total").find("span").find("span").text(item["cost"])
+                </li>`)
+                $(".sub").find("p:nth-child(2) span").text(item["cost"] - 80)
+                $(".shipping").find("p:nth-child(2) span").text(80)
+                $(".order").find("p:nth-child(2) span").text(item["cost"])
             })
 
         }
 
         $(".fa-times").click(function () {
-            $(".order-items-wrapper").removeClass("open")
-            $(".order-items-wrapper-overlay").removeClass("open")
+            $(".order-summary").removeClass("open")
+            $(".order-summary-overlay").removeClass("open")
         })
 
         $(document).on("click", ".details", function () {
-            $(".order-items-wrapper").addClass("open");
-            $(".order-items-wrapper-overlay").addClass("open");
+            $(".order-summary").addClass("open");
+            $(".order-summary-overlay").addClass("open");
             let orderID = parseInt($(this).parent().attr("id"));
+            setOrderID(orderID)
             data = { orderID: orderID }
             $.ajax({
                 method: "POST",
@@ -209,6 +280,36 @@
                 }
             })
         })
+
+        let orderID = 0
+
+        function setOrderID(order) {
+            orderID = order
+        }
+
+        $("#cancel-order-button").click(function () {
+            data = { "orderID": orderID }
+            $.ajax({
+                method: "POST",
+                url: "../server/order/cancel_order.php",
+                data: data,
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    if (result.data) {
+                        console.log(result.data);
+                        sessionStorage.setItem("cancel", "True")
+                        location.reload()
+
+                    } else {
+                        console.log("No User");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        })
+
 
     </script>
 

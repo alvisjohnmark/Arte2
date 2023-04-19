@@ -1,4 +1,4 @@
-<?php include "../global/user.php" ?>
+<?php include "../../global/user.php" ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,8 +7,8 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link href="../css/style.css" rel="stylesheet" />
-  <link href="../css/products.css" rel="stylesheet">
+  <link href="../../css/style.css" rel="stylesheet" />
+  <link href="../../css/products.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
 
   <title>Arte crafts</title>
@@ -33,14 +33,15 @@
           <li><a href="./products/paper.php">About</a></li>
           <li><a href="#">Contact</a></li>
           <li>
-            <a href="../pages/wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+            <a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>><i
+                class="fa fa-heart" aria-hidden="true"></i></a>
           </li>
           <li>
-            <a href=<?php $userLoggedIn ? print "../pages/profile.php" : print "../forms/login.php" ?>><i
+            <a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>><i
                 class="fa fa-user-circle-o" aria-hidden="true"></i></a>
           </li>
           <li>
-            <a href=<?php $userLoggedIn ? print "../pages/cart.php" : print "../forms/login.php" ?>><i
+            <a href=<?php $userLoggedIn ? print "../cart.php" : print "../../forms/login.php" ?>><i
                 class="fa fa-shopping-cart" aria-hidden="true"></i>
               <span>0</span>
             </a>
@@ -51,10 +52,10 @@
     <div id="mobile" class="mobile">
       <navbar class="mobile-nav">
         <ul>
-          <li><a href="./pages/profile.php">Profile</a></li>
-          <li><a href="./pages/wishlist.php">Wishlist</a></li>
+          <li><a href="../profile.php">Profile</a></li>
+          <li><a href="../wishlist.php">Wishlist</a></li>
           <li>
-            <a href="./pages/wishlist.php">About</a>
+            <a href="../wishlist.php">About</a>
           </li>
           <li>
             <a href="./forms/login.php">Contact</a>
@@ -68,7 +69,7 @@
       <div class="container">
         <div class="outer-paper-products">
           <ul>
-            <a href="../index.php#products">
+            <a href="../../index.php#products">
               <li>Products</li>
             </a>
             <span>❯</span>
@@ -140,7 +141,7 @@
 
       $.ajax({
         method: "GET",
-        url: "../server/item/getAll.php?kind=1",
+        url: "../../server/item/getAll.php?kind=1",
         success: async function (response) {
           let result = await JSON.parse(response)
           result.data ? setElements(result) : console.log("No Items");
@@ -158,7 +159,7 @@
           let price = item["price"];
           let image = item["img"];
           let itemID = item["itemID"];
-          let src = `../assets/images/${image}`
+          let src = `../../assets/images/${image}`
           $("section .inner-outer-products .card-container").append(
             $(`<a href="./papers/paper.php?itemID=${itemID}"><div class="card">
                 <div class="image-holder">
@@ -176,7 +177,7 @@
     }
   </script>
 
-  <script src="../global/js/animation.js"></script>
+  <script src="../../global/js/animation.js"></script>
 </body>
 
 </html>

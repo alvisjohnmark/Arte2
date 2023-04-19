@@ -1,0 +1,173 @@
+.checkout-wrapper {
+  margin: 2rem;
+}
+.checkout-container {
+  width: 100%;
+  font-family: var(--font-style-three);
+
+  display: grid;
+  grid-template-areas:
+    "ship sum"
+    "ship  sum";
+  grid-template-columns: 1fr 1fr;
+  color: #353935;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: var(--secondary-color);
+}
+
+.checkout-container form {
+  grid-area: ship;
+}
+
+.checkout-container .order-summary {
+  grid-area: sum;
+}
+
+.order-details,
+.order-summary {
+  padding: 2rem 4rem;
+}
+
+.shipping-address,
+.payment {
+  padding-bottom: 2rem;
+}
+
+.shipping-address p,
+.payment p,
+.summary > p {
+  margin: 10px 0;
+  font-size: 1.3rem;
+}
+
+.note {
+  font-size: 0.9rem;
+}
+label {
+  float: left;
+}
+
+.shipping-address input[type="text"],
+.payment input[type="text"],
+input[type="date"] {
+  width: 100%;
+  margin: 5px 0px;
+  padding: 15px 20px;
+  outline: none;
+  border: solid #35393575 1px;
+}
+
+.card {
+  visibility: hidden;
+}
+.payment input:nth-last-child(-n + 2) {
+  width: 49%;
+}
+.payment input:last-child {
+  margin: 5px 0;
+  float: right;
+}
+
+input[type="text"]:focus,
+input[type="submit"],
+input[type="button"] {
+  border: 1px solid var(--icon-color) !important;
+
+  box-shadow: 0 0 3px var(--icon-color) !important;
+}
+
+input[type="radio"],
+label {
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+input[type="submit"],
+input[type="button"] {
+  /* position: relative; */
+  margin: auto;
+  text-align: center;
+  cursor: pointer;
+  padding: 12px 20px;
+  width: 100%;
+  color: whitesmoke;
+  background: var(--icon-color);
+  margin: 5px;
+}
+
+input[type="button"] {
+  background: rgba(155, 155, 155, 0.24);
+  color: red;
+}
+
+.summary {
+  border: 1px solid #35393575;
+  padding: 1.5rem;
+}
+
+.summary img {
+  width: 4rem;
+  height: 4rem;
+}
+
+.summary ul {
+  padding: 1rem 0;
+}
+
+.summary ul li {
+  display: flex;
+  margin: 10px 0;
+}
+
+.summary ul li > div {
+  padding: 0 1rem;
+}
+
+.summary ul li > div p:nth-child(1) {
+  font-size: 1rem;
+}
+
+.summary ul li > div p:nth-child(2) {
+  font-size: 0.7rem;
+  margin-bottom: 5px;
+}
+.summary ul li > div p:last-child {
+  font-size: 0.8rem;
+}
+
+.summary > div p {
+  display: inline;
+}
+.summary > div p:nth-child(2) {
+  float: right;
+}
+
+.summary .total {
+  padding: 1rem;
+}
+
+.summary .order {
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+@media only screen and (max-width: 990px) {
+  .checkout-container {
+    grid-template-areas:
+      "sum sum"
+      "ship  ship";
+    grid-template-rows: auto;
+    grid-template-columns: 1fr;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .checkout-container {
+    padding: 0;
+  }
+}
+@media only screen and (max-width: 445px) {
+  .order-details,
+  .order-summary {
+    padding: 0.5rem 1rem;
+  }
+}
