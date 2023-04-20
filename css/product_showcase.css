@@ -141,8 +141,8 @@ p {
 }
 
 .wishlist {
-  padding: 11px 14px;
   font-size: 2rem;
+  margin-left: 10px;
 }
 
 .fa-heart {

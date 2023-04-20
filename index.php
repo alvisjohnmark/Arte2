@@ -192,16 +192,6 @@
           </div>
         </div>
       </div>
-      <!-- <?php
-      echo '<pre>' . print_r($_SESSION, TRUE) . '</pre>';
-
-      if (isset($_SESSION["customerID"])) {
-        echo $_SESSION["customerID"];
-      } else {
-        echo "Po";
-      }
-
-      ?> -->
   </footer>
   <!-- <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
@@ -214,11 +204,12 @@
       $.ajax({
         method: "GET",
         url: "./server/cart/getItemsQnty.php",
-        success: async function (response) {
-          let result = await JSON.parse(response)
-          if (result.data[0][0]) {
-
-            $(".nav-desk").find("span").text(result.data[0][0])
+        success: function (response) {
+          let result = JSON.parse(response)
+          console.log(result.data);
+          if (result.data) {
+            console.log(result.data);
+            $(".nav-desk").find("span").text(result.data)
           } else {
             console.log("No User");
           }

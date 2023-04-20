@@ -216,8 +216,8 @@ class Cart extends DB
             if ($ID) {
                 $stmt = $this->connect()->query("SELECT SUM(cart_items.quantity) FROM cart_items INNER JOIN cart on cart_items.cartID = cart.cartID WHERE cart.customerID = '$ID' AND cart_items.orderID IS NULL");
                 $result = $stmt->fetchALL();
-                if (isset($result)) {
-                    return $result;
+                if (isset($result[0])) {
+                    return $result[0]['SUM(cart_items.quantity)'];
                 } else {
                     return 0;
                 }

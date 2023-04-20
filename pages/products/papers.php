@@ -23,7 +23,7 @@
         </button>
       </div>
       <div class="brand-name">
-        <a href="../index.php">
+        <a href="../../index.php">
           <span>Arte</span>
           <span>crafts</span>
         </a>
@@ -118,17 +118,18 @@
       </div>
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-  <script src="../global/js/animation.js"></script>
+  <script src="../../global/js/animation.js"></script>
   <script>
 
     $(document).ready(function () {
       $.ajax({
         method: "GET",
-        url: "../server/cart/getItemsQnty.php",
-        success: async function (response) {
-          let result = await JSON.parse(response)
-          if (result.data[0][0]) {
-            $(".nav-desk").find("span").text(result.data[0][0])
+        url: "../../server/cart/getItemsQnty.php",
+        success: function (response) {
+          let result = JSON.parse(response)
+          console.log(result.data);
+          if (result.data) {
+            $(".nav-desk").find("span").text(result.data)
           } else {
             console.log("No User");
           }

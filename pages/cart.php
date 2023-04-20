@@ -66,6 +66,7 @@
     <section>
         <div class="container">
             <p id="cart-id" style="display: none;">Cart ID <span>
+                    <!--Gets the cart ID of the user and use it as refernce for sql processing-->
                     <?php if (isset($_SESSION["customerID"])) {
                         echo $_SESSION["customerID"];
                     } else {
@@ -150,8 +151,6 @@
                 </div>
             </div>
     </footer>
-    <!-- <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script> -->
-    <!-- <script src="./js/animation.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
         integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -181,14 +180,14 @@
             }
             sessionStorage.setItem("add", "False") //stores in a session
 
-
+            //gets the quantity of items in cart
             $.ajax({
                 method: "GET",
                 url: "../server/cart/getItemsQnty.php",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
-                    if (result.data[0][0]) {
-                        $(".nav-desk").find("span").text(result.data[0][0])
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    if (result.data) {
+                        $(".nav-desk").find("span").text(result.data)
                     } else {
                         console.log("No User");
                     }
@@ -207,8 +206,8 @@
             $.ajax({
                 method: "GET",
                 url: "../server/cart/getAll.php",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
+                success: function (response) {
+                    let result = JSON.parse(response)
                     console.log(result.data);
                     result.data ? setElements(result) : console.log("No customer");
                 },
@@ -229,11 +228,11 @@
                     let stock = item["stock"];
                     let kind = item["kind"]
                     let src = `../assets/images/${image}`
+
                     $("section .products ul").append(
                         $(`<li><div class="line"></div>
                 <div class="product-wrapper">
                     <input type="checkbox" class="check" name=${itemID}>
-                    <label for=${itemID} class="label">
                         <svg viewBox="0 0 100 100" height="50" width="50">
                             <rect x="30" y="20" width="50" height="50" stroke="black" fill="none" />
                             <g transform="translate(0,-952.36216)" id="layer1">
@@ -262,9 +261,8 @@
                                 <p>₱<span>${price * quantity}</span>.00</p>
                             </div>
                         </div>
-                    </label>
                 </div></li>`));
-                }) : $("section .products").append("<div>No items in your cart.</div>")
+                }) : $("section .totals").prepend("<div class='no-items-msg'><span>No items in your cart.</span></div>")
         }
 
 
@@ -278,6 +276,7 @@
                 }
 
                 let checkBox = $(this).children(".check");
+                console.log(checkBox);
                 if (checkBox.prop("checked")) {
                     checkBox.prop("checked", false)
                 } else {
@@ -403,9 +402,9 @@
 
 
             $(document).on("click", ".delete-confirmation button:first-child", function () {
+                console.log("Fired");
                 $(".check:checked").map(function (i, el) {
                     $(el).parent().slideUp(300, function () {
-
                         removeItemFromDB(el)
                         $(el).parent().remove()
                     });

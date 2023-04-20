@@ -1,12 +1,3 @@
-input[type="checkbox"]:checked + label div.product {
-  font-style: normal;
-
-  background-color: rgba(219, 137, 102, 0.25);
-
-  box-shadow: rgba(219, 137, 102, 0.25) 0px 1px 2px 0px,
-    rgba(219, 137, 102, 0.25) 0px 2px 6px 2px;
-}
-
 .line {
   width: 100%;
   border-top: 1px solid #353935;
@@ -40,7 +31,7 @@ input[type="checkbox"] {
   display: none;
 }
 
-.check:checked + label svg g path,
+.check:checked + svg g path,
 .select-all:checked + label svg g path {
   stroke-dashoffset: 0;
 }
@@ -73,6 +64,9 @@ svg {
   stroke-dashoffset: 400;
   transition: 0.5s all;
 }
+/* .products {
+  margin-top: 50px;
+} */
 
 .product {
   display: grid;

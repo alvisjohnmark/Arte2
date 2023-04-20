@@ -43,9 +43,6 @@
 .note {
   font-size: 0.9rem;
 }
-label {
-  float: left;
-}
 
 .shipping-address input[type="text"],
 .payment input[type="text"],

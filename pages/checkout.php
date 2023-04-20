@@ -38,8 +38,10 @@
                                 <p>Payment Method</p>
                                 <input type="radio" id="cod" name="payment-method" value="cod" checked="true">
                                 <label for="cod">Cash On Delivery</label><br>
+
                                 <input type="radio" id="card" name="payment-method" value="card">
                                 <label for="card">Credit/Debit Card</label><br>
+
                                 <div class="card">
                                     <input type="text" placeholder="Name on Card">
                                     <br>
@@ -99,8 +101,8 @@
                 $.ajax({
                     method: "GET",
                     url: "../server/cart/getAll.php",
-                    success: async function (response) {
-                        let result = await JSON.parse(response)
+                    success: function (response) {
+                        let result = JSON.parse(response)
                         let new_list = result.data.filter(function (item) {
                             return list.includes(item["itemID"])
                         })

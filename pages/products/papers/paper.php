@@ -32,14 +32,14 @@
                     <li><a href="./products/paper.php">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li>
-                        <a href="../../wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                        <a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../forms/login.php" ?>><i
+                        <a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../../forms/login.php" ?>><i
                                 class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href=<?php $userLoggedIn ? print "../../cart.php" : print "../../forms/login.php" ?>><i
+                        <a href=<?php $userLoggedIn ? print "../../cart.php" : print "../../../forms/login.php" ?>><i
                                 class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
@@ -117,16 +117,16 @@
             </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="../../global/js/animation.js"></script>
+    <script src="../../../global/js/animation.js"></script>
     <script>
         $(document).ready(function () {
             $.ajax({
                 method: "GET",
                 url: "../../../server/cart/getItemsQnty.php",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
-                    if (result.data[0][0]) {
-                        $(".nav-desk").find("span").text(result.data[0][0])
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    if (result.data) {
+                        $(".nav-desk").find("span").text(result.data)
                     } else {
                         console.log("No User");
                     }
@@ -182,8 +182,8 @@
             $.ajax({
                 method: "GET",
                 url: `../../../server/item/get.php?itemID=${value}`,
-                success: async function (response) {
-                    let result = await JSON.parse(response)
+                success: function (response) {
+                    let result = JSON.parse(response)
                     result.data ? setElements(result.data) : console.log("No Item");
                 },
                 error: function (xhr, status, error) {
@@ -196,6 +196,7 @@
                 let price = item["price"];
                 let image = item["img"];
                 let stock = item["stock"];
+                let description = item["description"];
                 let src = `../../../assets/images/${image}`
                 $("section .item").append(
 
@@ -205,10 +206,9 @@
               </div>
               <div class="item-detail">
                 <p>${name}</p>
-                <div style="display:flex;"><p>₱${price}.00 </p><div class="wishlist" data-beat=${true}><i class="fa fa-heart wishlist-add" aria-hidden="true"></i>
+                <div style="display:flex; align-items: baseline;"><p>₱${price}.00 </p><div class="wishlist" data-beat=${true}><i class="fa fa-heart wishlist-add" aria-hidden="true"></i>
                 </div></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
-                  et dolore magna aliqua.</p>
+                <p>${description}</p>
                 
                 <div class="lower">
                   <div class="quantity-wrapper">
@@ -322,8 +322,8 @@
                 method: "POST",
                 url: '../../../server/wishlist/exist.php',
                 data: { itemID: value },
-                success: async function (response) {
-                    let result = await JSON.parse(response)
+                success: function (response) {
+                    let result = JSON.parse(response)
                     if (result.data) {
                         $(".wishlist-add").addClass("beat");
                         hasBeat = true;

@@ -11,9 +11,10 @@
     if ($result) {
         $_SESSION["customerID"] = $result;
         header("location: ../index.php");
+        exit();
     } else {
         header("location: ../forms/login.php");
-
+        exit();
     }
 
 } else {

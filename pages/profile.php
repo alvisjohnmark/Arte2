@@ -180,10 +180,10 @@
             $.ajax({
                 method: "GET",
                 url: "../server/cart/getItemsQnty.php",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
-                    if (result.data[0][0]) {
-                        $(".nav-desk").find("span").text(result.data[0][0])
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    if (result.data) {
+                        $(".nav-desk").find("span").text(result.data)
                     } else {
                         console.log("No User");
                     }

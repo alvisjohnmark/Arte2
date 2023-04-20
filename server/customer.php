@@ -5,9 +5,10 @@ if (isset($_GET)) {
 
     if (isset($_SESSION["customerID"])) {
         echo json_encode(["data" => true]);
+        exit();
     } else {
         echo json_encode(["data" => false]);
-
+        exit();
     }
 } else {
     echo json_encode(["msg" => "Error"]);

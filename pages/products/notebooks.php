@@ -23,7 +23,7 @@
                 </button>
             </div>
             <div class="brand-name">
-                <a href="../index.php">
+                <a href="../../index.php">
                     <span>Arte</span>
                     <span>crafts</span>
                 </a>
@@ -33,7 +33,8 @@
                     <li><a href="./products/paper.php">About</a></li>
                     <li><a href="#">Contact</a></li>
                     <li>
-                        <a href="../wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
+                        <a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>><i
+                                class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
                         <a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>><i
