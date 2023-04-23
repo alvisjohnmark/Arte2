@@ -118,7 +118,7 @@
             </div>
     </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="../global/js/animation.js"></script>
+    <script src="../../global/js/animation.js"></script>
     <script>
         $(document).ready(function () {
             $.ajax({
@@ -164,7 +164,7 @@
                 let itemID = item["itemID"];
                 let src = `../../assets/images/${image}`
                 $("section .inner-outer-products .card-container").append(
-                    $(`<a href="./papers/paper.php?itemID=${itemID}"><div class="card">
+                    $(`<a href="./notebooks/notebook.php?itemID=${itemID}"><div class="card">
                 <div class="image-holder">
                     <img src=${src} loading="lazy">
                 </div>
@@ -179,8 +179,6 @@
 
         }
     </script>
-
-    <script src="../../js/animation.js"></script>
 </body>
 
 </html>

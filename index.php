@@ -124,42 +124,6 @@
         </div>
       </div>
     </section>
-    <!--SERVICES-->
-    <section class="services" id="services">
-      <div class="container">
-        <h2>OUR SERVICES</h2>
-        <div class="items">
-          <div class="item">
-            <div class="image">
-              <img src="./assets/images/Dark Academia Stationary Kit Letter Writing Dark Academia - Etsy - Copy.png"
-                alt="" />
-            </div>
-            <div class="text">
-              <p>Letter Writing Service</p>
-            </div>
-          </div>
-          <div class="item">
-            <div class="image">
-              <img src="./assets/images/Personalised-Journal-Notebook-Custom-Name-Journal-Custom-Etsy-Copy.png"
-                alt="" />
-            </div>
-            <div class="text">
-              <p>Personalize Your Purchase</p>
-            </div>
-          </div>
-          <div class="item">
-            <div class="image">
-              <img
-                src="./assets/images/pencil-case_-cottagecore_-pencil-pouch_-pencil-case-aesthetic_-cottage-core_-estuches-lapices-tela_-.png"
-                alt="" />
-            </div>
-            <div class="text">
-              <p>Pack and Shift as Gift</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
   <footer class="site-footer">
     <div class="container">

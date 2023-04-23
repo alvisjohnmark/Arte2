@@ -1,141 +1,237 @@
-.hamburger {
-  display: block;
-  cursor: pointer;
-}
-.hamburger .line {
-  width: 1.875rem;
-  height: 0.188rem;
-  background: #000000;
-  margin: 0.375rem 1rem 0.375rem 1rem;
-}
-.admin-text {
-  text-align: center;
-}
-.admin-text h1 {
-  letter-spacing: 0.5em;
+.form {
+  position: relative;
+  font-family: var(--font-style-three);
+  /* opacity: 0; */
 }
 
-.card-container {
-  position: relative;
-  padding: 1rem;
-  font-family: var(--font-style-four);
+td,
+th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
 }
-.cards {
+
+tr {
+  border: 1px solid #dddddd;
+  height: 2rem;
+}
+
+table {
+  width: 50%;
+  margin: auto;
+  font-family: var(--font-style-three);
+  border-collapse: separate;
+  border-spacing: 0 5px;
+}
+
+tr td:last-child {
+  /* text-align: center; */
   display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  margin-top: 100px;
-  justify-content: center;
+  justify-content: space-between;
+}
+.item-table button,
+.exit-view {
+  /* float: right; */
+  padding: 3px 6px;
+  outline: none;
+  border: none;
+  background-color: inherit;
+  background: inherit;
+  cursor: pointer;
+}
+
+.item-table ul {
+  width: fit-content;
+}
+
+.item-table li {
+  display: flex;
   align-items: center;
+  gap: 30px;
+  justify-content: space-between;
 }
-.card {
-  position: relative;
-  height: 350px;
-  width: 275px;
-  background-color: var(--primary-color);
-  border-radius: 20px;
-  padding: 20px;
-  margin-top: auto;
+
+form,
+.item-table ul {
+  width: 50%;
+  margin: auto;
+  padding: 1rem;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
-.card-header {
-  padding: 5px 10px 10px 5px;
+
+input,
+select {
+  margin: 1rem;
+}
+form p {
+  margin-top: 1rem;
+}
+.fa {
+  color: var(--icon-color);
+}
+select {
+  font-size: 1.3rem;
+}
+
+input[type="submit"],
+.addBtn button,
+.delete-confirmation-dialog button,
+.form input[type="button"] {
+  /* position: relative; */
+  margin: auto;
+  text-align: center;
+  cursor: pointer;
+  padding: 12px 20px;
+  width: 100%;
+  color: whitesmoke;
+  background: var(--icon-color);
+  margin: 15px 0;
+  border: 1px solid var(--icon-color) !important;
+}
+
+textarea {
+  font-family: var(--font-style-three);
+  width: 100%;
+  resize: none;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  margin: 5px 0px;
+  padding: 15px 20px;
+  outline: none;
+  border: solid #35393575 1px;
+}
+
+.preview {
+  border: 1px solid black;
+  width: 100px;
+  height: 100px;
+  margin: auto;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+}
+
+.addBtn {
   text-align: center;
 }
-.card span {
-  font-size: 20px;
+
+.addBtn button {
+  width: 50%;
+  padding: 10px;
 }
-.add-product {
-  margin-top: auto;
-  padding-left: 50px;
-  padding-right: 50px;
-}
-.add-product button {
-  position: absolute;
-  top: 90%;
+
+.delete-confirmation-dialog {
+  background-color: var(--secondary-color);
+  width: fit-content;
+  margin: auto;
+  text-align: center;
+  /* display: none; */
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 30px;
-  width: 50%;
-  border: none;
-  cursor: pointer;
-}
-.add-product button:hover {
-  opacity: 0.7;
+  padding: 1.5rem;
+  z-index: 2;
 }
 
-.small-card {
+.overlay {
+  display: none;
+  z-index: 1;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.show {
+  display: block;
+}
+
+.delete-confirmation-dialog p {
+  margin: 12px;
+  font-size: 1.1rem;
+}
+
+.delete-confirmation-dialog .actionBtn {
+  width: 100px;
+  margin: 3px 6px;
+  display: inline;
+}
+
+.delete-confirmation-dialog button {
+  padding: 4px 6px;
+}
+.delete-confirmation-dialog button:last-child,
+.form input[type="button"] {
+  background: rgba(155, 155, 155, 0.24);
+  color: red;
+}
+
+.view-modal {
   position: relative;
-  height: 350px;
-  width: 275px;
-  background-color: var(--primary-color);
-  border-radius: 20px;
-  padding: 20px;
-}
-.card-header {
-  padding: 5px 10px 10px 5px;
-  text-align: center;
-  font-family: var(--font-style-five);
-}
-.small-card span {
-  font-size: 20px;
-  font-family: var(--font-style-five);
-}
-
-.close {
-  margin-left: 650px;
-  border: none;
-  background: none;
-  font-size: 30px;
-}
-.close:hover {
-  opacity: 0.5;
-}
-
-.big-card {
-  height: 600px;
-  width: 1000px;
-  background-color: var(--primary-color);
-}
-
-.header {
-  padding: 1rem 0 1rem 2rem;
-  font-size: 30px;
-}
-label {
-  font-weight: bold;
-  font-size: 20px;
-}
-.form-box {
-  display: flex;
-}
-.input-box {
   padding: 15px;
-  margin: 20px;
-}
-.left-input {
-  width: 50%;
-}
-.right-input {
-  width: 50%;
-}
-input[type="text"] {
-  height: 60px;
-  border: none;
-  width: 100%;
-}
-input[type="number"] {
-  height: 60px;
-  border: none;
-  width: 100%;
+  font-family: var(--font-style-two);
+  width: 300px;
+  margin: auto;
+  color: rgb(240, 236, 236);
+  background-color: var(--highlight-color);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1.5rem;
+  z-index: 2;
 }
 
-.add-btn {
+.view-modal img {
+  margin: 5px;
+  float: right;
+}
+
+.view-modal p {
+  line-height: 22px;
+}
+.view-modal .view-name {
+  font-size: 1.1rem;
+}
+
+.view-modal .view-description {
+  margin: 15px 0;
+  text-align: justify;
+}
+
+.view-modal .view-kind {
+  font-size: 0.9rem;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.exit-view {
+  background-color: transparent;
   position: absolute;
-  top: 620px;
-  left: 1100px;
-  height: 36px;
-  width: 160px;
-  background-color: white;
-  border: none;
-  cursor: pointer;
+  top: -15px;
+  right: -17px;
+}
+
+@media screen and (max-width: 945px) {
+  form,
+  table,
+  .addBtn button {
+    width: 80%;
+  }
+}
+@media screen and (max-width: 426px) {
+  form,
+  table,
+  .addBtn button {
+    width: 95%;
+  }
+
+  td,
+  th {
+    padding: 0px;
+  }
 }

@@ -8,7 +8,8 @@ class Item extends DB
     private $kind;
     private $stock;
     private $img;
-    public function __construct($ID = null, $name = null, $price = null, $category = null, $kind = null, $stock = null, $img = null)
+    private $description;
+    public function __construct($ID = null, $name = null, $price = null, $category = 1, $kind = null, $stock = null, $img = null, $description = null)
     {
         $this->ID = $ID;
         $this->name = $name;
@@ -17,6 +18,7 @@ class Item extends DB
         $this->kind = $kind;
         $this->stock = $stock;
         $this->img = $img;
+        $this->description = $description;
     }
 
     public function getItems()
@@ -25,6 +27,16 @@ class Item extends DB
             $stmt = $this->connect()->prepare("SELECT * FROM `item` WHERE kind = ?"); //use join
             $stmt->bindParam(1, $this->ID, PDO::PARAM_INT);
             $stmt->execute();
+            return $stmt->fetchAll();
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
+
+    public function getAllItem()
+    {
+        try {
+            $stmt = $this->connect()->query("SELECT * FROM `item`"); //use join
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             return "Error" . $e . ".";
@@ -59,16 +71,18 @@ class Item extends DB
 
     }
 
-    public function setItem()
+    public function setItem($name, $price, $kind, $stock, $image, $description, $category)
     {
+
         try {
-            $stmt = $this->connect()->prepare("INSERT INTO `item`( `name`, `price`, `category`, `kind`, `stock`, `img`) VALUES ('?','?','?','?','?','?')");
-            $stmt->bindParam(1, $this->name, PDO::PARAM_STR);
-            $stmt->bindParam(2, $this->price, PDO::PARAM_INT);
-            $stmt->bindParam(3, $this->category, PDO::PARAM_INT);
-            $stmt->bindParam(4, $this->kind, PDO::PARAM_INT);
-            $stmt->bindParam(5, $this->stock, PDO::PARAM_INT);
-            $stmt->bindParam(6, $this->img, PDO::PARAM_STR);
+            $stmt = $this->connect()->prepare("INSERT INTO `item`( `name`, `price`, `kind`, `stock`, `img`, `description`, `category`) VALUES (?,?,?,?,?,?,?)");
+            $stmt->bindParam(1, $name, PDO::PARAM_STR);
+            $stmt->bindParam(2, $price, PDO::PARAM_INT);
+            $stmt->bindParam(3, $kind, PDO::PARAM_INT);
+            $stmt->bindParam(4, $stock, PDO::PARAM_INT);
+            $stmt->bindParam(5, $image, PDO::PARAM_STR);
+            $stmt->bindParam(6, $description, PDO::PARAM_STR);
+            $stmt->bindParam(7, $category, PDO::PARAM_INT);
             if ($stmt->execute()) {
                 return "Success";
             }
@@ -82,6 +96,26 @@ class Item extends DB
         try {
             $stmt = $this->connect()->prepare("DELETE FROM `item` WHERE itemID = ?");
             $stmt->bindParam(1, $this->ID, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                return "Success";
+            }
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
+
+    public function updateItem()
+    {
+        try {
+            $stmt = $this->connect()->prepare("UPDATE `item` SET `name`=?,`price`=?,`category`=?,`kind`=?,`stock`=?,`img`=?,`description`=? WHERE itemID = ?");
+            $stmt->bindParam(1, $this->name, PDO::PARAM_STR);
+            $stmt->bindParam(2, $this->price, PDO::PARAM_INT);
+            $stmt->bindParam(3, $this->category, PDO::PARAM_INT);
+            $stmt->bindParam(4, $this->kind, PDO::PARAM_INT);
+            $stmt->bindParam(5, $this->stock, PDO::PARAM_INT);
+            $stmt->bindParam(6, $this->img, PDO::PARAM_STR);
+            $stmt->bindParam(7, $this->description, PDO::PARAM_STR);
+            $stmt->bindParam(8, $this->ID, PDO::PARAM_STR);
             if ($stmt->execute()) {
                 return "Success";
             }

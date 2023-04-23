@@ -174,12 +174,12 @@
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
-            let value = params.itemID; // "some_value"
+            let value = params.itemID; //gte the value in params
             if (sessionStorage.getItem("add") == "True") {
                 notify("Item(s) Deleted!");
             }
             sessionStorage.setItem("add", "False") //stores in a session
-
+            getItems(); //gets the items
             //gets the quantity of items in cart
             $.ajax({
                 method: "GET",
@@ -266,203 +266,189 @@
         }
 
 
-        $(document).ready(function () {
-            getItems();
-            let checked
-
-            $(document).on("click", ".product-wrapper", (function (e) {
-                if ($(e.target).is("input")) {
-                    return
-                }
-
-                let checkBox = $(this).children(".check");
-                console.log(checkBox);
-                if (checkBox.prop("checked")) {
-                    checkBox.prop("checked", false)
-                } else {
-                    checkBox.prop("checked", true)
-                }
-                if ($(".check:checked").length <= 0) {
-                    $(".delete-confirmation").removeClass("expand")
-                }
-                calculateTotal()
-            }));
-
-
-
-            let s = parseFloat($('.qnty').val())
-
-            function calculateTotal(all = null) {
-                let total = 0
-                $(".check:checked").each(function (index) {
-                    if (all && index == 0) {
-                        return
-                    }
-                    if ($(this).parent().find(".product-total").find("span").length > 1) return;
-                    let val = parseFloat($(this).parent().find(".product-total").find("span").text())
-                    total += val
-                })
-                if (total) {
-                    $("#cart-subtotal span").text(total)
-                    $("#cart-total span").text(total + 80)
-                } else {
-                    $("#cart-subtotal span").text(00)
-                    $("#cart-total span").text(00)
-                }
+        $(document).on("click", ".product-wrapper", (function (e) {
+            if ($(e.target).is("input")) {
+                return
             }
 
-            function calculate(e, quantity, price) {
-                let pric = parseFloat($(price).text())
-                product = quantity * pric;
-                $(e).text(product);
+            let checkBox = $(this).children(".check");
+            console.log(checkBox);
+            if (checkBox.prop("checked")) {
+                checkBox.prop("checked", false)
+            } else {
+                checkBox.prop("checked", true)
             }
-
-            let time_out_running = null;
-
-            $(document).on('input', ".qnty", function (e) {
-                let quantity = parseFloat($(e.target).val())
-                let node = ($(e.target).parent().parent().find(".product-total").find("span"))
-                let price = ($(e.target).parent().parent().find(".product-price").find("span"));
-
-                let sum = quantitySum()
-                $(".nav-desk").find("span").text(sum)
-                calculate(node, quantity, price)
-                calculateTotal()
-
-                if (time_out_running) {
-                    clearTimeout(time_out_running);
-                    time_out_running = null;
-                }
-
-                if (!time_out_running) {
-                    time_out_running = setTimeout(function () {
-                        $.each($(".product-wrapper"), function (index, el) {
-                            updateItems(el);
-                        })
-                    }, 2000)
-                }
-            })
-
-            function quantitySum() {
-                console.log("d");
-                let sum = 0
-                $('.qnty').each(function () {
-                    sum += parseFloat($(this).val())
-                })
-                return sum
-            }
-
-            function removeItemFromDB(el) {
-                let itemID = $(el).parent().find("input").attr("name");
-                let data = { "itemID": itemID }
-                $.ajax({
-                    method: "POST",
-                    url: "../server/cart/delete.php",
-                    data: data,
-                    success: function (response) {
-                        let result = response
-                        console.log(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr, status, error);
-                    }
-                })
-            }
-
-            function updateItems(el) {
-                let quantity = $(el).find(".product-quantity").find(".qnty").val()
-                let itemID = $(el).find("input").attr("name")
-                const data = { quantity: quantity, itemID: itemID }
-                $.ajax({
-                    method: "POST",
-                    url: "../server/cart/update.php",
-                    data: data,
-                    success: function (response) {
-                        let result = response
-                        console.log(response);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr, status, error);
-                    }
-                })
-            }
-
-            $(".select-all-svg").click(function () {
-                //TODO: check the Select all checkbox when all products are selected
-
-                let checkBoxes = $(".check");
-                if (checkBoxes.prop("checked")) {
-                    checkBoxes.prop("checked", false)
-                } else {
-                    checkBoxes.prop("checked", true)
-                }
-                calculateTotal(true)
-
-            })
-
-
-            $(document).on("click", ".delete-confirmation button:first-child", function () {
-                console.log("Fired");
-                $(".check:checked").map(function (i, el) {
-                    $(el).parent().slideUp(300, function () {
-                        removeItemFromDB(el)
-                        $(el).parent().remove()
-                    });
-                })
+            if ($(".check:checked").length <= 0) {
                 $(".delete-confirmation").removeClass("expand")
+            }
+            calculateTotal()
+        }));
 
-                setTimeout(function () {
-                    sessionStorage.setItem("add", "True");
-                    location.reload()
-                }, 500);
-            })
-
-
-            $(document).on("click", ".delete-confirmation button:last-child", function () {
-                $(".delete-confirmation").removeClass("expand")
-                $(".check:checked").map(function (i, el) {
-                    $(el).prop("checked", false)
-                })
-                calculateTotal()
-
-            })
-
-
-            $(".delete").click(function () {
-                if ($(".check:checked").length <= 0) {
-                    console.log("Select an item");
-                    notify("Please select item(s)")
+        function calculateTotal(all = null) {
+            let total = 0
+            $(".check:checked").each(function (index) {
+                if (all && index == 0) {
                     return
                 }
-                $(".delete-confirmation").addClass("expand")
+                if ($(this).parent().find(".product-total").find("span").length > 1) return;
+                let val = parseFloat($(this).parent().find(".product-total").find("span").text())
+                total += val
             })
+            if (total) {
+                $("#cart-subtotal span").text(total)
+                $("#cart-total span").text(total + 80)
+            } else {
+                $("#cart-subtotal span").text(00)
+                $("#cart-total span").text(00)
+            }
+        }
 
-            //Checkout
-            $(".checkout").click(function () {
-                if ($(".check:checked").length <= 0) {
-                    console.log("Noway");
-                    notify("Please select item(s)")
-                    return
+        function calculate(e, quantity, price) {
+            let pric = parseFloat($(price).text())
+            product = quantity * pric;
+            $(e).text(product);
+        }
+
+        let time_out_running = null;
+
+        $(document).on('input', ".qnty", function (e) {
+            let quantity = parseFloat($(e.target).val())
+            let node = ($(e.target).parent().parent().find(".product-total").find("span"))
+            let price = ($(e.target).parent().parent().find(".product-price").find("span"));
+
+            let sum = quantitySum()
+            $(".nav-desk").find("span").text(sum)
+            calculate(node, quantity, price)
+            calculateTotal()
+
+            if (time_out_running) {
+                clearTimeout(time_out_running);
+                time_out_running = null;
+            }
+
+            if (!time_out_running) {
+                time_out_running = setTimeout(function () {
+                    $.each($(".product-wrapper"), function (index, el) {
+                        updateItems(el);
+                    })
+                }, 2000)
+            }
+        })
+
+        function quantitySum() {
+            console.log("d");
+            let sum = 0
+            $('.qnty').each(function () {
+                sum += parseFloat($(this).val())
+            })
+            return sum
+        }
+
+        function removeItemFromDB(el) {
+            let itemID = $(el).parent().find("input").attr("name");
+            let data = { "itemID": itemID }
+            $.ajax({
+                method: "POST",
+                url: "../server/cart/delete.php",
+                data: data,
+                success: function (response) {
+                    let result = response
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
                 }
-                let items_list = []
-
-                $(".check:checked").each(function () {
-                    items_list.push(parseInt($(this).attr("name")));
-                })
-
-                let cartID = $("#cart-id").find("span").text().trim()
-                console.log(cartID);
-
-                let url = `http://localhost/ARTE/pages/checkout.php?items=${items_list}&cartID=${cartID}`
-                window.location = url
-
-
-                // setOrderSummary()
-                // $(".checkout-wrapper").addClass("show");
             })
+        }
 
+        function updateItems(el) {
+            let quantity = $(el).find(".product-quantity").find(".qnty").val()
+            let itemID = $(el).find("input").attr("name")
+            const data = { quantity: quantity, itemID: itemID }
+            $.ajax({
+                method: "POST",
+                url: "../server/cart/update.php",
+                data: data,
+                success: function (response) {
+                    let result = response
+                    console.log(response);
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
+        }
+
+        $(".select-all-svg").click(function () {
+            //TODO: check the Select all checkbox when all products are selected
+
+            let checkBoxes = $(".check");
+            if (checkBoxes.prop("checked")) {
+                checkBoxes.prop("checked", false)
+            } else {
+                checkBoxes.prop("checked", true)
+            }
+            calculateTotal(true)
 
         })
+
+
+        $(document).on("click", ".delete-confirmation button:first-child", function () {
+            console.log("Fired");
+            $(".check:checked").map(function (i, el) {
+                $(el).parent().slideUp(300, function () {
+                    removeItemFromDB(el)
+                    $(el).parent().remove()
+                });
+            })
+            $(".delete-confirmation").removeClass("expand")
+
+            setTimeout(function () {
+                sessionStorage.setItem("add", "True");
+                location.reload()
+            }, 500);
+        })
+
+
+        $(document).on("click", ".delete-confirmation button:last-child", function () {
+            $(".delete-confirmation").removeClass("expand")
+            $(".check:checked").map(function (i, el) {
+                $(el).prop("checked", false)
+            })
+            calculateTotal()
+
+        })
+
+
+        $(".delete").click(function () {
+            if ($(".check:checked").length <= 0) {
+                console.log("Select an item");
+                notify("Please select item(s)")
+                return
+            }
+            $(".delete-confirmation").addClass("expand")
+        })
+
+        //Checkout
+        $(".checkout").click(function () {
+            if ($(".check:checked").length <= 0) {
+                console.log("Noway");
+                notify("Please select item(s)")
+                return
+            }
+            let items_list = []
+
+            $(".check:checked").each(function () {
+                items_list.push(parseInt($(this).attr("name")));
+            })
+
+            let cartID = $("#cart-id").find("span").text().trim()
+            console.log(cartID);
+
+            let url = `http://localhost/ARTE/pages/checkout.php?items=${items_list}&cartID=${cartID}`
+            window.location = url
+        })
+
     </script>
 </body>
 

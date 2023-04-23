@@ -5,7 +5,7 @@
   background-color: var(--primary-color);
   color: #353935;
   padding: 1rem;
-  margin: 1rem;
+  margin: 150px 0 50px 0;
 }
 
 form,
@@ -16,7 +16,8 @@ p {
 }
 
 select,
-input {
+input,
+button {
   width: 70%;
   padding: 20px 25px;
   outline: none;
@@ -30,7 +31,8 @@ select {
     calc(92% + 3px) center/12px;
 }
 
-input {
+input,
+button {
   margin-top: 2rem;
   background: var(--icon-color);
   color: whitesmoke;
