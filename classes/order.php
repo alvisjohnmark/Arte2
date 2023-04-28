@@ -88,7 +88,6 @@ class Order extends DB
     private function setAddress()
     {
         try {
-
             $stmt = $this->connect()->prepare("INSERT INTO `address`(`address`, `customerID`) VALUES (?,?)");
             $stmt->bindParam(1, $this->address, PDO::PARAM_STR);
             $stmt->bindParam(2, $this->customerId, PDO::PARAM_INT);
@@ -121,7 +120,7 @@ class Order extends DB
     public function getOrderItems($orderID)
     {
         try {
-            $stmt = $this->connect()->query("SELECT placedorder.orderID, placedorder.cost, item.name, item.img, cart_items.quantity FROM `placedorder`INNER JOIN cart_items on cart_items.orderID = placedorder.orderID INNER JOIN item on item.itemID = cart_items.itemID WHERE placedorder.orderID = '$orderID'");
+            $stmt = $this->connect()->query("SELECT placedorder.orderID, placedorder.cost, item.name, item.img, cart_items.quantity, item.price FROM `placedorder`INNER JOIN cart_items on cart_items.orderID = placedorder.orderID INNER JOIN item on item.itemID = cart_items.itemID WHERE placedorder.orderID = '$orderID'");
             $result = $stmt->fetchALL();
             if (isset($result)) {
                 return $result;

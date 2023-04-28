@@ -36,6 +36,17 @@
   border-radius: 50%;
 }
 
+button {
+  margin-top: 2rem;
+  font-family: "Josefin Sans", sans-serif;
+  padding: 10px 25px;
+  outline: none;
+  background-color: var(--icon-color);
+  border: solid #35393575 1px;
+  color: whitesmoke;
+  cursor: pointer;
+}
+
 .table-container {
   width: 100%;
   height: 400px;

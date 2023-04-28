@@ -72,6 +72,7 @@
                     <div class="profile-details">
                         <p class="name">Jonathan</p>
                         <p class="address">Brgy. 29 Pasngal, Bacarra, Ilocos Norte</p>
+                        <button id="logout">Logout</button>
                     </div>
                 </div>
                 <div class="my-orders">
@@ -172,7 +173,9 @@
             }, 2000)
         }
 
+
         $(document).ready(function () {
+
             if (sessionStorage.getItem("cancel") == "True") {
                 notify("Order Cancelled");
             }
@@ -193,10 +196,26 @@
                     console.error(xhr, status, error);
                 }
             })
-        });
+
+            $.ajax({
+                method: "GET",
+                url: "../server/customer/get.php",
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    if (result.data) {
+                        setUser(result.data)
+
+                    } else {
+                        console.log("No User");
+                    }
+
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr, status, error);
+                }
+            })
 
 
-        $(document).ready(function () {
             $.ajax({
                 method: "GET",
                 url: "../server/order/get_orders.php",
@@ -216,18 +235,23 @@
                 }
             })
 
-            function setItem(items) {
-                items.forEach(item => {
-                    $(".table-container table").append($(`<tr id=${item["orderID"]}>
-                                <td>Order ${item["orderID"]} </td>
-                                <td>${item["time_placed"]}</td>
-                                <td>${item["status"]}</td>
-                                <td class="details">Details</td>
-                            </tr>`))
-                });
-            }
         })
 
+        function setUser(user) {
+            $('.profile-details p:first-child').text(user[0]['name'])
+            $('.profile-details p:nth-child(2').text(user[0]['email'])
+        }
+
+        function setItem(items) {
+            items.forEach(item => {
+                $(".table-container table").append($(`<tr id=${item["orderID"]}>
+                            <td>Order ${item["orderID"]} </td>
+                            <td>${item["time_placed"]}</td>
+                            <td>${item["status"]}</td>
+                            <td class="details">Details</td>
+                        </tr>`))
+            });
+        }
 
         function setItems(params) {
             $(".order-summary ul").empty() //remove the existing child elements
@@ -235,11 +259,11 @@
             // $(".order-summary ul").prop("id", "")
             params.forEach(item => {
                 $(".order-summary ul").append(`<li>
-                    <img src="" alt="">
+                    <img src=../assets/images/${item["img"]} alt="">
                     <div>
                         <p>${item["name"]}</p>
                         <p>Qnty: <span>${item["quantity"]}</span></p>
-                        <p>₱<span>${item["cost"]}.00</span></p>
+                        <p>₱<span>${item["price"] * item["quantity"]} .00</span></p>
                     </div>
                 </li>`)
                 $(".sub").find("p:nth-child(2) span").text(item["cost"] - 80)
@@ -308,6 +332,10 @@
                     console.error(xhr, status, error);
                 }
             })
+        })
+
+        $("#logout").click(function () {
+            window.location = '../global/logout.php'
         })
 
 
