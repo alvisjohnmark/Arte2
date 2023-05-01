@@ -124,5 +124,20 @@ class Item extends DB
         }
     }
 
+    public function update_stock($ID, $quantity)
+    {
+
+        try {
+            $stmt = $this->connect()->prepare("UPDATE `item` SET `stock`= stock - ? WHERE itemID = ?");
+            $stmt->bindParam(1, $quantity, PDO::PARAM_INT);
+            $stmt->bindParam(2, $ID, PDO::PARAM_INT);
+            if ($stmt->execute()) {
+                return "Success";
+            }
+        } catch (PDOException $e) {
+            return "Error" . $e . ".";
+        }
+    }
+
 }
 ?>

@@ -92,7 +92,7 @@
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
-
+            //get items in the url
             let list = params.items.split(",").map(function (str) { return parseInt(str) })
             console.log(list);
             getItems();
@@ -102,11 +102,15 @@
                     method: "GET",
                     url: "../server/cart/getAll.php",
                     success: function (response) {
+                        //filter out items not in the list
                         let result = JSON.parse(response)
                         let new_list = result.data.filter(function (item) {
                             return list.includes(item["itemID"])
                         })
                         setOrderSummary(new_list)
+                        // store the items in the sessionStorage
+                        // retrieve when user checks out
+                        sessionStorage.setItem("items", JSON.stringify(new_list));
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr, status, error);
@@ -118,7 +122,7 @@
                 let subtotal = 0;
                 items.map(function (item) {
                     $(".summary ul").append(`<li>
-                <img src="" alt="">
+                <img src=../assets/images/${item["img"]} alt="">
                                         <div>
                                             <p>${item["name"]}</p>
                                             <p>Qnty: <span>${item["quantity"]}</span></p>
@@ -145,6 +149,29 @@
                 }
             })
 
+            function updateStock() {
+                const items = JSON.parse(sessionStorage.getItem("items"));
+                console.log(items);
+                items.map((function (item) {
+                    let data = {}
+                    data.itemID = item.itemID
+                    data.quantity = item.quantity
+                    console.log(data);
+
+                    $.ajax({
+                        method: "POST",
+                        url: "../server/item/update_stock.php",
+                        data: data,
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr, status, error);
+                        }
+                    })
+                }))
+            }
+
             $("form").submit(function (e) {
                 e.preventDefault();
 
@@ -160,8 +187,7 @@
                     url: "../server/order/set_order.php",
                     data: data,
                     success: function (response) {
-                        // let result = JSON.parse(response);
-                        console.log(response);
+                        updateStock()
                         window.history.back()
 
                     },

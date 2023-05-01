@@ -71,8 +71,8 @@
                             <li>Products</li>
                         </a>
                         <span>❯</span>
-                        <a href="../notebooks.php">
-                            <li>Notebook</li>
+                        <a href="../pens.php">
+                            <li>Pen</li>
                         </a>
                         <span>❯</span>
                         <li id="name"></li>

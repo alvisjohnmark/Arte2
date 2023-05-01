@@ -104,19 +104,23 @@
             </div>
           </div>
           <div class="item">
-            <div class="image">
-              <img
-                src="./assets/images/pencil-case_-cottagecore_-pencil-pouch_-pencil-case-aesthetic_-cottage-core_-estuches-lapices-tela_-.png"
-                alt="" />
-            </div>
+            <a href="./pages/products/cases.php">
+              <div class="image">
+                <img
+                  src="./assets/images/pencil-case_-cottagecore_-pencil-pouch_-pencil-case-aesthetic_-cottage-core_-estuches-lapices-tela_-.png"
+                  alt="" />
+              </div>
+            </a>
             <div class="text">
               <p>Canvas Pencil Case and Pouches</p>
             </div>
           </div>
           <div class="item">
-            <div class="image">
-              <img src="./assets/images/Pretty-Stationery-Items.png" alt="" />
-            </div>
+            <a href="./pages/products/pens.php">
+              <div class="image">
+                <img src="./assets/images/Pretty-Stationery-Items.png" alt="" />
+              </div>
+            </a>
             <div class="text">
               <p>Stationary and Calligraphy Pens</p>
             </div>

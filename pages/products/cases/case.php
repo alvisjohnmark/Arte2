@@ -71,8 +71,8 @@
                             <li>Products</li>
                         </a>
                         <span>❯</span>
-                        <a href="../notebooks.php">
-                            <li>Notebook</li>
+                        <a href="../cases.php">
+                            <li>Case and Pouch</li>
                         </a>
                         <span>❯</span>
                         <li id="name"></li>

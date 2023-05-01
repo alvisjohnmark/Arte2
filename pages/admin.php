@@ -89,7 +89,7 @@
                     <input type="radio" id="notebook" name="kind" value="2">
                     <label for="notebook">Notebook</label>
                     <input type="radio" id="case" name="kind" value="3">
-                    <label for="case">Pencil Case</label>
+                    <label for="case">Case and Pouch</label>
                     <input type="radio" id="pen" name="kind" value="4">
                     <label for="pen">Pen</label>
                     <br>
