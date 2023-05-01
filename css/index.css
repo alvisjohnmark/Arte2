@@ -138,3 +138,26 @@ h2 {
     padding: 0 1rem;
   }
 }
+
+.sticky {
+  position: -webkit-sticky;
+  position: fixed;
+  top: 70%;
+  left: 85%;
+  background-color: transparent;
+  padding: 150px;
+}
+
+.sticky button{
+  height: 40px;
+  width: 40px;
+  border-radius: 20px;
+  background-color: var(--icon-color);
+  border: none;
+  bottom: 10%;
+  right: 3%;
+}
+
+.sticky button a i{
+  color: var(--primary-color);
+}
