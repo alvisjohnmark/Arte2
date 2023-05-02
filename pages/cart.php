@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../css/cart.css">
     <link rel="stylesheet" href="../css/checkout.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo.ico" />
     <title>Arte crafts</title>
 </head>
 
@@ -157,17 +158,7 @@
     <script src="../global/js/animation.js"></script>
     <script>
 
-        function notify(message) {
-            // if ($(".notify") >= 1) return
-            let div = document.createElement("div");
-            div.innerHTML = message
-            div.classList.add("notify")
-            $("body").prepend(div);
 
-            setTimeout(function () {
-                div.remove();
-            }, 2000)
-        }
 
         $(document).ready(function () {
 
@@ -179,7 +170,7 @@
                 notify("Item(s) Deleted!");
             }
             sessionStorage.setItem("add", "False") //stores in a session
-            getItems(); //gets the items
+            getItems(); //gets the items and render them to the page
             //gets the quantity of items in cart
             $.ajax({
                 method: "GET",
@@ -199,7 +190,17 @@
             })
         });
 
+        function notify(message) {
+            // if ($(".notify") >= 1) return
+            let div = document.createElement("div");
+            div.innerHTML = message
+            div.classList.add("notify")
+            $("body").prepend(div);
 
+            setTimeout(function () {
+                div.remove();
+            }, 2000)
+        }
 
 
         function getItems() {
@@ -265,7 +266,7 @@
                 }) : $("section .totals").prepend("<div class='no-items-msg'><span>No items in your cart.</span></div>")
         }
 
-
+        //manages the checkboxes
         $(document).on("click", ".product-wrapper", (function (e) {
             if ($(e.target).is("input")) {
                 return
@@ -283,6 +284,8 @@
             }
             calculateTotal()
         }));
+
+        //calculateTotal: Calculate the overall total of products including shipping
 
         function calculateTotal(all = null) {
             let total = 0
@@ -303,21 +306,24 @@
             }
         }
 
+        //calculates the total of an item: price * quantity of an item
         function calculate(e, quantity, price) {
             let pric = parseFloat($(price).text())
             product = quantity * pric;
             $(e).text(product);
         }
 
-        let time_out_running = null;
 
+        //this is for handling changes in the input.
+        //to prevent multiple query every change in the input,
+        //it calls a query every 2 seconds of inactivity from input
+        let time_out_running = null;
         $(document).on('input', ".qnty", function (e) {
             let quantity = parseFloat($(e.target).val())
             let node = ($(e.target).parent().parent().find(".product-total").find("span"))
             let price = ($(e.target).parent().parent().find(".product-price").find("span"));
 
-            let sum = quantitySum()
-            $(".nav-desk").find("span").text(sum)
+            quantitySum()
             calculate(node, quantity, price)
             calculateTotal()
 
@@ -335,14 +341,16 @@
             }
         })
 
+        //this gets the total quantity of all items
+        //this function is called everytime there are changes in the inputs
         function quantitySum() {
-            console.log("d");
             let sum = 0
             $('.qnty').each(function () {
                 sum += parseFloat($(this).val())
             })
-            return sum
+            $(".nav-desk").find("span").text(sum)
         }
+
 
         function removeItemFromDB(el) {
             let itemID = $(el).parent().find("input").attr("name");
@@ -403,6 +411,7 @@
             })
             $(".delete-confirmation").removeClass("expand")
 
+            //setTimeout to make sure the item is set before the page reloads
             setTimeout(function () {
                 sessionStorage.setItem("add", "True");
                 location.reload()
@@ -422,7 +431,6 @@
 
         $(".delete").click(function () {
             if ($(".check:checked").length <= 0) {
-                console.log("Select an item");
                 notify("Please select item(s)")
                 return
             }
@@ -432,7 +440,6 @@
         //Checkout
         $(".checkout").click(function () {
             if ($(".check:checked").length <= 0) {
-                console.log("Noway");
                 notify("Please select item(s)")
                 return
             }

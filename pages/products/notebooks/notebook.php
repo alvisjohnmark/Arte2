@@ -9,6 +9,7 @@
     <link href="../../../css/style.css" rel="stylesheet" />
     <link href="../../../css/product_showcase.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../../../assets/images/logo.ico" />
 
     <title>Arte crafts</title>
 </head>
@@ -50,8 +51,8 @@
         <div id="mobile" class="mobile">
             <navbar class="mobile-nav">
                 <ul>
-                    <li><a href="../profile.php">Profile</a></li>
-                    <li><a href="../wishlist.php">Wishlist</a></li>
+                    <li><a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../../forms/login.php" ?>>Profile</a></li>
+                    <li><a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>>Wishlist</a></li>
                     <li>
                         <a href="../wishlist.php">About</a>
                     </li>

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/checkout.css">
     <link href="../css/items.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../assets/images/logo.ico" />
     <title>Arte crafts</title>
 </head>
 
