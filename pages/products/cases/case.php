@@ -36,12 +36,10 @@
                         <a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../../forms/login.php" ?>><i
-                                class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../../forms/login.php" ?>><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href=<?php $userLoggedIn ? print "../../cart.php" : print "../../../forms/login.php" ?>><i
-                                class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <a href=<?php $userLoggedIn ? print "../../cart.php" : print "../../../forms/login.php" ?>><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
                     </li>
@@ -51,8 +49,10 @@
         <div id="mobile" class="mobile">
             <navbar class="mobile-nav">
                 <ul>
-                    <li><a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../../forms/login.php" ?>>Profile</a></li>
-                    <li><a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>>Wishlist</a></li>
+                    <li><a href=<?php $userLoggedIn ? print "../../profile.php" : print "../../../forms/login.php" ?>>Profile</a>
+                    </li>
+                    <li><a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>>Wishlist</a>
+                    </li>
                     <li>
                         <a href="#">About</a>
                     </li>
@@ -120,11 +120,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="../../../global/js/animation.js"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             $.ajax({
                 method: "GET",
                 url: "../../../server/cart/getItemsQnty.php",
-                success: function (response) {
+                success: function(response) {
                     let result = JSON.parse(response)
                     if (result.data) {
                         $(".nav-desk").find("span").text(result.data)
@@ -133,7 +133,7 @@
                     }
 
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
@@ -145,14 +145,14 @@
             div.classList.add("notify")
             $("body").prepend(div);
 
-            setTimeout(function () {
+            setTimeout(function() {
                 if ($('.notify').length > 0) {
                     div.remove();
                 }
             }, 2000)
         }
 
-        $(document).ready(function () {
+        $(document).ready(function() {
             const params = new Proxy(new URLSearchParams(window.location.search), {
                 get: (searchParams, prop) => searchParams.get(prop),
             });
@@ -165,12 +165,12 @@
             $.ajax({
                 method: "GET",
                 url: "../../../server/customer.php",
-                success: function (response) {
+                success: function(response) {
                     let result = JSON.parse(response)
                     renderItem(value, result.data)
                     wishlist(value, result.data)
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
@@ -183,11 +183,11 @@
             $.ajax({
                 method: "GET",
                 url: `../../../server/item/get.php?itemID=${value}`,
-                success: function (response) {
+                success: function(response) {
                     let result = JSON.parse(response)
                     result.data ? setElements(result.data) : console.log("No Item");
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
@@ -227,8 +227,7 @@
                   <button id="cart" class="add-to-cart">Add to cart</button>
                 </div>
               </div>
-            </div>`
-                    ));
+            </div>`));
                 $(".outer-paper-products #name").append(
                     $(`<b>${name}</b>`)
                 )
@@ -238,7 +237,7 @@
 
                 let s = Number($('#stock').text())
 
-                $(document).on('input', "#qnty", function (e) {
+                $(document).on('input', "#qnty", function(e) {
                     let cur = Number($("#qnty").val())
                     if (cur == 0) {
 
@@ -256,7 +255,7 @@
                     }
                 })
 
-                $(document).on('click', "#inc", function () {
+                $(document).on('click', "#inc", function() {
                     let cur = Number($("#qnty").val())
                     if (cur == item["stock"] || cur === item["stock"]) {
                         return
@@ -266,7 +265,7 @@
                     $("#qnty").val(cur)
                 });
 
-                $(document).on('click', "#dec", function () {
+                $(document).on('click', "#dec", function() {
                     let cur = $("#qnty").val()
                     if (cur == 1 || cur === 1) {
                         return
@@ -280,9 +279,9 @@
 
 
             //add to cart 
-            $(document).on('click', "#cart", function (i) {
+            $(document).on('click', "#cart", function(i) {
                 if (!userLoggedIn) {
-                    window.location.href = "http://localhost/ARTE/forms/login.php";
+                    window.location.href = "../../../forms/login.php";
                     return
                 }
                 let qnty = $("#qnty").val()
@@ -290,17 +289,20 @@
                 if (qnty === 0 || qnty === '0') return;
                 //itemID is very importanting
                 console.log(qnty);
-                let data = { quantity: qnty, itemID: value }
+                let data = {
+                    quantity: qnty,
+                    itemID: value
+                }
                 $.ajax({
                     method: "POST",
                     url: "../../../server/cart/add.php",
                     data: data,
-                    success: function (response) {
+                    success: function(response) {
                         let result = response
                         sessionStorage.setItem("add", "True");
                         location.reload()
                     },
-                    error: function (xhr, status, error) {
+                    error: function(xhr, status, error) {
                         console.error(xhr, status, error);
                     }
                 })
@@ -322,8 +324,10 @@
             $.ajax({
                 method: "POST",
                 url: '../../../server/wishlist/exist.php',
-                data: { itemID: value },
-                success: function (response) {
+                data: {
+                    itemID: value
+                },
+                success: function(response) {
                     let result = JSON.parse(response)
                     if (result.data) {
                         $(".wishlist-add").addClass("beat");
@@ -335,12 +339,12 @@
                         hasBeat = false;
                     }
                 },
-                error: function (xhr, status, error) {
+                error: function(xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
 
-            $(document).on('click', ".wishlist-add", function () {
+            $(document).on('click', ".wishlist-add", function() {
                 if (!userLoggedIn) {
                     window.location.href = "http://localhost/ARTE/forms/login.php";
                 }
@@ -355,19 +359,21 @@
                 }
             });
 
-            $(window).on('beforeunload', function () {
-                let data = { itemID: value }
+            $(window).on('beforeunload', function() {
+                let data = {
+                    itemID: value
+                }
                 console.log(hasBeat);
                 if (hasBeat) {
                     $.ajax({
                         method: "POST",
                         url: "../../../server/wishlist/add.php",
                         data: data,
-                        success: function (response) {
+                        success: function(response) {
                             let result = JSON.parse(response)
                             console.log(response);
                         },
-                        error: function (xhr, status, error) {
+                        error: function(xhr, status, error) {
                             console.error(xhr, status, error);
                         }
                     })
@@ -377,11 +383,11 @@
                         method: "POST",
                         url: "../../../server/wishlist/delete.php",
                         data: data,
-                        success: function (response) {
+                        success: function(response) {
                             let result = JSON.parse(response)
                             console.log(response);
                         },
-                        error: function (xhr, status, error) {
+                        error: function(xhr, status, error) {
                             console.error(xhr, status, error);
                         }
                     })
@@ -389,8 +395,6 @@
                 }
             });
         }
-
-
     </script>
 </body>
 
