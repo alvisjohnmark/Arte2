@@ -15,7 +15,7 @@
 <body>
     <div class="container">
         <div class="form-container">
-            <h1 class="welcome">Welcome back</h1>
+            <img src="../assets/images/logo.ico" alt="">
             <form method="POST" action="../server/login.php">
                 <div>
                     <label for="email">Email</label>
@@ -25,30 +25,8 @@
                     <label for="password">Password</label>
                     <input type="password" required name="password">
                 </div>
-                <input type="submit" name="submitform">
+                <input class="submit-btn-form" type="submit" name="submitform">
             </form>
-            <p class="sign-up">or sign-up with
-            <p>
-            <div>
-                <ul>
-                    <li>
-                        <a href="#"><i class="fa fa-facebook"></i>Facebook</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-envelope"></i>G-mail</a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-apple"></i>Apple</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="signs-1">
-                <a class="s" href="#">SIGN-IN<i class="fa fa-arrow-right"></i></a>
-            </div>
-            <div class="signs-2">
-                <a class="s" href="./signup.php">SIGN-UP</a>
-                <a class="s" href="#">Forgot password</a>
-            </div>
         </div>
     </div>
 </body>
