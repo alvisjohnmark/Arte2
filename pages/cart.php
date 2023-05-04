@@ -206,7 +206,7 @@
         function getItems() {
             $.ajax({
                 method: "GET",
-                url: "../server/cart/getAll.php",
+                url: "../server/cart/get_all_item_kind.php",
                 success: function (response) {
                     let result = JSON.parse(response)
                     console.log(result.data);
@@ -452,7 +452,7 @@
             let cartID = $("#cart-id").find("span").text().trim()
             console.log(cartID);
 
-            let url = `http://localhost/ARTE/pages/checkout.php?items=${items_list}&cartID=${cartID}`
+            let url = `./checkout.php?items=${items_list}&cartID=${cartID}`
             window.location = url
         })
 

@@ -73,7 +73,7 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla porttitor lobortis erat ut
               scelerisque.
               Nam blandit nisl nec purus tincidunt, accumsan fermentum metus facilisis. </p>
-            <button>Shop</button>
+            <button id="shop-btn">Shop</button>
           </div>
         </div>
       </div>
@@ -131,7 +131,8 @@
       </div>
     </section>
   </main>
-  <div class="sticky"><button><a href="./pages/admin.php"><i class="fa fa-home"></i></a></button></div>
+  <div class="sticky"><button><a href="./pages/admin.php"><i class="fa fa-cog" aria-hidden="true"></i></a></button>
+  </div>
   <footer class="site-footer">
     <div class="container">
       <div class="row">
@@ -164,13 +165,15 @@
         </div>
       </div>
   </footer>
-  <!-- <script src="https://code.iconify.design/iconify-icon/1.0.5/iconify-icon.min.js"></script> -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
     integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./global/js/animation.js">
   </script>
   <script>
+
+
+
     $(document).ready(function () {
       $.ajax({
         method: "GET",

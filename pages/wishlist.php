@@ -174,7 +174,7 @@
                 })
             } else {
                 let ID = $(this).attr("data-item-id")
-                window.location.href = `http://localhost/ARTE/products/papers/paper.php?itemID=${ID}`
+                window.location.href = `./products/papers/paper.php?itemID=${ID}`
             }
         });
 

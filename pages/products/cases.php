@@ -125,10 +125,10 @@
             $.ajax({
                 method: "GET",
                 url: "../../server/cart/getItemsQnty.php",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
-                    if (result.data[0][0]) {
-                        $(".nav-desk").find("span").text(result.data[0][0])
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    if (result.data) {
+                        $(".nav-desk").find("span").text(result.data)
                     } else {
                         console.log("No User");
                     }
@@ -140,12 +140,12 @@
             })
         });
 
-        $(document).ready(async function () {
+        $(document).ready(function () {
             $.ajax({
                 method: "GET",
-                url: "../../server/item/getAll.php?kind=3",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
+                url: "../../server/item/get_all_item_kind.php?kind=3",
+                success: function (response) {
+                    let result = JSON.parse(response)
                     result.data ? setElements(result) : console.log("No Items");
                 },
                 error: function (xhr, status, error) {
@@ -157,15 +157,15 @@
 
 
         function setElements(params) {
-
-            params.data.forEach(item => {
-                let name = item["name"];
-                let price = item["price"];
-                let image = item["img"];
-                let itemID = item["itemID"];
-                let src = `../../assets/images/${image}`
-                $("section .inner-outer-products .card-container").append(
-                    $(`<a href="./cases/case.php?itemID=${itemID}"><div class="card">
+            params.data.length > 0 ?
+                params.data.forEach(item => {
+                    let name = item["name"];
+                    let price = item["price"];
+                    let image = item["img"];
+                    let itemID = item["itemID"];
+                    let src = `../../assets/images/${image}`
+                    $("section .inner-outer-products .card-container").append(
+                        $(`<a href="./pens/pen.php?itemID=${itemID}"><div class="card">
                 <div class="image-holder">
                     <img src=${src} loading="lazy">
                 </div>
@@ -175,7 +175,8 @@
                     <p>₱${price}.00</p>
                 </div>
             </div></a>`));
-            })
+                }) : $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like the products are not available right now.</div>")
+
 
 
         }

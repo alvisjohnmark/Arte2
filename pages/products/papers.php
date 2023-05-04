@@ -143,13 +143,14 @@
 
       $.ajax({
         method: "GET",
-        url: "../../server/item/getAll.php?kind=1",
-        success: async function (response) {
-          let result = await JSON.parse(response)
+        url: "../../server/item/get_all_item_kind.php?kind=1",
+        success: function (response) {
+          let result = JSON.parse(response)
           result.data ? setElements(result) : console.log("No Items");
         },
         error: function (xhr, status, error) {
           console.error(xhr, status, error);
+          $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like the products are not available right now.</div>");
         }
       })
     });

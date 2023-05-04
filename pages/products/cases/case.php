@@ -346,7 +346,7 @@
 
             $(document).on('click', ".wishlist-add", function() {
                 if (!userLoggedIn) {
-                    window.location.href = "http://localhost/ARTE/forms/login.php";
+                    window.location.href = "../../../forms/login.php";
                 }
                 if ($(this).hasClass("beat")) {
                     hasBeat = false;

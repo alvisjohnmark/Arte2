@@ -101,7 +101,7 @@
             function getItems() {
                 $.ajax({
                     method: "GET",
-                    url: "../server/cart/getAll.php",
+                    url: "../server/cart/get_all_item_kind.php",
                     success: function (response) {
                         //filter out items not in the list
                         let result = JSON.parse(response)

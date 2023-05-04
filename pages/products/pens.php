@@ -143,10 +143,10 @@
 
             $.ajax({
                 method: "GET",
-                url: "../../server/item/getAll.php?kind=4",
-                success: async function (response) {
-                    let result = await JSON.parse(response)
-                    result.data ? setElements(result) : console.log("No Items");
+                url: "../../server/item/get_all_item_kind.php?kind=4",
+                success: function (response) {
+                    let result = JSON.parse(response)
+                    result.data ? setElements(result) : $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like these products are not available right now.</div>");
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr, status, error);
@@ -173,7 +173,7 @@
                     <p>₱${price}.00</p>
                 </div>
             </div></a>`));
-                }) : $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like these products are not available right now.</div>")
+                }) : $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like the products are not available right now.</div>")
 
 
         }

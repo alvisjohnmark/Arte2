@@ -349,20 +349,20 @@
             }
         })
 
-        $(document).on('click', ".wishlist-add", function() {
-            if (!userLoggedIn) {
-                window.location.href = "http://localhost/ARTE/forms/login.php";
-            }
-            if ($(this).hasClass("beat")) {
-                hasBeat = false;
-                console.log(hasBeat);
-                $(this).removeClass("beat");
-            } else {
-                hasBeat = true;
-                console.log(hasBeat);
-                $(this).addClass("beat");
-            }
-        });
+            $(document).on('click', ".wishlist-add", function () {
+                if (!userLoggedIn) {
+                    window.location.href = "../../../forms/login.php";
+                }
+                if ($(this).hasClass("beat")) {
+                    hasBeat = false;
+                    console.log(hasBeat);
+                    $(this).removeClass("beat");
+                } else {
+                    hasBeat = true;
+                    console.log(hasBeat);
+                    $(this).addClass("beat");
+                }
+            });
 
         $(window).on('beforeunload', function() {
             let data = {
