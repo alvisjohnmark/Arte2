@@ -16,53 +16,18 @@
 <body>
     <header>
         <div id="header">
-            <div id="bars">
-                <button class="mobile-menu">
-                    <span></span>
-                </button>
-            </div>
             <div class="brand-name">
                 <a href="../index.php">
                     <span>Arte</span>
                     <span>crafts</span>
                 </a>
             </div>
-            <navbar class="nav-desk">
-                <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    <li>
-                        <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span>0</span>
-                        </a>
-                    </li>
-                </ul>
-            </navbar>
-        </div>
-        <div id="mobile" class="mobile">
-            <navbar class="mobile-nav">
-                <ul>
-                    <li><a href="./profile.php">Profile</a></li>
-                    <li><a href="./wishlist.php">Wishlist</a></li>
-                    <li>
-                        <a href="./wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../forms/login.php">Contact</a>
-                    </li>
-                </ul>
-            </navbar>
         </div>
     </header>
     <div class="overlay"></div>
     <section>
         <div class="container">
+            <p>Product Items</p>
             <table class="item-table">
                 <tr>
                     <th>Item ID</th>
@@ -113,13 +78,11 @@
             <div class="view-modal">
                 <button class="exit-view"><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></button>
                 <img class="view-img" src="" alt="">
-                <p class='view-name'>
-                    Plain Recycled Paper</p>
-                <p class='view-kind'>Paper</p>
-                <p class='view-stock'>Stock: <span>19</span></p>
-                <p class='view-price'>Price: ₱<span>50</span>.00</p>
-                <p class='view-description'>Beautiful A4 sheets of off-white paper embedded with a mix of wildflower
-                    seeds. Perfect for stationery, crafts, card-making, printing.</p>
+                <p class='view-name'></p>
+                <p class='view-kind'></p>
+                <p class='view-stock'>Stock: <span></span></p>
+                <p class='view-price'>Price: ₱<span></span>.00</p>
+                <p class='view-description'></p>
             </div>
 
             <div class="delete-confirmation-dialog">
@@ -130,10 +93,12 @@
             </div>
         </div>
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../global/js/animation.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".form").hide() // hide the form when page is loaded or ready
             $('.delete-confirmation-dialog').hide()
             $('.view-modal').hide()
@@ -142,7 +107,7 @@
             $.ajax({
                 method: "GET",
                 url: '../server/item/get_all_item.php',
-                success: function(response) {
+                success: function (response) {
                     let result = JSON.parse(response)
                     if (result.data) {
                         result.data.map((item) => {
@@ -150,7 +115,7 @@
                         })
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
@@ -179,7 +144,7 @@
                         <p style="display: none;" id="item-stock">${stock}</p>
                         <p style="display: none;" id="item-description">${description}</p>
                         <p style="display: none;" id="item-img">${image}</p>
-                        <div>
+                        <div style="display:flex;">
                             <button class="viewBtn"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button>
                             <button class="editBtn"><i class="fa fa-pencil-square fa-lg"
                                     aria-hidden="true"></i></button>
@@ -189,19 +154,19 @@
                 </tr>`));
         }
 
-        var loadFile = function(event) {
+        var loadFile = function (event) {
             var preview = document.getElementById('preview');
             preview.src = URL.createObjectURL(event.target.files[0]);
 
             console.log((event.target.files[0]));
 
-            preview.onload = function() {
+            preview.onload = function () {
                 URL.revokeObjectURL(preview.src) // free memory
             }
         };
 
 
-        $('form').submit(function(e) {
+        $('form').submit(function (e) {
             e.preventDefault()
 
             const action = $('.form').data('action') //get the set data attribute
@@ -215,13 +180,13 @@
                         contentType: false,
                         cache: false,
                         processData: false,
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response);
 
                             location.reload()
 
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error(xhr, status, error);
                         }
                     })
@@ -236,12 +201,12 @@
                         contentType: false,
                         cache: false,
                         processData: false,
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response);
                             location.reload()
 
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error(xhr, status, error);
                         }
                     })
@@ -256,19 +221,19 @@
                 ':checkbox, :radio, select').val('')
         }
 
-        $("#cancel").click(function() {
+        $("#cancel").click(function () {
             clearInput()
             $(".form").hide()
         })
 
-        $(".addBtn").click(function() {
+        $(".addBtn").click(function () {
             $("#preview").attr("src", "") //clear existing image src
             $('.form').data('action', 'add');
             clearInput()
             $(".form").slideDown("slow");
         })
 
-        $(document).on('click', '.deleteBtn', function() {
+        $(document).on('click', '.deleteBtn', function () {
             console.log("asd");
             $('.overlay').css("display", "block")
             $('.delete-confirmation-dialog').slideDown("fast")
@@ -276,7 +241,7 @@
             $('.delete-confirmation-dialog').data('ID', ID);
         })
 
-        $(document).on('click', '.viewBtn', function() {
+        $(document).on('click', '.viewBtn', function () {
             $('.view-modal').slideDown("fast")
             $('.overlay').css("display", "block")
 
@@ -316,14 +281,12 @@
 
         })
 
-        $(".exit-view").click(function() {
+        $(".exit-view").click(function () {
             $('.overlay').css("display", "none")
             $('.view-modal').hide()
         })
 
-        $(document).on('click', '.editBtn', function() {
-            console.log("asd");
-
+        $(document).on('click', '.editBtn', function () {
 
             //gets all existing values and put it into inputs
             const ID = parseInt($(this).parents('.data').find("#item-id").text())
@@ -348,11 +311,11 @@
         })
 
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
 
         })
 
-        $(".delete-confirmation-dialog .delete").click(function() {
+        $(".delete-confirmation-dialog .delete").click(function () {
             const ID = $('.delete-confirmation-dialog').data('ID')
             const data = {
                 "itemID": ID
@@ -361,20 +324,18 @@
                 method: "POST",
                 url: "../server/item/delete.php",
                 data: data,
-                success: function(response) {
-                    // let result = JSON.parse(response);
-                    console.log(response);
+                success: function (response) {
                     $('.overlay').css("display", "none")
                     $('.delete-confirmation-dialog').hide()
                     location.reload()
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
         })
-        $(".delete-confirmation-dialog .cancel").click(function() {
+        $(".delete-confirmation-dialog .cancel").click(function () {
             $('.overlay').css("display", "none")
             $('.delete-confirmation-dialog').hide()
         })

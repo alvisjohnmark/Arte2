@@ -1,13 +1,24 @@
 <?php
+/**
+ * Summary of Customer
+ */
 class Customer extends DB
 {
     private $ID;
 
+    /**
+     * Summary of __construct
+     * @param int $ID
+     */
     public function __construct($ID)
     {
         $this->ID = $ID;
     }
 
+    /**
+     * Summary of getUser
+     * @return array|string
+     */
     public function getUser()
     {
         try {

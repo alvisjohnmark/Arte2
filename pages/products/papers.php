@@ -31,8 +31,6 @@
       </div>
       <navbar class="nav-desk">
         <ul>
-          <li><a href="./products/paper.php">About</a></li>
-          <li><a href="#">Contact</a></li>
           <li>
             <a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php" ?>><i
                 class="fa fa-heart" aria-hidden="true"></i></a>
@@ -55,12 +53,6 @@
         <ul>
           <li><a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>>Profile</a></li>
           <li><a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php" ?>>Wishlist</a></li>
-          <li>
-            <a href="../wishlist.php">About</a>
-          </li>
-          <li>
-            <a href="./forms/login.php">Contact</a>
-          </li>
         </ul>
       </navbar>
     </div>
@@ -143,13 +135,14 @@
 
       $.ajax({
         method: "GET",
-        url: "../../server/item/getAll.php?kind=1",
-        success: async function (response) {
-          let result = await JSON.parse(response)
+        url: "../../server/item/get_all_item_kind.php?kind=1",
+        success: function (response) {
+          let result = JSON.parse(response)
           result.data ? setElements(result) : console.log("No Items");
         },
         error: function (xhr, status, error) {
           console.error(xhr, status, error);
+          $("section .inner-outer-products .card-container").append("<div class=no-items-msg>Sorry :) It seems like the products are not available right now.</div>");
         }
       })
     });

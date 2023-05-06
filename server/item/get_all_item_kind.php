@@ -7,8 +7,9 @@ if (isset($_GET["kind"])) {
 
 
     try {
-        $item = new Item($ID = $_GET["kind"]);
-        $msg = $item->getItems();
+        $get_kind = $_GET["kind"];
+        $item = new Item();
+        $msg = $item->getItems($get_kind);
         echo json_encode(["data" => $msg]);
         http_response_code(200);
     } catch (\Throwable $th) {

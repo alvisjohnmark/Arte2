@@ -30,8 +30,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>><i
                                 class="fa fa-heart" aria-hidden="true"></i></a>
@@ -57,12 +55,6 @@
                     </li>
                     <li><a
                             href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>>Wishlist</a>
-                    </li>
-                    <li>
-                        <a href="../wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../../forms/login.php">Contact</a>
                     </li>
                 </ul>
             </navbar>
@@ -349,20 +341,20 @@
             }
         })
 
-        $(document).on('click', ".wishlist-add", function() {
-            if (!userLoggedIn) {
-                window.location.href = "http://localhost/ARTE/forms/login.php";
-            }
-            if ($(this).hasClass("beat")) {
-                hasBeat = false;
-                console.log(hasBeat);
-                $(this).removeClass("beat");
-            } else {
-                hasBeat = true;
-                console.log(hasBeat);
-                $(this).addClass("beat");
-            }
-        });
+            $(document).on('click', ".wishlist-add", function () {
+                if (!userLoggedIn) {
+                    window.location.href = "../../../forms/login.php";
+                }
+                if ($(this).hasClass("beat")) {
+                    hasBeat = false;
+                    console.log(hasBeat);
+                    $(this).removeClass("beat");
+                } else {
+                    hasBeat = true;
+                    console.log(hasBeat);
+                    $(this).addClass("beat");
+                }
+            });
 
         $(window).on('beforeunload', function() {
             let data = {

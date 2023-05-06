@@ -3,7 +3,7 @@
     include "../../classes/DB.php";
     include "../../classes/order.php";
     try {
-        $address = $_POST["street"] . " " . $_POST["barangay"] . " " . $_POST["c_m"] . " " . $_POST["province"];
+        $address = $_POST["street"] . " " . $_POST["barangay"] . ", " . $_POST["c_m"] . ", " . $_POST["province"];
         $items = $_POST["items"];
         $cost = $_POST["cost"];
         $order = new Order(isset($_SESSION["customerID"]) ? $_SESSION["customerID"] : null, $items, $cost, $address);

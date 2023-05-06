@@ -38,3 +38,9 @@ $("#bars").on("click", function () {
   let el = $("#mobile");
   el.toggleClass("down");
 });
+
+$("#shop-btn").on("click", function () {
+  console.log("asd");
+  const element = document.getElementById("products");
+  element.scrollIntoView({ behavior: "smooth" });
+});

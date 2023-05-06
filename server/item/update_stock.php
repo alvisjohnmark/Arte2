@@ -2,6 +2,7 @@
     session_start();
     include "../../classes/DB.php";
     include "../../classes/item.php";
+    //this is to update stock when chcked out
     try {
         $post_itemID = $_POST['itemID'];
         $post_quantity = $_POST['quantity'];

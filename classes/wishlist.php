@@ -1,18 +1,30 @@
 <?php
+/**
+ * Summary of Wishlist
+ */
 class Wishlist extends DB
 {
     private $customerID;
     private $itemID;
+    /**
+     * Summary of __construct
+     * @param mixed $customerID
+     * @param mixed $itemID
+     */
     public function __construct($customerID, $itemID)
     {
         $this->customerID = $customerID;
         $this->itemID = $itemID;
     }
 
+    /**
+     * Summary of setToWishlist
+     * @return string
+     */
     public function setToWishlist()
     {
         if ($this->itemExist())
-            return;
+            return "Exixst";
         try {
             $stmt = $this->connect()->prepare("INSERT INTO `wishlist`(`customerID`, `itemID`) VALUES (?,?)");
             $stmt->bindParam(1, $this->customerID, PDO::PARAM_INT);
@@ -20,11 +32,16 @@ class Wishlist extends DB
             if ($stmt->execute()) {
                 return "Success";
             }
+            return "Fail";
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }
     }
 
+    /**
+     * Summary of deleteFromWishlist
+     * @return string
+     */
     public function deleteFromWishlist()
     {
         try {
@@ -38,6 +55,10 @@ class Wishlist extends DB
         }
     }
 
+    /**
+     * Summary of itemExist
+     * @return mixed 
+     */
     public function itemExist()
     {
         try {
@@ -52,6 +73,10 @@ class Wishlist extends DB
         }
     }
 
+    /**
+     * Summary of getWishlist
+     * @return array|string
+     */
     public function getWishlist()
     {
         try {

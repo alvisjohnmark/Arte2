@@ -1,102 +1,4 @@
-.line {
-  width: 100%;
-  border-top: 1px solid #353935;
-}
-
-/* input[type="number"] {
-  width: 50px;
-} */
-
-input[type="number"] {
-  background-color: var(--secondary-color);
-  padding: 8px 4px;
-  font-size: 16px;
-  text-align: center;
-  width: 50px;
-  outline: inherit;
-}
-
-p {
-  padding: 0 10px;
-}
-
-.product-wrapper {
-  position: relative;
-  padding: 20px;
-  /* border-bottom: 1px solid rgb(143, 143, 143); */
-  margin: 0 50px;
-}
-
-input[type="checkbox"] {
-  display: none;
-}
-
-.check:checked + svg g path,
-.select-all:checked + label svg g path {
-  stroke-dashoffset: 0;
-}
-
-svg {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  cursor: pointer;
-}
-.label-select-all {
-  display: flex;
-  align-items: center;
-}
-
-.label-select-all,
-.label-select-all svg {
-  position: relative;
-  margin-bottom: 5px;
-  top: 3px;
-  right: 0;
-}
-
-.select-all:checked + svg g path {
-  stroke-dashoffset: 0;
-}
-
-.path1 {
-  stroke-dasharray: 400;
-  stroke-dashoffset: 400;
-  transition: 0.5s all;
-}
-/* .products {
-  margin-top: 50px;
-} */
-
-.product {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  cursor: pointer;
-  justify-items: center;
-  align-items: center;
-  padding: 20px;
-  font-family: "Playfair Display", serif;
-}
-
-.product:hover {
-  box-shadow: rgba(219, 137, 102, 0.25) 0px 1px 2px 0px,
-    rgba(219, 137, 102, 0.25) 0px 2px 6px 2px;
-}
-
-.product-image {
-  width: 150px;
-  height: 150px;
-}
-
-.product-title p:nth-child(2) {
-  font-size: 13px;
-  color: #b38168;
-  font-family: "Josefin Sans", sans-serif;
-  margin: 3px;
-}
-
 .totals {
-  font-family: "Playfair Display", serif;
   margin: 50px 0;
   text-align: right;
 }
@@ -119,137 +21,32 @@ svg {
 
 .totals .totals-item .totals-value {
   width: 130px;
-  /* text-align: right; */
 }
 
 .totals .totals-item-total {
-  font-family: "HelveticaNeue-Medium", "Helvetica Neue Medium";
   font-weight: bold;
 }
 
 .checkout {
   float: right;
-  border: 0;
-  margin-top: 20px;
-  padding: 6px 25px;
+  margin-top: 30px;
+  bottom: 20px;
+  right: 20px;
+  padding: 15px 50px;
+  color: var(--secondary-color);
   background-color: var(--icon-color);
-  color: #fff;
-  font-size: 25px;
-  border-radius: 3px;
+  font-weight: 900;
   font-family: "Josefin Sans", sans-serif;
-  margin-right: 20px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
 }
 
 .checkout:hover {
   background-color: var(--primary-color);
 }
 
-.delete {
-  position: absolute;
-  padding: 10px 0;
-  top: 25px;
-  display: flex;
-  align-items: center;
-  right: 20px;
-}
-
-#deleteBtn {
-  color: var(--icon-color);
-  background-color: var(--secondary-color);
-}
-
-.delete-button {
-  transform: translateX(15px);
-  float: left;
-  border-radius: 50%;
-  justify-content: center;
-  align-items: center;
-  transition: 0.4s;
-}
-
-.delete-button button {
-  cursor: pointer;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  color: inherit;
-  border: 1px solid #353935;
-}
-
-.delete-confirmation {
-  border: none;
-  background: none;
-  outline: none;
-  float: left;
-  padding: 0;
-  color: white;
-  font-size: 16px;
-  transition: 0.4s;
-  line-height: 40px;
-  width: 0px;
-  overflow-x: hidden;
-}
-
-.expand {
-  width: 150px;
-}
-
-.delete-confirmation button {
-  cursor: pointer;
-  height: 30px;
-}
-
-.delete-confirmation button:hover:first-child,
-.delete-confirmation button:hover:last-child,
-#deleteBtn:hover {
-  background-color: var(--primary-color);
-}
-
-.delete-confirmation button:first-child {
-  background-color: var(--secondary-color);
-  color: green;
-  padding-left: 5px;
-  width: 80px;
-  border: 1px solid #353935;
-}
-.delete-confirmation button:last-child {
-  background-color: var(--secondary-color);
-  color: red;
-  width: 70px;
-  border: 1px solid #353935;
-  border-radius: 0 20px 20px 0;
-}
-
-@media screen and (max-width: 990px) {
-}
-
 @media screen and (max-width: 630px) {
-  .product {
-    grid-template-columns: 150px minmax(75px, 100px) minmax(75px, 100px);
-    grid-template-rows: 75px 75px;
-    justify-content: center;
-  }
-
-  .product-image {
-    grid-row: 1/3;
-  }
-
-  .product-title {
-    grid-column: 2/4;
-  }
-
-  .totals .totals-item {
-    width: 60%;
-  }
-  .product-wrapper {
-    margin: 0;
-    padding: 10px;
-  }
-
-  /* .totals-item {
-      width: 100%;
-    } */
-
   .totals .totals-item {
     width: 100%;
   }
@@ -266,10 +63,131 @@ svg {
     visibility: hidden;
     display: none;
   }
+}
 
-  svg {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-  }
+body {
+  font-family: var(--font-style-three);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 1rem;
+}
+
+table tr {
+  text-align: center;
+}
+
+table th {
+  font-weight: 500;
+}
+
+table td {
+  width: 25%;
+  padding: 1.3rem;
+}
+
+.quantity button {
+  width: 22px;
+  background: transparent;
+  border: none;
+  height: 35px;
+  padding: 0px;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  transform: translateY(-5px);
+}
+
+.decrement span,
+.increment span,
+.remove span {
+  display: inline-block;
+  width: 60%;
+  height: 2px;
+  background: var(--icon-color);
+  position: relative;
+  transition: all 0.2s;
+}
+
+.decrement span:before,
+.increment span:after,
+.remove span:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: var(--icon-color);
+  height: 2px;
+  left: 0px;
+}
+
+.increment span:before,
+.remove span:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  background: var(--icon-color);
+  height: 2px;
+  left: 0px;
+  transform: rotate(90deg);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.quantity input {
+  text-align: center;
+  background-color: var(--secondary-color);
+  padding: 5px 10px;
+  width: 50px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
+.image {
+  position: relative;
+  width: 85px;
+  height: 85px;
+  margin: auto;
+}
+
+img {
+  width: 100%;
+  height: 100%;
+}
+
+.image button {
+  position: absolute;
+  transform: rotate(45deg) !important;
+  right: -13px;
+  top: -19px;
+  cursor: pointer;
+}
+
+.product-item button {
+  width: 22px;
+  background: transparent;
+  border: none;
+  height: 35px;
+  padding: 0px;
+  overflow: hidden;
+  vertical-align: middle;
+  text-align: center;
+  transform: translateY(-5px);
 }
