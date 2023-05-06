@@ -7,7 +7,6 @@ class Order extends DB
     private $orderID;
     private $cost;
     private $address;
-    private $addressID;
 
     public function __construct($customerId, $items = NULL, $cost = 0, $address = null)
     {
@@ -49,12 +48,12 @@ class Order extends DB
     {
 
         try {
-            $this->setAddress();
-            $this->getAddressID();
-            $stmt = $this->connect()->prepare("INSERT INTO `placedorder`(`customerID`, `status`, `time_placed`, `cost`, `addressID`) VALUES (?,1, NOW(), ?, ?);");
+            // $this->setAddress();
+            // $this->getAddressID();
+            $stmt = $this->connect()->prepare("INSERT INTO `placedorder`(`customerID`, `status`, `time_placed`, `cost`, `address`) VALUES (?,1, NOW(), ?, ?);");
             $stmt->bindParam(1, $this->customerId, PDO::PARAM_INT);
             $stmt->bindParam(2, $this->cost, PDO::PARAM_INT);
-            $stmt->bindParam(3, $this->addressID, PDO::PARAM_INT);
+            $stmt->bindParam(3, $this->address, PDO::PARAM_STR);
             if ($stmt->execute()) {
                 $this->orderID = $this->getInsertedOrderID();
                 foreach ($this->items as $item) {
@@ -66,36 +65,6 @@ class Order extends DB
         } catch (PDOException $e) {
             print "Error" . $e . ".";
             die();
-        }
-    }
-
-    private function getAddressID()
-    {
-        try {
-            $stmt = $this->connect()->query("SELECT MAX(addressID) FROM `address`");
-            $result = $stmt->fetchALL();
-            if (isset($result)) {
-                $this->addressID = $result[0][0];
-                return $result[0][0];
-            }
-            return "Error";
-        } catch (PDOException $e) {
-            print "Error" . $e . ".";
-            die();
-        }
-    }
-
-    private function setAddress()
-    {
-        try {
-            $stmt = $this->connect()->prepare("INSERT INTO `address`(`address`, `customerID`) VALUES (?,?)");
-            $stmt->bindParam(1, $this->address, PDO::PARAM_STR);
-            $stmt->bindParam(2, $this->customerId, PDO::PARAM_INT);
-            if ($stmt->execute()) {
-                return "Success";
-            }
-        } catch (PDOException $e) {
-            return "Error" . $e . ".";
         }
     }
 
@@ -120,7 +89,7 @@ class Order extends DB
     public function getOrderItems($orderID)
     {
         try {
-            $stmt = $this->connect()->query("SELECT placedorder.orderID, placedorder.cost, item.name, item.img, cart_items.quantity, item.price FROM `placedorder`INNER JOIN cart_items on cart_items.orderID = placedorder.orderID INNER JOIN item on item.itemID = cart_items.itemID WHERE placedorder.orderID = '$orderID'");
+            $stmt = $this->connect()->query("SELECT placedorder.orderID, placedorder.address, placedorder.cost, item.name, item.img, cart_items.quantity, item.price FROM `placedorder`INNER JOIN cart_items on cart_items.orderID = placedorder.orderID INNER JOIN item on item.itemID = cart_items.itemID WHERE placedorder.orderID = '$orderID'");
             $result = $stmt->fetchALL();
             if (isset($result)) {
                 return $result;

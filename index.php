@@ -29,8 +29,6 @@
       </div>
       <navbar class="nav-desk">
         <ul>
-          <li><a href="./products/paper.php">About</a></li>
-          <li><a href="#">Contact</a></li>
           <li>
             <a href=<?php $userLoggedIn ? print "./pages/wishlist.php" : print "./forms/login.php" ?>><i
                 class="fa fa-heart" aria-hidden="true"></i></a>
@@ -54,11 +52,6 @@
           <li><a href="./pages/profile.php">Profile</a></li>
           <li><a href="./pages/wishlist.php">Wishlist</a></li>
           <li>
-            <a href="./pages/wishlist.php">About</a>
-          </li>
-          <li>
-            <a href="./forms/login.php">Contact</a>
-          </li>
         </ul>
       </navbar>
     </div>

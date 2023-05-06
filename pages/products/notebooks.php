@@ -31,8 +31,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php" ?>><i
                                 class="fa fa-heart" aria-hidden="true"></i></a>
@@ -55,12 +53,6 @@
                 <ul>
                     <li><a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>>Profile</a></li>
                     <li><a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php" ?>>Wishlist</a></li>
-                    <li>
-                        <a href="../wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../forms/login.php">Contact</a>
-                    </li>
                 </ul>
             </navbar>
         </div>
@@ -166,7 +158,7 @@
                     let itemID = item["itemID"];
                     let src = `../../assets/images/${image}`
                     $("section .inner-outer-products .card-container").append(
-                        $(`<a href="./papers/paper.php?itemID=${itemID}"><div class="card">
+                        $(`<a href="./notebooks/notebook.php?itemID=${itemID}"><div class="card">
                 <div class="image-holder">
                     <img src=${src} loading="lazy">
                 </div>
@@ -176,7 +168,7 @@
                     <p>₱${price}.00</p>
                 </div>
             </div></a>`));
-                }) : $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like these products are not available right now.</div>")
+                }) : $("section .inner-outer-products .card-container").append("<div class=no-items-msg>Sorry :) It seems like these products are not available right now.</div>")
 
 
         }

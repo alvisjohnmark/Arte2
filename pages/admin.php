@@ -29,8 +29,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
@@ -50,12 +48,6 @@
                 <ul>
                     <li><a href="./profile.php">Profile</a></li>
                     <li><a href="./wishlist.php">Wishlist</a></li>
-                    <li>
-                        <a href="./wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../forms/login.php">Contact</a>
-                    </li>
                 </ul>
             </navbar>
         </div>
@@ -130,10 +122,12 @@
             </div>
         </div>
     </section>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"
+        integrity="sha512-pumBsjNRGGqkPzKHndZMaAG+bir374sORyzM3uulLV14lN5LyykqNk8eEeUlUkB3U0M4FApyaHraT65ihJhDpQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="../global/js/animation.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".form").hide() // hide the form when page is loaded or ready
             $('.delete-confirmation-dialog').hide()
             $('.view-modal').hide()
@@ -142,7 +136,7 @@
             $.ajax({
                 method: "GET",
                 url: '../server/item/get_all_item.php',
-                success: function(response) {
+                success: function (response) {
                     let result = JSON.parse(response)
                     if (result.data) {
                         result.data.map((item) => {
@@ -150,7 +144,7 @@
                         })
                     }
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
@@ -189,19 +183,19 @@
                 </tr>`));
         }
 
-        var loadFile = function(event) {
+        var loadFile = function (event) {
             var preview = document.getElementById('preview');
             preview.src = URL.createObjectURL(event.target.files[0]);
 
             console.log((event.target.files[0]));
 
-            preview.onload = function() {
+            preview.onload = function () {
                 URL.revokeObjectURL(preview.src) // free memory
             }
         };
 
 
-        $('form').submit(function(e) {
+        $('form').submit(function (e) {
             e.preventDefault()
 
             const action = $('.form').data('action') //get the set data attribute
@@ -215,13 +209,13 @@
                         contentType: false,
                         cache: false,
                         processData: false,
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response);
 
                             location.reload()
 
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error(xhr, status, error);
                         }
                     })
@@ -236,12 +230,12 @@
                         contentType: false,
                         cache: false,
                         processData: false,
-                        success: function(response) {
+                        success: function (response) {
                             console.log(response);
                             location.reload()
 
                         },
-                        error: function(xhr, status, error) {
+                        error: function (xhr, status, error) {
                             console.error(xhr, status, error);
                         }
                     })
@@ -256,19 +250,19 @@
                 ':checkbox, :radio, select').val('')
         }
 
-        $("#cancel").click(function() {
+        $("#cancel").click(function () {
             clearInput()
             $(".form").hide()
         })
 
-        $(".addBtn").click(function() {
+        $(".addBtn").click(function () {
             $("#preview").attr("src", "") //clear existing image src
             $('.form').data('action', 'add');
             clearInput()
             $(".form").slideDown("slow");
         })
 
-        $(document).on('click', '.deleteBtn', function() {
+        $(document).on('click', '.deleteBtn', function () {
             console.log("asd");
             $('.overlay').css("display", "block")
             $('.delete-confirmation-dialog').slideDown("fast")
@@ -276,7 +270,7 @@
             $('.delete-confirmation-dialog').data('ID', ID);
         })
 
-        $(document).on('click', '.viewBtn', function() {
+        $(document).on('click', '.viewBtn', function () {
             $('.view-modal').slideDown("fast")
             $('.overlay').css("display", "block")
 
@@ -316,12 +310,12 @@
 
         })
 
-        $(".exit-view").click(function() {
+        $(".exit-view").click(function () {
             $('.overlay').css("display", "none")
             $('.view-modal').hide()
         })
 
-        $(document).on('click', '.editBtn', function() {
+        $(document).on('click', '.editBtn', function () {
             console.log("asd");
 
 
@@ -348,11 +342,11 @@
         })
 
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
 
         })
 
-        $(".delete-confirmation-dialog .delete").click(function() {
+        $(".delete-confirmation-dialog .delete").click(function () {
             const ID = $('.delete-confirmation-dialog').data('ID')
             const data = {
                 "itemID": ID
@@ -361,7 +355,7 @@
                 method: "POST",
                 url: "../server/item/delete.php",
                 data: data,
-                success: function(response) {
+                success: function (response) {
                     // let result = JSON.parse(response);
                     console.log(response);
                     $('.overlay').css("display", "none")
@@ -369,12 +363,12 @@
                     location.reload()
 
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error(xhr, status, error);
                 }
             })
         })
-        $(".delete-confirmation-dialog .cancel").click(function() {
+        $(".delete-confirmation-dialog .cancel").click(function () {
             $('.overlay').css("display", "none")
             $('.delete-confirmation-dialog').hide()
         })

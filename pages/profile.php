@@ -31,8 +31,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
@@ -52,12 +50,6 @@
                 <ul>
                     <li><a href="./profile.php">Profile</a></li>
                     <li><a href="./wishlist.php">Wishlist</a></li>
-                    <li>
-                        <a href="./wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../forms/login.php">Contact</a>
-                    </li>
                 </ul>
             </navbar>
         </div>
@@ -71,8 +63,8 @@
                         <img src="../assets/images/Pretty-Stationery-Items.png" alt="">
                     </div>
                     <div class="profile-details">
-                        <p class="name">Jonathan</p>
-                        <p class="address">Brgy. 29 Pasngal, Bacarra, Ilocos Norte</p>
+                        <p class="name"></p>
+                        <p class="address"></p>
                         <button id="logout">Logout</button>
                     </div>
                 </div>
@@ -102,6 +94,8 @@
             <ul>
             </ul>
 
+            <hr>
+            <p style="font-size: 1rem;" id="address"></p>
             <hr>
             <div class="sub total">
                 <p>Subtotal</p>
@@ -267,10 +261,12 @@
                         <p>₱<span>${item["price"] * item["quantity"]} .00</span></p>
                     </div>
                 </li>`)
-                $(".sub").find("p:nth-child(2) span").text(item["cost"] - 80)
-                $(".shipping").find("p:nth-child(2) span").text(80)
-                $(".order").find("p:nth-child(2) span").text(item["cost"])
+
             })
+            $("#address").text(params[0]["address"])
+            $(".sub").find("p:nth-child(2) span").text(params[0]["cost"] - 80)
+            $(".shipping").find("p:nth-child(2) span").text(80)
+            $(".order").find("p:nth-child(2) span").text(params[0]["cost"])
 
         }
 

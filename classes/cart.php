@@ -154,42 +154,6 @@ class Cart extends DB
         }
     }
 
-    // private function deleteCart()
-    // {
-    //     try {
-    //         $stmt = $this->connect()->prepare("DELETE FROM `cart` WHERE cartID = ?");
-    //         $stmt->bindParam(1, $this->cartID, PDO::PARAM_INT);
-    //         if ($stmt->execute()) {
-    //             return 1;
-    //         }
-    //         return 0;
-    //     } catch (PDOException $e) {
-    //         print "Error" . $e . ".";
-    //         die();
-    //     }
-    // }
-
-    // public function placeorder()
-    // {
-    //     try {
-    //         $this->userHasCart();
-    //         $stmt = $this->connect()->prepare("INSERT INTO `placedorder`(`customerID`, `cartID`, `status`, `time_placed`) VALUES (?,?,1, NOW())");
-    //         $stmt->bindParam(1, $this->customerId, PDO::PARAM_INT);
-    //         $stmt->bindParam(2, $this->cartID, PDO::PARAM_INT);
-    //         if ($stmt->execute()) {
-    //             if ($this->deleteCart() == 1) {
-    //                 return "Success";
-    //             }
-    //         }
-    //         return "Error";
-    //     } catch (PDOException $e) {
-    //         print "Error" . $e . ".";
-    //         die();
-    //     }
-    //     // return "Succeess";
-
-    // }
-
 
     public function deleteItem()
     {

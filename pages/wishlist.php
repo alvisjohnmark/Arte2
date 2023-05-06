@@ -30,8 +30,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
@@ -53,12 +51,6 @@
                 <ul>
                     <li><a href="./pages/profile.php">Profile</a></li>
                     <li><a href="./pages/wishlist.php">Wishlist</a></li>
-                    <li>
-                        <a href="./pages/wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="./forms/login.php">Contact</a>
-                    </li>
                 </ul>
             </navbar>
         </div>
@@ -200,12 +192,8 @@
                     <p>₱${price}.00</p>
                 </div>
             </div>`));
-                }) : $("section .inner-outer-products .card-container").append("<div>You haven't added in your wishlist.</div>")
+                }) : $("section .inner-outer-products .card-container").append("<div class=no-items-msg>You haven't added in your wishlist.</div>")
         }
-
-        // $(document).on("click",, function () {
-
-        // })
 
     </script>
 </body>

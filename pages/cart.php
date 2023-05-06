@@ -30,8 +30,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
@@ -53,12 +51,6 @@
                 <ul>
                     <li><a href="./profile.php">Profile</a></li>
                     <li><a href="./wishlist.php">Wishlist</a></li>
-                    <li>
-                        <a href="./wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../forms/login.php">Contact</a>
-                    </li>
                 </ul>
             </navbar>
         </div>
@@ -74,34 +66,18 @@
                         echo 0;
                     } ?>
                 </span></p>
-            <h1>My shopping cart</h1>
-            <input type="checkbox" class="check" name=select-all>
-            <label for=select-all class="label-select-all">
-                <svg viewBox="0 0 100 100" height="50" width="50" class="select-all-svg">
-                    <rect x="30" y="20" width="50" height="50" stroke="black" fill="none" />
-                    <g transform="translate(0,-952.36216)" id="layer1">
-                        <path id="path4146"
-                            d="m 55,978 c -73,19 46,71 15,2 C 60,959 13,966 30,1007 c 12,30 61,13 46,-23" fill="none"
-                            stroke="black" stroke-width="3" class="path1" />
-                    </g>
-                </svg>
-                <span>Select All</span>
-            </label>
 
-            <div class="delete">
-                <div class="delete-button">
-                    <button id="deleteBtn"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                </div>
-                <div class="delete-confirmation">
-                    <div style="display: flex;">
-                        <button>Confirm</button>
-                        <button>Cancel</button>
-                    </div>
-                </div>
-            </div>
+            <p style="margin: 1.4rem;"><b>My Shopping Cart</b></p>
 
-            <div class="products">
-                <ul></ul>
+            <div class="overflow" style="overflow-x:auto;">
+                <table>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </table>
             </div>
             <div class="totals">
                 <div class="totals-item">
@@ -162,16 +138,9 @@
 
         $(document).ready(function () {
 
-            const params = new Proxy(new URLSearchParams(window.location.search), {
-                get: (searchParams, prop) => searchParams.get(prop),
-            });
-            let value = params.itemID; //gte the value in params
-            if (sessionStorage.getItem("add") == "True") {
-                notify("Item(s) Deleted!");
-            }
-            sessionStorage.setItem("add", "False") //stores in a session
             getItems(); //gets the items and render them to the page
-            //gets the quantity of items in cart
+
+            //gets the quantity of items in cart to be stored in cart quantity in header
             $.ajax({
                 method: "GET",
                 url: "../server/cart/getItemsQnty.php",
@@ -191,7 +160,6 @@
         });
 
         function notify(message) {
-            // if ($(".notify") >= 1) return
             let div = document.createElement("div");
             div.innerHTML = message
             div.classList.add("notify")
@@ -206,7 +174,7 @@
         function getItems() {
             $.ajax({
                 method: "GET",
-                url: "../server/cart/get_all_item_kind.php",
+                url: "../server/cart/getAll.php",
                 success: function (response) {
                     let result = JSON.parse(response)
                     console.log(result.data);
@@ -230,73 +198,47 @@
                     let kind = item["kind"]
                     let src = `../assets/images/${image}`
 
-                    $("section .products ul").append(
-                        $(`<li><div class="line"></div>
-                <div class="product-wrapper">
-                    <input type="checkbox" class="check" name=${itemID}>
-                        <svg viewBox="0 0 100 100" height="50" width="50">
-                            <rect x="30" y="20" width="50" height="50" stroke="black" fill="none" />
-                            <g transform="translate(0,-952.36216)" id="layer1">
-                                <path id="path4146"
-                                    d="m 55,978 c -73,19 46,71 15,2 C 60,959 13,966 30,1007 c 12,30 61,13 46,-23"
-                                    fill="none" stroke="black" stroke-width="3" class="path1" />
-                            </g>
-                        </svg> </span>
+                    $("table").append(
+                        $(`<tr class="product" id=${itemID}>
+                        <td class="product-item">
+                            <div class="image">
+                                <button class="remove">
+                                    <span></span>
+                                </button>
 
-                        <div class="product">
-                            <div class="product-image">
-                                <img src=${src}
-                                    alt="">
+                                <img src=${src} alt="">
                             </div>
-                            <div class="product-title">
-                                <p>${name}</p>
-                                <p>${kind}</p>
+                            <p>${name}</p>
+                        </td>
+                        <td id="price">
+                            <p style="min-width: 100px;">Php <span>${price}</span>.00</p>
+                        </td>
+                        <td class="quantity">
+                            <div class="flex">
+                                <button class="decrement" id="dec">
+                                    <span></span>
+                                </button>
+                                <input class="qnty" value=${quantity} type="number" min=1 max=${stock} name=${itemID}>
+                                <button class="increment" id="inc">
+                                    <span></span>
+                                </button>
                             </div>
-                            <div class="product-price">
-                                <p>₱<span>${price}</span>.00</p>
-                            </div>
-                            <div class="product-quantity">
-                                <input class="qnty" type="number" min="1" max=${stock} value=${quantity > stock ? stock : quantity}>
-                            </div>
-                            <div class="product-total">
-                                <p>₱<span>${price * quantity}</span>.00</p>
-                            </div>
-                        </div>
-                </div></li>`));
+                        </td>
+                        <td id="total">
+                            <p style="min-width: 100px;">Php <span>${price * quantity}</span>.00</p>
+                        </td>
+                    </tr>`));
                 }) : $("section .totals").prepend("<div class='no-items-msg'><span>No items in your cart.</span></div>")
+            calculateTotal()
         }
 
-        //manages the checkboxes
-        $(document).on("click", ".product-wrapper", (function (e) {
-            if ($(e.target).is("input")) {
-                return
-            }
-
-            let checkBox = $(this).children(".check");
-            console.log(checkBox);
-            if (checkBox.prop("checked")) {
-                checkBox.prop("checked", false)
-            } else {
-                checkBox.prop("checked", true)
-            }
-            if ($(".check:checked").length <= 0) {
-                $(".delete-confirmation").removeClass("expand")
-            }
-            calculateTotal()
-        }));
-
         //calculateTotal: Calculate the overall total of products including shipping
-
-        function calculateTotal(all = null) {
+        function calculateTotal() {
             let total = 0
-            $(".check:checked").each(function (index) {
-                if (all && index == 0) {
-                    return
-                }
-                if ($(this).parent().find(".product-total").find("span").length > 1) return;
-                let val = parseFloat($(this).parent().find(".product-total").find("span").text())
-                total += val
+            $("table #total").each(function () {
+                total += parseInt($(this).find("span").text())
             })
+
             if (total) {
                 $("#cart-subtotal span").text(total)
                 $("#cart-total span").text(total + 80)
@@ -308,21 +250,77 @@
 
         //calculates the total of an item: price * quantity of an item
         function calculate(e, quantity, price) {
-            let pric = parseFloat($(price).text())
-            product = quantity * pric;
+
+            if (isNaN(quantity)) {
+                $(e).text(0);
+                return;
+            }
+            product = quantity * price;
             $(e).text(product);
         }
 
+        function inputIncDecElement(element) {
+            return $(element).parent().find("input")
+        }
+
+        $(document).on('click', "#inc", function () {
+            let input = inputIncDecElement(this);
+            let price = parseInt($(input).closest("tr").find("#price").find("span").text())
+            let el = $(this).closest("tr").find("#total").find("span")
+            if (input.attr("max") == input.val()) {
+                input.val(1)
+            } else {
+                input.val(parseInt(input.val()) + 1)
+            }
+            calculate(el, parseInt(input.val()), price)
+            calculateTotal()
+        });
+
+        $(document).on('click', "#dec", function () {
+            let input = inputIncDecElement(this);
+            let price = parseInt($(input).closest("tr").find("#price").find("span").text())
+            let el = $(this).closest("tr").find("#total").find("span")
+            if (parseInt(input.val()) == 1) {
+                input.val(input.attr("max"))
+            } else {
+                input.val(parseInt(input.val()) - 1)
+            }
+            calculate(el, parseInt(input.val()), price);
+            calculateTotal()
+        });
 
         //this is for handling changes in the input.
         //to prevent multiple query every change in the input,
         //it calls a query every 2 seconds of inactivity from input
         let time_out_running = null;
-        $(document).on('input', ".qnty", function (e) {
-            let quantity = parseFloat($(e.target).val())
-            let node = ($(e.target).parent().parent().find(".product-total").find("span"))
-            let price = ($(e.target).parent().parent().find(".product-price").find("span"));
+        $(document).on('click', '#inc ,#dec', function () {
+            if (time_out_running) {
+                clearTimeout(time_out_running);
+                time_out_running = null;
+            }
+            if (!time_out_running) {
+                time_out_running = setTimeout(function () {
+                    $.each($("table .product"), function (index, el) {
+                        updateItems(el);
+                    })
+                }, 2000)
+            }
+        })
 
+        $(document).on('input', ".qnty", function (e) {
+            let quantity = parseInt($(e.target).val())
+            let node = $(this).closest("tr").find("#total").find("span")
+            let price = parseInt($(this).closest("tr").find("#price").find("span").text())
+            if (quantity == 0) {
+                ($(e.target).val(1)) //initialize to 1
+            } else {
+                if (quantity > $(this).attr("max")) {
+                    let lastDigi = Math.floor(quantity / 10);
+                    $(e.target).val(lastDigi)
+                    return
+                }
+                ($(e.target).val(quantity))
+            }
             quantitySum()
             calculate(node, quantity, price)
             calculateTotal()
@@ -334,11 +332,21 @@
 
             if (!time_out_running) {
                 time_out_running = setTimeout(function () {
-                    $.each($(".product-wrapper"), function (index, el) {
+                    $.each($("table .product"), function (index, el) {
                         updateItems(el);
                     })
                 }, 2000)
             }
+        })
+
+        $(document).on('click', '.remove', function () {
+            let el = $(this).parents(".product");
+            $(el).slideUp(300, function () {
+                removeItemFromDB(el)
+                $(el).remove()
+                notify("Item Deleted!");
+                quantitySum()
+            });
         })
 
         //this gets the total quantity of all items
@@ -370,8 +378,11 @@
         }
 
         function updateItems(el) {
-            let quantity = $(el).find(".product-quantity").find(".qnty").val()
-            let itemID = $(el).find("input").attr("name")
+
+            let quantity = parseInt($(el).find(".quantity").find("input").val())
+            let itemID = parseInt($(el).find("input").attr("name"))
+            isNaN(quantity) ? quantity = 0 : quantity
+            console.log(quantity, itemID);
             const data = { quantity: quantity, itemID: itemID }
             $.ajax({
                 method: "POST",
@@ -386,72 +397,15 @@
                 }
             })
         }
-
-        $(".select-all-svg").click(function () {
-            //TODO: check the Select all checkbox when all products are selected
-
-            let checkBoxes = $(".check");
-            if (checkBoxes.prop("checked")) {
-                checkBoxes.prop("checked", false)
-            } else {
-                checkBoxes.prop("checked", true)
-            }
-            calculateTotal(true)
-
-        })
-
-
-        $(document).on("click", ".delete-confirmation button:first-child", function () {
-            console.log("Fired");
-            $(".check:checked").map(function (i, el) {
-                $(el).parent().slideUp(300, function () {
-                    removeItemFromDB(el)
-                    $(el).parent().remove()
-                });
-            })
-            $(".delete-confirmation").removeClass("expand")
-
-            //setTimeout to make sure the item is set before the page reloads
-            setTimeout(function () {
-                sessionStorage.setItem("add", "True");
-                location.reload()
-            }, 500);
-        })
-
-
-        $(document).on("click", ".delete-confirmation button:last-child", function () {
-            $(".delete-confirmation").removeClass("expand")
-            $(".check:checked").map(function (i, el) {
-                $(el).prop("checked", false)
-            })
-            calculateTotal()
-
-        })
-
-
-        $(".delete").click(function () {
-            if ($(".check:checked").length <= 0) {
-                notify("Please select item(s)")
-                return
-            }
-            $(".delete-confirmation").addClass("expand")
-        })
-
         //Checkout
         $(".checkout").click(function () {
-            if ($(".check:checked").length <= 0) {
-                notify("Please select item(s)")
-                return
-            }
             let items_list = []
 
-            $(".check:checked").each(function () {
-                items_list.push(parseInt($(this).attr("name")));
+            $(".product").each(function () {
+                items_list.push(parseInt($(this).find("input").attr("name")));
             })
 
             let cartID = $("#cart-id").find("span").text().trim()
-            console.log(cartID);
-
             let url = `./checkout.php?items=${items_list}&cartID=${cartID}`
             window.location = url
         })

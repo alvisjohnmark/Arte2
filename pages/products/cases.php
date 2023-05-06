@@ -31,8 +31,6 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
-                    <li><a href="./products/paper.php">About</a></li>
-                    <li><a href="#">Contact</a></li>
                     <li>
                         <a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php" ?>><i
                                 class="fa fa-heart" aria-hidden="true"></i></a>
@@ -54,13 +52,8 @@
             <navbar class="mobile-nav">
                 <ul>
                     <li><a href=<?php $userLoggedIn ? print "../profile.php" : print "../../forms/login.php" ?>>Profile</a></li>
-                    <li><a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php" ?>>Wishlist</a></li>
-                    <li>
-                        <a href="../wishlist.php">About</a>
-                    </li>
-                    <li>
-                        <a href="../forms/login.php">Contact</a>
-                    </li>
+                    <li><a href=<?php $userLoggedIn ? print "../wishlist.php" : print "../../forms/login.php"
+                        ?>>Wishlist</a></li>
                 </ul>
             </navbar>
         </div>
@@ -175,7 +168,7 @@
                     <p>₱${price}.00</p>
                 </div>
             </div></a>`));
-                }) : $("section .inner-outer-products .card-container").append("<div>Sorry :) It seems like the products are not available right now.</div>")
+                }) : $("section .inner-outer-products .card-container").append("<div class=no-items-msg>Sorry :) It seems like the products are not available right now.</div>")
 
 
 

@@ -58,12 +58,8 @@
   padding: 15px 50px;
   color: var(--icon-color);
   background-color: var(--secondary-color);
-  /* border: 2px solid 	#353935; */
-  /* outline: none; */
-  /* color: inherit; */
   font-weight: 900;
   font-family: "Josefin Sans", sans-serif;
-  /* all: unset; */
   border: none;
   cursor: pointer;
 }

@@ -27,10 +27,7 @@
                                 <input type="text" placeholder="City/Municipality" name="c_m" id="c_m" required>
                                 <br>
                                 <input type="text" placeholder="Province" name="province" id="province" required>
-                                <span class="note">Your order will be delivered within 7 working days (May take longer
-                                    for
-                                    some
-                                    occasions).
+                                <span class="note">Your order will be delivered within 7 working days (May take longer).
                                 </span>
                                 <br>
                             </div>
@@ -40,7 +37,7 @@
                                 <input type="radio" id="cod" name="payment-method" value="cod" checked="true">
                                 <label for="cod">Cash On Delivery</label><br>
 
-                                <input type="radio" id="card" name="payment-method" value="card">
+                                <!-- <input type="radio" id="card" name="payment-method" value="card">
                                 <label for="card">Credit/Debit Card</label><br>
 
                                 <div class="card">
@@ -50,7 +47,7 @@
                                     <br>
                                     <input type="date" placeholder="Expiration Date">
                                     <input type="text" placeholder="Security Code (CVV)">
-                                </div>
+                                </div> -->
                             </div>
                             <input type="submit" value="Complete Purchase">
                             <input type="button" value="Cancel" id="cancel-purchase-btn">
@@ -101,7 +98,7 @@
             function getItems() {
                 $.ajax({
                     method: "GET",
-                    url: "../server/cart/get_all_item_kind.php",
+                    url: "../server/cart/getAll.php",
                     success: function (response) {
                         //filter out items not in the list
                         let result = JSON.parse(response)
