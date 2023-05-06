@@ -346,6 +346,7 @@
                 $(el).remove()
                 notify("Item Deleted!");
                 quantitySum()
+                calculateTotal()
             });
         })
 

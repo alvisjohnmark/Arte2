@@ -1,4 +1,7 @@
 <?php
+/**
+ * Summary of Item
+ */
 class Item extends DB
 {
     private $ID;
@@ -9,6 +12,7 @@ class Item extends DB
     private $stock;
     private $img;
     private $description;
+
     public function __construct($ID = null, $name = null, $price = null, $category = 1, $kind = null, $stock = null, $img = null, $description = null)
     {
         $this->ID = $ID;
@@ -21,11 +25,11 @@ class Item extends DB
         $this->description = $description;
     }
 
-    public function getItems()
+    public function getItems($kind)
     {
         try {
             $stmt = $this->connect()->prepare("SELECT * FROM `item` WHERE kind = ?"); //use join
-            $stmt->bindParam(1, $this->ID, PDO::PARAM_INT);
+            $stmt->bindParam(1, $kind, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetchAll();
         } catch (PDOException $e) {
@@ -43,7 +47,12 @@ class Item extends DB
         }
     }
 
-    public function updateStock($quantity = null)
+    /**
+     * Summary of updateStock
+     * @param int $quantity
+     * @return array|string
+     */
+    public function updateStock($quantity)
     {
         try {
             $stmt = $this->connect()->prepare("UPDATE `item` SET `stock`= stock - ? WHERE ?"); //use join
@@ -57,14 +66,18 @@ class Item extends DB
 
     }
 
-    public function getItem()
+    /**
+     * Summary of getItem
+     * @param int $itemID
+     * @return list|string
+     */
+    public function getItem($itemID)
     {
         try {
             $stmt = $this->connect()->prepare("SELECT * FROM `item` WHERE itemID = ?");
-            $stmt->bindParam(1, $this->ID, PDO::PARAM_INT);
+            $stmt->bindParam(1, $itemID, PDO::PARAM_INT);
             $stmt->execute();
             return $stmt->fetch(PDO::FETCH_ASSOC);
-            // return $stmt;
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }

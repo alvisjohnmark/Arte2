@@ -1,4 +1,7 @@
 <?php
+/**
+ * Summary of Order
+ */
 class Order extends DB
 {
 
@@ -16,6 +19,11 @@ class Order extends DB
         $this->cost = $cost;
     }
 
+
+    /**
+     * Summary of getInsertedOrderID
+     * @return mixed
+     */
     private function getInsertedOrderID()
     {
         try {
@@ -24,13 +32,18 @@ class Order extends DB
             if (isset($result)) {
                 return $result[0][0];
             }
-            return "Error";
         } catch (PDOException $e) {
             print "Error" . $e . ".";
             die();
         }
     }
 
+
+    /**
+     * Summary of updateOrderID
+     * @param int $item
+     * @return 
+     */
     private function updateOrderID($item)
     {
         try {
@@ -44,12 +57,14 @@ class Order extends DB
         }
     }
 
+    /**
+     * Summary of setOrder
+     * @return string
+     */
     public function setOrder()
     {
 
         try {
-            // $this->setAddress();
-            // $this->getAddressID();
             $stmt = $this->connect()->prepare("INSERT INTO `placedorder`(`customerID`, `status`, `time_placed`, `cost`, `address`) VALUES (?,1, NOW(), ?, ?);");
             $stmt->bindParam(1, $this->customerId, PDO::PARAM_INT);
             $stmt->bindParam(2, $this->cost, PDO::PARAM_INT);
@@ -68,6 +83,10 @@ class Order extends DB
         }
     }
 
+    /**
+     * Summary of getOrders
+     * @return array|int|string
+     */
     public function getOrders()
     {
         try {
@@ -86,6 +105,11 @@ class Order extends DB
             return "Error" . $e . ".";
         }
     }
+    /**
+     * Summary of getOrderItems
+     * @param int $orderID
+     * @return array|int|string
+     */
     public function getOrderItems($orderID)
     {
         try {
@@ -102,6 +126,11 @@ class Order extends DB
         }
     }
 
+    /**
+     * Summary of cancelOrder
+     * @param int $orderID
+     * @return string
+     */
     public function cancelOrder($orderID)
     {
         try {
@@ -109,6 +138,7 @@ class Order extends DB
             if ($stmt->execute()) {
                 return "Success";
             }
+            return "Failed";
         } catch (PDOException $e) {
             return "Error" . $e . ".";
         }

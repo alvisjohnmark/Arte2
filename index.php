@@ -63,9 +63,7 @@
         <div class="hero-section">
           <div class="content">
             <h1>Locally-sourced Stationaries and Handcrafts</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla porttitor lobortis erat ut
-              scelerisque.
-              Nam blandit nisl nec purus tincidunt, accumsan fermentum metus facilisis. </p>
+            <p>#SupportLocalArtisans</p>
             <button id="shop-btn">Shop</button>
           </div>
         </div>

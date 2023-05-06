@@ -16,45 +16,18 @@
 <body>
     <header>
         <div id="header">
-            <div id="bars">
-                <button class="mobile-menu">
-                    <span></span>
-                </button>
-            </div>
             <div class="brand-name">
                 <a href="../index.php">
                     <span>Arte</span>
                     <span>crafts</span>
                 </a>
             </div>
-            <navbar class="nav-desk">
-                <ul>
-                    <li>
-                        <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
-                    </li>
-                    <li>
-                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <span>0</span>
-                        </a>
-                    </li>
-                </ul>
-            </navbar>
-        </div>
-        <div id="mobile" class="mobile">
-            <navbar class="mobile-nav">
-                <ul>
-                    <li><a href="./profile.php">Profile</a></li>
-                    <li><a href="./wishlist.php">Wishlist</a></li>
-                </ul>
-            </navbar>
         </div>
     </header>
     <div class="overlay"></div>
     <section>
         <div class="container">
+            <p>Product Items</p>
             <table class="item-table">
                 <tr>
                     <th>Item ID</th>
@@ -105,13 +78,11 @@
             <div class="view-modal">
                 <button class="exit-view"><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></button>
                 <img class="view-img" src="" alt="">
-                <p class='view-name'>
-                    Plain Recycled Paper</p>
-                <p class='view-kind'>Paper</p>
-                <p class='view-stock'>Stock: <span>19</span></p>
-                <p class='view-price'>Price: ₱<span>50</span>.00</p>
-                <p class='view-description'>Beautiful A4 sheets of off-white paper embedded with a mix of wildflower
-                    seeds. Perfect for stationery, crafts, card-making, printing.</p>
+                <p class='view-name'></p>
+                <p class='view-kind'></p>
+                <p class='view-stock'>Stock: <span></span></p>
+                <p class='view-price'>Price: ₱<span></span>.00</p>
+                <p class='view-description'></p>
             </div>
 
             <div class="delete-confirmation-dialog">
@@ -173,7 +144,7 @@
                         <p style="display: none;" id="item-stock">${stock}</p>
                         <p style="display: none;" id="item-description">${description}</p>
                         <p style="display: none;" id="item-img">${image}</p>
-                        <div>
+                        <div style="display:flex;">
                             <button class="viewBtn"><i class="fa fa-eye fa-lg" aria-hidden="true"></i></button>
                             <button class="editBtn"><i class="fa fa-pencil-square fa-lg"
                                     aria-hidden="true"></i></button>
@@ -316,8 +287,6 @@
         })
 
         $(document).on('click', '.editBtn', function () {
-            console.log("asd");
-
 
             //gets all existing values and put it into inputs
             const ID = parseInt($(this).parents('.data').find("#item-id").text())
@@ -356,8 +325,6 @@
                 url: "../server/item/delete.php",
                 data: data,
                 success: function (response) {
-                    // let result = JSON.parse(response);
-                    console.log(response);
                     $('.overlay').css("display", "none")
                     $('.delete-confirmation-dialog').hide()
                     location.reload()

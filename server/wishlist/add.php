@@ -10,11 +10,8 @@
         http_response_code(200);
     } catch (\Throwable $th) {
         echo json_encode(["msg" => "Errory"]);
-        // http_response_code(400);
     }
 } else {
     return json_encode(["msg" => "itemID missing"]);
-
-
 }
 ?>

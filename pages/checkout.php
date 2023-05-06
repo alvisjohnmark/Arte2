@@ -100,15 +100,11 @@
                     method: "GET",
                     url: "../server/cart/getAll.php",
                     success: function (response) {
-                        //filter out items not in the list
                         let result = JSON.parse(response)
-                        let new_list = result.data.filter(function (item) {
-                            return list.includes(item["itemID"])
-                        })
-                        setOrderSummary(new_list)
+                        setOrderSummary(result.data)
                         // store the items in the sessionStorage
                         // retrieve when user checks out
-                        sessionStorage.setItem("items", JSON.stringify(new_list));
+                        sessionStorage.setItem("items", JSON.stringify(result.data));
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr, status, error);
@@ -161,7 +157,7 @@
                         url: "../server/item/update_stock.php",
                         data: data,
                         success: function (response) {
-                            console.log(response);
+                            window.history.back()
                         },
                         error: function (xhr, status, error) {
                             console.error(xhr, status, error);
@@ -186,8 +182,6 @@
                     data: data,
                     success: function (response) {
                         updateStock()
-                        window.history.back()
-
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr, status, error);

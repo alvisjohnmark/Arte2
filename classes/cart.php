@@ -24,13 +24,14 @@ class Cart extends DB
         $prevQnty = $this->userAddedSameItem();
         $this->getItemStock(); //set the number of stock of the item
         try {
-            if ($prevQnty) {
+            if ($prevQnty) { //when added to cart the same item, it adds up to previous quantity
                 $sum = $prevQnty + $this->quantity;
                 if ($sum > $this->stock) {
                     $sum = $this->stock;
                 }
                 $this->updateCartItems($sum);
             } else {
+                //insert new cart only when customer has not made yet any order
                 if ($insertCart) {
                     $stmt = $this->connect()->prepare("INSERT INTO `cart`(`customerID`) VALUES (?)");
                     $stmt->bindParam(1, $this->customerId, PDO::PARAM_INT);
@@ -46,7 +47,6 @@ class Cart extends DB
             return "Succcess";
         } catch (PDOException $e) {
             return "Error" . $e . ".";
-            // die();
         }
     }
 
@@ -123,8 +123,6 @@ class Cart extends DB
         try {
             $ID = $this->customerId;
             $stmt = $this->connect()->query("SELECT cartID FROM `cart` WHERE customerID = '$ID'"); #gets the last order made by the customer
-            //        $stmt->bindParam(1, $this->itemID, PDO::PARAM_INT);
-            // $stmt->bindParam(2, $this->customerID, PDO::PARAM_INT);
             $result = $stmt->fetchALL();
             if (isset($result[0]["cartID"])) {
                 $this->cartID = $result[0][0];

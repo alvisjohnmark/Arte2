@@ -1,4 +1,7 @@
 <?php
+/**
+ * Summary of Login
+ */
 class Login extends DB
 {
 
@@ -11,6 +14,10 @@ class Login extends DB
         $this->password = $password;
     }
 
+    /**
+     * Summary of loginUser
+     * @return int
+     */
     public function loginUser(): int
     {
         $e = $this->email;
