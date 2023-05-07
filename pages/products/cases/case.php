@@ -30,6 +30,7 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
+                    <li><a href="../../about.php">About Us</a></li>
                     <li>
                         <a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
@@ -53,6 +54,7 @@
                     </li>
                     <li><a href=<?php $userLoggedIn ? print "../../wishlist.php" : print "../../../forms/login.php" ?>>Wishlist</a>
                     </li>
+                    <li><a href="../../about.php">About Us</a></li>
                 </ul>
             </navbar>
         </div>
@@ -82,15 +84,6 @@
     <footer class="site-footer">
         <div class="container">
             <div class="row">
-                <div class="links">
-                    <h6>Quick Links</h6>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Contribute</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
                 <hr>
             </div>
             <div class="container">

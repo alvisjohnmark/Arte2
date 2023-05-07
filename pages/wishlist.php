@@ -30,6 +30,7 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
+                    <li><a href="./about.php">About Us</a></li>
                     <li>
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
@@ -49,8 +50,9 @@
         <div id="mobile" class="mobile">
             <navbar class="mobile-nav">
                 <ul>
-                    <li><a href="./pages/profile.php">Profile</a></li>
-                    <li><a href="./pages/wishlist.php">Wishlist</a></li>
+                    <li><a href="./profile.php">Profile</a></li>
+                    <li><a href="./wishlist.php">Wishlist</a></li>
+                    <li><a href="./about.php">About Us</a></li>
                 </ul>
             </navbar>
         </div>
@@ -76,15 +78,6 @@
     <footer class="site-footer">
         <div class="container">
             <div class="row">
-                <div class="links">
-                    <h6>Quick Links</h6>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Contribute</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
                 <hr>
             </div>
             <div class="container">

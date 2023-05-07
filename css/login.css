@@ -4,42 +4,16 @@
   src: url(../assets/amsterdam-four-ttf-maisfontes.100e/amsterdam-four-ttf.ttf);
 }
 
-/* Define the needed styles */
-/* :root {
-  --primary-color: #dfccc5;
-  --secondary-color: #f4eee1;
-  --icon-color: #998076;
-  --highlight-color: #c8aea4;
-  --font-style-one: "Amsterdam";
-  --font-style-two: "Catamaran", sans-serif;
-  --font-style-three: "Open Sans", sans-serif;
-  --font-style-four: "Cormorant", serif;
-}
-
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
-
-body{
-  background-color: var(--secondary-color);
-} */
-.welcome {
-  font-family: var(--font-style-four);
-  font-size: 2em;
-}
-
 .container {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }
 
 .form-container {
+  font-family: var(--font-style-three);
   width: 26.25rem;
-  height: 20.25rem;
   background-color: var(--primary-color);
   position: relative;
   box-sizing: border-box;
@@ -57,13 +31,13 @@ form input {
   width: 100%;
   height: 1rem;
   margin-top: 10px;
-  font-family: var(--font-style-three);
   background: transparent;
   border: none;
 }
 
 input[type="email"],
-input[type="password"]{
+input[type="password"],
+input[type="text"] {
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -76,17 +50,24 @@ label {
   font-size: 1.3em;
 }
 
-.submit-btn-form{
+.submit-btn-form {
   height: 30px;
   width: 100px;
   border: 1px solid black;
   border-radius: 8px;
-  margin-left: 110px;
-  margin-right:110px;
+  margin: 5px 110px;
   cursor: pointer;
 }
 
-img{
+.buttonform {
+  background-color: inherit;
+}
+
+p {
+  text-align: center;
+}
+
+img {
   position: absolute;
   top: -15%;
   left: 37%;

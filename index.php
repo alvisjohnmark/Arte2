@@ -29,6 +29,7 @@
       </div>
       <navbar class="nav-desk">
         <ul>
+          <li><a href="./pages/about.php">About Us</a></li>
           <li>
             <a href=<?php $userLoggedIn ? print "./pages/wishlist.php" : print "./forms/login.php" ?>><i
                 class="fa fa-heart" aria-hidden="true"></i></a>
@@ -49,9 +50,10 @@
     <div id="mobile" class="mobile">
       <navbar class="mobile-nav">
         <ul>
-          <li><a href="./pages/profile.php">Profile</a></li>
-          <li><a href="./pages/wishlist.php">Wishlist</a></li>
-          <li>
+          <li><a href=<?php $userLoggedIn ? print "./pages/profile.php" : print "./forms/login.php" ?>>Profile</a></li>
+          <li><a href=<?php $userLoggedIn ? print "./pages/wishlist.php" : print "./forms/login.php" ?>>Wishlist</a>
+          </li>
+          <li><a href="./pages/about.php">About Us</a></li>
         </ul>
       </navbar>
     </div>
@@ -127,15 +129,6 @@
   <footer class="site-footer">
     <div class="container">
       <div class="row">
-        <div class="links">
-          <h6>Quick Links</h6>
-          <ul class="footer-links">
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact Us</a></li>
-            <li><a href="#">Contribute</a></li>
-            <li><a href="#">Privacy Policy</a></li>
-          </ul>
-        </div>
         <hr>
       </div>
       <div class="container">
@@ -150,7 +143,8 @@
             <ul class="social-icons">
               <li><a class="facebook" href="#"><i class="fa fa-facebook"> </i></a></li>
               <li><a class="instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-              <li><a class="github" href="#"><i class="fa fa-github"></i></a></li>
+              <li><a class="github" href="https://github.com/jnthnpstl/Arte2" target="_blank"><i
+                    class="fa fa-github"></i></a></li>
             </ul>
           </div>
         </div>

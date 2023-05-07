@@ -30,16 +30,15 @@
             </div>
             <navbar class="nav-desk">
                 <ul>
+                    <li><a href="./about.php">About Us</a></li>
                     <li>
                         <a href="./wishlist.php"><i class="fa fa-heart" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href=<?php $userLoggedIn ? print "./profile.php" : print "../forms/login.php" ?>><i
-                                class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+                        <a href="./profile.php"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
                     </li>
                     <li>
-                        <a href=<?php $userLoggedIn ? print "./cart.php" : print "../forms/login.php" ?>><i
-                                class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        <a href="./cart.php"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
                             <span>0</span>
                         </a>
                     </li>
@@ -51,6 +50,7 @@
                 <ul>
                     <li><a href="./profile.php">Profile</a></li>
                     <li><a href="./wishlist.php">Wishlist</a></li>
+                    <li><a href="./about.php">About Us</a></li>
                 </ul>
             </navbar>
         </div>
@@ -99,15 +99,6 @@
     <footer class="site-footer">
         <div class="container">
             <div class="row">
-                <div class="links">
-                    <h6>Quick Links</h6>
-                    <ul class="footer-links">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                        <li><a href="#">Contribute</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
-                </div>
                 <hr>
             </div>
             <div class="container">
@@ -259,6 +250,17 @@
             $(e).text(product);
         }
 
+        //this gets the total quantity of all items
+        //this function is called everytime there are changes in the inputs
+        function quantitySum() {
+            let sum = 0
+            $('.qnty').each(function () {
+                sum += parseFloat($(this).val())
+            })
+            isNaN(sum) ? sum = 0 : sum
+            $(".nav-desk").find("span").text(sum)
+        }
+
         function inputIncDecElement(element) {
             return $(element).parent().find("input")
         }
@@ -273,7 +275,7 @@
                 input.val(parseInt(input.val()) + 1)
             }
             calculate(el, parseInt(input.val()), price)
-            calculateTotal()
+            inputActions()
         });
 
         $(document).on('click', "#dec", function () {
@@ -286,14 +288,17 @@
                 input.val(parseInt(input.val()) - 1)
             }
             calculate(el, parseInt(input.val()), price);
-            calculateTotal()
+            inputActions()
         });
 
         //this is for handling changes in the input.
         //to prevent multiple query every change in the input,
         //it calls a query every 2 seconds of inactivity from input
         let time_out_running = null;
-        $(document).on('click', '#inc ,#dec', function () {
+
+        function inputActions() {
+            calculateTotal()
+            quantitySum()
             if (time_out_running) {
                 clearTimeout(time_out_running);
                 time_out_running = null;
@@ -305,6 +310,9 @@
                     })
                 }, 2000)
             }
+        }
+        $(document).on('click', '#inc ,#dec', function () {
+            inputActions()
         })
 
         $(document).on('input', ".qnty", function (e) {
@@ -321,22 +329,9 @@
                 }
                 ($(e.target).val(quantity))
             }
-            quantitySum()
             calculate(node, quantity, price)
-            calculateTotal()
+            inputActions()
 
-            if (time_out_running) {
-                clearTimeout(time_out_running);
-                time_out_running = null;
-            }
-
-            if (!time_out_running) {
-                time_out_running = setTimeout(function () {
-                    $.each($("table .product"), function (index, el) {
-                        updateItems(el);
-                    })
-                }, 2000)
-            }
         })
 
         $(document).on('click', '.remove', function () {
@@ -349,16 +344,6 @@
                 calculateTotal()
             });
         })
-
-        //this gets the total quantity of all items
-        //this function is called everytime there are changes in the inputs
-        function quantitySum() {
-            let sum = 0
-            $('.qnty').each(function () {
-                sum += parseFloat($(this).val())
-            })
-            $(".nav-desk").find("span").text(sum)
-        }
 
 
         function removeItemFromDB(el) {
@@ -398,6 +383,7 @@
                 }
             })
         }
+
         //Checkout
         $(".checkout").click(function () {
             let items_list = []
@@ -405,6 +391,12 @@
             $(".product").each(function () {
                 items_list.push(parseInt($(this).find("input").attr("name")));
             })
+
+            //if there are no items in cart, can't checkout
+            if (items_list.length <= 0) {
+                notify("Please add items.")
+                return;
+            }
 
             let cartID = $("#cart-id").find("span").text().trim()
             let url = `./checkout.php?items=${items_list}&cartID=${cartID}`
